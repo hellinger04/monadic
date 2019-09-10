@@ -4,7 +4,7 @@ Andrew Hellinger
 
 # Elevator Pitch
 
-Monads are infamously hard to explain. Just look at the comments of Computerphile's video on them. So why not create a website that teaches you monads by doing?
+Monads are infamously hard to explain; just look at the comments of Computerphile's video on them. So why not create a website that teaches you monads by doing?
 
 # Problem
 
