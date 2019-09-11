@@ -31,19 +31,24 @@ just learning from a textbook or lecture. Websites that allow you to learn, say,
 https://www.haskell.org
 - 4Clojure is a Clojure tutorial site that features user accounts that keep track of how many problems the user completes:
 http://www.4clojure.com/
+- Leetcode is a commonly-used website for practicing coding skills by solving coding challenges:
+https://leetcode.com/
+- HackerRank is a website that is similar to Leetcode in purpose:
+https://www.hackerrank.com/
 
 ## Architecture Overview
 
 - Front-end: A website where users can sign in, select monad problems, and implement solutions to said problems.
-- Back-end: A server that keeps track of user data.
+- Back-end: A server that keeps track of user data and evaluates user-written solution code.
 
 ## Features
 
-- Users have a profile, where they can store their progress on tutorials and problems
+- Users have a profile, where they can store their progress on tutorials and problems.
 - Problems are listed on a main site with title and difficulty.
 - User can type up code, which the website evaluates for correctness.
 - User account keeps track of user progression (ie. how many problems have been completed).
-- User can submit custom problems to the webpage
+- User can submit custom problems to the webpage.
+- One webpage will link to a number of open-source projects that use monads.
 
 ## Wireframes
 
@@ -89,7 +94,7 @@ The wireframe would consist of several web pages:
 
 ## Proof of Concept
 
-- A GitHub repo titled "Learning Monads in an Example" already exists: https://github.com/DiegoVicen/monadic-gcd. However, it only has one example, and it's more of a demo than a serious teaching tool.
+- A GitHub repo titled "Learning Monads in an Example" already exists: https://github.com/DiegoVicen/monadic-gcd. However, it only has one example, and it's more of a demo than a serious teaching tool. It's also not interactive, despite the fact that it contains Haskell code snippets.
 
 # Difficulty
 
@@ -99,11 +104,12 @@ The wireframe would consist of several web pages:
 
 ## Users
 
-- Not too many users actually, as programming language theory is a topic that only a few nerds like myself care about.
+- Currently not too many users, but functional programming is becoming more popular due to its use in JavaScript. As monads are an important concept in functional programming, this opens up an opportunity for curious users to learn about them.
 
 ## Competition
 
-- There are quite a few online tutorials for monads, usually in relation to Haskell. However, none of them are interactive (save for the aforementioned GitHub repo) and mostly consist of either text or videos.
+- There are quite a few online tutorials for monads, usually in relation to Haskell. However, none of them are interactive and mostly consist of either text or videos.
+- Example tutorials: ![A 5-Minute Monad Tutorial](http://www.cs.cornell.edu/~akhirsch/monads.html), ![About Monads](https://www.haskell.org/tutorial/monads.html), and ![monads-in-clojure](https://github.com/khinsen/monads-in-clojure).
 - Currently, most people learn about monads through books, blog posts, and language documentation - none of which are interactive, or in school - which isn’t feasible for most functional programmers. For those who are no longer in school but are still interested in learning about functional programming.
 
 # Roadmap
