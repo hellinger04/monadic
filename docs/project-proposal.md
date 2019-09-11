@@ -12,11 +12,21 @@ Monads are one of the most notorious difficult concepts in theoretical computer 
 
 ## Introduction to Domain
 
-- Monad: A...well, that's the whole problem, right? A common (joke) definition
-is that "a monad is a monoid in the category of endofunctors."
-(Source: https://blog.merovius.de/2018/01/08/monads-are-just-monoids.html)
-Explained more simply, a monad is one of the many design patterns that allows
-code reuse; examples include monads for state and exceptions.
+- Monad: A...well, that's the whole problem, right? A common (joke) definition is that "a monad is a monoid in the category of endofunctors." (Source: https://blog.merovius.de/2018/01/08/monads-are-just-monoids.html)
+Explained more simply, a monad is one of the many design patterns that allows code reuse; examples include monads for state and exceptions. A monad consists of three parts (taken from the [Wikipedia article](https://en.wikipedia.org/wiki/Monad_(functional_programming)):
+    1. A _type constructor_ `M` that builds a monadic type `M T` from a regular type `T` (eg. `T` is an `int` or a `string`).
+    2. A _type converter_ that turns the regular type `T` into a monadic type `T` (eg. `unit(x) : T -> M T`).
+    3. A _combinator_ that takes in  a monadic type and a monadic function and returns another monadic type (eg. `(mx >>= f) : (M T, T -> M U) -> M U`.
+An example would be to use a monad to allow an operation to take in both regular data (`int`, `boolean`, `string`, etc.) and also `null` data. For example, the following defines a safe `not` operation using the monadic type `Maybe Boolean` (which can either be `Nothing` or an actual `boolean`, ie. `Just Boolean`):
+```
+>>= : (Maybe T, T -> Maybe U) -> Maybe U
+(mx >== f) =
+    if mx is Just(x) then f(x)
+    else Nothing
+
+not : Maybe Boolean -> Maybe Boolean
+not(mp) = mp >>= fun p -> (unit(not(p)) // mp is a "Maybe Boolean" variable
+```
 
 - Functional programming: This is the programming paradigm that is most commonly associated with monads. Functional programming emphasizes functions and the immutability of data, while the other main paradigm (imperative programming) emphasizes changing of state and doing things in a certain order. Examples of functional programming languages include Haskell, Clojure and OCaml.
 
