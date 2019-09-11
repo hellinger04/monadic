@@ -3,7 +3,8 @@ Group Members:
 Andrew Hellinger,
 Kelvin Qian,
 Nathan Vallapureddy,
-Robin Brooks
+Robin Brooks,
+Cortland Morse
 
 # Elevator Pitch
 
