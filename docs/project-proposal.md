@@ -4,7 +4,8 @@ Andrew Hellinger,
 Kelvin Qian,
 Nathan Vallapureddy,
 Robin Brooks,
-Cortland Morse
+Cortland Morse,
+Keturah Jones
 
 # Elevator Pitch
 
