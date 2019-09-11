@@ -1,6 +1,7 @@
 # Project Proposal: Monad Tutorial
 Group Members:
 Andrew Hellinger
+Kelvin Qian
 
 # Elevator Pitch
 
@@ -21,7 +22,7 @@ Explained more simply, a monad is one of the many design patterns that allows co
 An example would be to use a monad to allow an operation to take in both regular data (`int`, `boolean`, `string`, etc.) and also `null` data. For example, the following defines a safe `not` operation using the monadic type `Maybe Boolean` (which can either be `Nothing` or an actual `boolean`, ie. `Just Boolean`):
 ```
 >>= : (Maybe T, T -> Maybe U) -> Maybe U
-(mx >== f) =
+(mx >>= f) =
     if mx is Just(x) then f(x)
     else Nothing
 
