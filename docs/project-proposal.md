@@ -1,7 +1,8 @@
 # Project Proposal: Monad Tutorial
 Group Members:
-Andrew Hellinger
-Kelvin Qian
+Andrew Hellinger,
+Kelvin Qian,
+Nathan Vallapureddy
 
 # Elevator Pitch
 
