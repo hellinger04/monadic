@@ -76,8 +76,6 @@ The wireframe would consist of several web pages:
 - A home page with a list of problem sets; clicking on one leads to...
 - A page that has the problem description at top and a space to write code at the bottom; there will be a "Submit" button that displays if the user's code is correct or not and leads to the next problem if correct.
 
-![](<!-- TODO -->)
-
 ## User Stories
 - As someone interested in functional programming, I want to learn about monads without having to go to a university course.
 - As a university professor, I would like a neat way for my students to practice their knowledge of monads.
