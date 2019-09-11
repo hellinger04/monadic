@@ -5,7 +5,7 @@ Kelvin Qian,
 Nathan Vallapureddy,
 Robin Brooks,
 Cortland Morse,
-Keturah Jones
+and Keturah Jones
 
 # Elevator Pitch
 
