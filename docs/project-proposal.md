@@ -13,7 +13,7 @@ Monads are one of the most notorious difficult concepts in theoretical computer 
 ## Introduction to Domain
 
 - Monad: A...well, that's the whole problem, right? A common (joke) definition is that "a monad is a monoid in the category of endofunctors." (Source: https://blog.merovius.de/2018/01/08/monads-are-just-monoids.html)
-Explained more simply, a monad is one of the many design patterns that allows code reuse; examples include monads for state and exceptions. A monad consists of three parts (taken from the [Wikipedia article](https://en.wikipedia.org/wiki/Monad_(functional_programming)):
+Explained more simply, a monad is one of the many design patterns that allows code reuse; examples include monads for state and exceptions. A monad consists of three parts (taken from the [Wikipedia article](https://en.wikipedia.org/wiki/Monad_(functional_programming))):
     1. A _type constructor_ `M` that builds a monadic type `M T` from a regular type `T` (eg. `T` is an `int` or a `string`).
     2. A _type converter_ that turns the regular type `T` into a monadic type `T` (eg. `unit(x) : T -> M T`).
     3. A _combinator_ that takes in  a monadic type and a monadic function and returns another monadic type (eg. `(mx >>= f) : (M T, T -> M U) -> M U`.
@@ -88,16 +88,17 @@ The wireframe would consist of several web pages:
 
 ## Hardware
 
-- We at least need a computer (a mobile version is something for a later iteration).
+- We at least need a computer (a mobile version is something for a later iteration), which we all have.
 
 ## APIs
 
 - We need some way to host a website. (GitHub provides a way, but it's limited to one website per profile. Also it's not convenient for real projects.)
 - We need a backend web server and DB to keep track of user progress.
+- We also need a way to compile/interpret/evaluate the code that the user has written, likely in a different language than what the project iself is implemented in (eg. OCaml vs. Java).
 
 ## Tools
 
-- Programming language: Java + a bit of Kotlin
+- Programming language: Java + JavaScript + a bit of Kotlin; will also use a functional programming language for user solution implementation
 - IDE: IntelliJ IDEA
 - Version control: Git + GitHub (natch)
 - Web deployment: Heroku (will be our server; also have SQLite DB?)
@@ -108,19 +109,19 @@ The wireframe would consist of several web pages:
 
 # Difficulty
 
-- Shouldn't be too hard to implement, given that this is essentially just a basic web app. The hard part comes from the esoteric domain knowledge and the challenge of implementing solution validation functions.
+- This shouldn't be too hard to implement, given that this is essentially just a basic web app. The hard part comes from the esoteric domain knowledge and the challenge of implementing solution validation functions.
 
 # Market Research
 
 ## Users
 
-- Currently not too many users, but functional programming is becoming more popular due to its use in JavaScript. As monads are an important concept in functional programming, this opens up an opportunity for curious users to learn about them.
+- Currently there not too many users, but functional programming is becoming more popular due to its use in JavaScript. As monads are an important concept in functional programming, this opens up an opportunity for curious users to learn about them.
 
 ## Competition
 
 - There are quite a few online tutorials for monads, usually in relation to Haskell. However, none of them are interactive and mostly consist of either text or videos.
 - Example tutorials: [A 5-Minute Monad Tutorial](http://www.cs.cornell.edu/~akhirsch/monads.html), [About Monads](https://www.haskell.org/tutorial/monads.html), and [monads-in-clojure](https://github.com/khinsen/monads-in-clojure).
-- Currently, most people learn about monads through books, blog posts, and language documentation - none of which are interactive, or in school - which isn’t feasible for most functional programmers. For those who are no longer in school but are still interested in learning about functional programming.
+- Currently, most people learn about monads through books, blog posts, and language documentation - none of which are interactive, or in school - which isn’t feasible for most functional programmers. This is especially true for those who are no longer in school but are still interested in learning about functional programming.
 
 # Roadmap
 
