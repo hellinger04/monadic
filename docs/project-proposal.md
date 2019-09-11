@@ -17,6 +17,7 @@ Explained more simply, a monad is one of the many design patterns that allows co
     1. A _type constructor_ `M` that builds a monadic type `M T` from a regular type `T` (eg. `T` is an `int` or a `string`).
     2. A _type converter_ that turns the regular type `T` into a monadic type `T` (eg. `unit(x) : T -> M T`).
     3. A _combinator_ that takes in  a monadic type and a monadic function and returns another monadic type (eg. `(mx >>= f) : (M T, T -> M U) -> M U`.
+
 An example would be to use a monad to allow an operation to take in both regular data (`int`, `boolean`, `string`, etc.) and also `null` data. For example, the following defines a safe `not` operation using the monadic type `Maybe Boolean` (which can either be `Nothing` or an actual `boolean`, ie. `Just Boolean`):
 ```
 >>= : (Maybe T, T -> Maybe U) -> Maybe U
