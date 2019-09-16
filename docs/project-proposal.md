@@ -102,10 +102,10 @@ The wireframe would consist of several web pages:
 
 ## Tools
 
-- Programming language: Java + JavaScript + a bit of Kotlin; will also use a functional programming language for user solution implementation
-- IDE: IntelliJ IDEA
-- Version control: Git + GitHub (natch)
-- Web deployment: Heroku (will be our server; also have SQLite DB?)
+- Programming languages:
+    - Java + JavaScript + a bit of Kotlin for the project itself
+    - JavaScript for the user solutions (use a functional programming language that doesn't scare people)
+- All other tools are (or at least should) be found in the Toolbox
 
 ## Proof of Concept
 
@@ -124,7 +124,7 @@ The wireframe would consist of several web pages:
 ## Competition
 
 - There are quite a few online tutorials for monads, usually in relation to Haskell. However, none of them are interactive and mostly consist of either text or videos.
-- Example tutorials: [A 5-Minute Monad Tutorial](http://www.cs.cornell.edu/~akhirsch/monads.html), [About Monads](https://www.haskell.org/tutorial/monads.html), and [monads-in-clojure](https://github.com/khinsen/monads-in-clojure).
+- Example tutorials: [A 5-Minute Monad Tutorial](http://www.cs.cornell.edu/~akhirsch/monads.html), [About Monads](https://www.haskell.org/tutorial/monads.html), and [monads-in-clojure](https://github.com/khinsen/monads-in-clojure). This tutorial, [Monads in JavaScript](https://curiosity-driven.org/monads-in-javascript) uses JavaScript to teach monads, which is what we will be using.
 - Currently, most people learn about monads through books, blog posts, and language documentation - none of which are interactive, or in school - which isn’t feasible for most functional programmers. This is especially true for those who are no longer in school but are still interested in learning about functional programming.
 
 # Roadmap
