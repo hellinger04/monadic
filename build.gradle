@@ -4,7 +4,7 @@ plugins {
     id 'application'
 }
 
-group 'todoose'
+group 'monadic'
 version '1.0'
 
 sourceCompatibility = 12
@@ -31,5 +31,5 @@ test {
 task stage(dependsOn: 'assemble')
 
 application {
-    mainClassName = 'com.jhuoose.todoose.Server'
+    mainClassName = 'com.jhuoose.monadic.Server'
 }
