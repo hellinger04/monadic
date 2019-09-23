@@ -9,7 +9,6 @@ public class User {
     private String password;
     private Enrollment enrollment;
     private Avatar avatar;
-    private Pet pet;
     private Wallet wallet;
 
     public User(String username, String password) {
@@ -33,9 +32,6 @@ public class User {
         return avatar;
     }
 
-    public Pet getPet() {
-        return pet;
-    }
 
     public Wallet getWallet() {
         return token;
@@ -55,10 +51,6 @@ public class User {
 
     public void setAvatar(Avatar avatar) {
         this.avatar = avatar;
-    }
-
-    public void setPet(Pet pet) {
-        this.pet = pet;
     }
 
     public void setWallet(Wallet wallet) {
