@@ -4,17 +4,17 @@ import java.util.ArrayList;
 
 public class Lesson {
 
-    int ID;
+    double ID;
     ArrayList<Problem> problemList;
     String lessonText;
 
-    public Lesson(int ID, ArrayList<Problem> problemList, String lessonText) {
+    public Lesson(double ID, ArrayList<Problem> problemList, String lessonText) {
         this.ID = ID;
         this.problemList = problemList;
         this.lessonText = lessonText;
     }
 
-    public int getID() {
+    public double getID() {
         return ID;
     }
 
