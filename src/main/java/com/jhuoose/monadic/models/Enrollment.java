@@ -1,17 +1,19 @@
 package com.jhuoose.monadic.models;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /* Class to represent
  */
 public class Enrollment {
 
+    //this was changed to use Lesson to refer to each Lesson (instead of Lesson.ID) because it makes it easier for the
+    //Enrollment class to communicate with EnrollmentMap
     private Map<Lesson, Integer> lessonList;
     private Map<Integer, StudentAnswer> answers;
 
     public Enrollment() {
         lessonList = EnrollmentMap.getLessonList();
-        answers = new Map<Integer, StudentAnswer>;
+        answers = new HashMap<>();
     }
 
     /* 0 - lesson is unavailable
