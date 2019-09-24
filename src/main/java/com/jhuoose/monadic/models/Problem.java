@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class Problem {
 
-    int ID;
-    ArrayList<TestCase> tests;
-    CanonicalAnswer canonicalAnswer;
-    String description;
-    String starterCode;
+    private int ID;
+    private ArrayList<TestCase> tests;
+    private CanonicalAnswer canonicalAnswer;
+    private String description;
+    private String starterCode;
 
     public Problem(int ID, ArrayList<TestCase> tests, CanonicalAnswer canonicalAnswer, String description, String starterCode) {
         this.ID = ID;

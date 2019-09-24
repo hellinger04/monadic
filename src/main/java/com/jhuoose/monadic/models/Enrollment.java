@@ -5,8 +5,8 @@ import java.util.Map;
  */
 public class Enrollment {
 
-    Map<Course, Integer> courseList;
-    Map<Problem, StudentAnswer> answers;
+    private Map<Course, Integer> courseList;
+    private Map<Problem, StudentAnswer> answers;
 
     public Enrollment() {
         courseList = CourseDirectory.getCourseList();
