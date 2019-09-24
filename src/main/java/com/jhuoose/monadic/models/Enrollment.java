@@ -6,7 +6,7 @@ import java.util.Map;
 public class Enrollment {
 
     Map<Course, Integer> courseList;
-    Map<Problem, Answer> answers;
+    Map<Problem, StudentAnswer> answers;
 
     public Enrollment() {
         courseList = CourseDirectory.getCourseList();
@@ -17,7 +17,7 @@ public class Enrollment {
         return this.courseList.get(course);
     }
 
-    public Answer getAnswer(Problem problem) {
+    public StudentAnswer getAnswer(Problem problem) {
         return answers.get(problem);
     }
 
