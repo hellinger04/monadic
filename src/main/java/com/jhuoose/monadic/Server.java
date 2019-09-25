@@ -7,6 +7,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/* Class to represent a Server which runs our application. The skeleton code for this class was
+   copied from the TODOOSE application.
+ */
 public class Server {
 
     public static void main(String[] args) throws SQLException {

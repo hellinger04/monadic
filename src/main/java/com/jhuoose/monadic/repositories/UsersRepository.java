@@ -2,8 +2,10 @@ package com.jhuoose.monadic.repositories;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
+/* Class to manage User objects stored in the database. The skeleton code for this class was copied from the
+   ItemsRepository.java file from the TODOOSE application.
+ */
 public class UsersRepository {
 
     private Connection connection;
