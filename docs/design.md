@@ -25,10 +25,11 @@ methods, so instead of repeating these methods, we simply created an Answer clas
 these sub-classes. This way, we can define the constructor and getter functionality in the parent class, without 
 repeating this code throughout the sub-classes.
 
-Keep It Simple Stupid (KISS): This principle states that we shouldn't worry about designing code if we can simply use a
-pre-written library, reducing the amount of work and complexity required to implement the project. For our code, we 
-decided it would be simplest not to implement a web code typing app ourselves, and that we could probably just find one
-online to use with our program.   
+Keep It Simple Stupid (KISS): This principle states that we shouldn't worry about designing code if it's not necessary,
+especially if writing this code makes the program much more complex for no good reason. At first, we were deliberating
+adding a Pet class to the codebase, which would allow Users to customize their own Pet for their profile. When thinking 
+about the KISS principle, we decided against including this feature, as it would add a lot of complexity to the project
+without providing too much importance.
 
 ## Design Patterns
 
