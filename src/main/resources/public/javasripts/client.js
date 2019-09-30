@@ -13,8 +13,8 @@ class Application extends React.Component {
 
 const Header = () => (
     <header>
-        <h1>TODOOSE Robin Brooks</h1>
-        <p><small>A <a href="https://github.com/jhu-oose/todoose">to-do application</a> for <a href="https://www.jhu-oose.com">OOSE</a></small></p>
+        <h1>MONADIC</h1>
+        <p><small>A <a href="https://github.com/jhu-oose/2019-group-monadic">monad tutorial application</a> for <a href="https://www.monadic.com">OOSE</a></small></p>
     </header>
 );
 

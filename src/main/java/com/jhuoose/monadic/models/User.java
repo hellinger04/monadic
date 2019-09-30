@@ -8,8 +8,6 @@ public class User {
     private String username;
     private String password;
     private Enrollment enrollment;
-    private Avatar avatar;
-    private Wallet wallet;
 
     public User(String username, String password) {
         this.username = username;
@@ -28,15 +26,6 @@ public class User {
         return enrollment;
     }
 
-    public Avatar getAvatar() {
-        return avatar;
-    }
-
-
-    public Wallet getWallet() {
-        return token;
-    }
-
     public void setUsername(String username) {
         this.username = username;
     }
@@ -47,13 +36,5 @@ public class User {
 
     public void setEnrollment(Enrollment enrollment) {
         this.enrollment = enrollment;
-    }
-
-    public void setAvatar(Avatar avatar) {
-        this.avatar = avatar;
-    }
-
-    public void setWallet(Wallet wallet) {
-        this.wallet = wallet;
     }
 }

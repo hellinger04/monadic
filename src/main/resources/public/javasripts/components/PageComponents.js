@@ -1,14 +1,11 @@
-class PlusButton extends React.Component {
-    handleClick() {
-        fetch("/items", { method: "POST" });
-    }
+class LessonText  extends React.Component {
 
     render() {
         return <button className={this.props.className} onClick={() => { this.handleClick(); }}>+</button>;
     }
 }
 
-class ItemList extends React.Component {
+class ProblemList  extends React.Component {
     constructor(props) {
         super(props);
         this.state = { items: [] };
@@ -28,7 +25,7 @@ class ItemList extends React.Component {
     }
 }
 
-class Item extends React.Component {
+class Problem extends React.Component {
     render() {
         return (
             <li>
@@ -39,7 +36,7 @@ class Item extends React.Component {
     }
 }
 
-class MarkItemAsDoneCheckbox extends React.Component {
+class RunProblem extends React.Component {
     handleChange() {
         fetch(`/items/${this.props.item.identifier}`, { method: "DELETE" });
     }
@@ -49,7 +46,7 @@ class MarkItemAsDoneCheckbox extends React.Component {
     }
 }
 
-class ItemDescription extends React.Component {
+class ProblemText extends React.Component {
     constructor(props) {
         super(props);
         this.state = null;
