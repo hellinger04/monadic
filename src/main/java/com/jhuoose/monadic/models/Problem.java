@@ -2,7 +2,7 @@ package com.jhuoose.monadic.models;
 
 import java.util.ArrayList;
 
-public class Problem {
+public class Problem implements LessonElement {
 
     private int ID;
     private ArrayList<TestCase> tests;
@@ -16,6 +16,14 @@ public class Problem {
         this.canonicalAnswer = canonicalAnswer;
         this.description = description;
         this.starterCode = starterCode;
+    }
+
+    public boolean isProblem() {
+        return true;
+    }
+
+    public String getContents() {
+        return starterCode;
     }
 
     public int getID() {
