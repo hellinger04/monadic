@@ -9,11 +9,11 @@ import java.util.List;
 
 public class Server {
     public static void main(String[] args) {
-        var lessons = List.of(
-                new Lesson(0.0, new ArrayList<>()),
-                new Lesson(1.2, new ArrayList<>()),
-                new Lesson(1.3, new ArrayList<>())
-        );
+    //    var lessons = List.of(
+    //            new Lesson(0.0, new ArrayList<>()),
+    //            new Lesson(1.2, new ArrayList<>()),
+    //            new Lesson(1.3, new ArrayList<>())
+    //    );
         /* this is messy because List.of's are not mutable and
          * for some reason, it wasn't letting me put a List instead
          * of an ArrayList into an ArrayList of type Course
@@ -21,8 +21,8 @@ public class Server {
          * when we connect to the DB
          */
         var morelessons = new ArrayList<Lesson>();
-        var firstLesson = new Lesson(0.0, new ArrayList<>());
-        var second = new Lesson(0.1 , new ArrayList<>());
+        var firstLesson = new Lesson(0, new ArrayList<>());
+        var second = new Lesson(1 , new ArrayList<>());
         morelessons.add(firstLesson);
         morelessons.add(second);
         var courses = new ArrayList<Course>();
