@@ -3,26 +3,26 @@ package com.jhuoose.monadic.models;
 import java.util.ArrayList;
 
 public class Lesson {
-
     double ID;
-    ArrayList<Problem> problemList;
-    String lessonText;
+    ArrayList<LessonElement> lessonElements;
 
-    public Lesson(double ID, ArrayList<Problem> problemList, String lessonText) {
+    public Lesson(double ID, ArrayList<LessonElement> lessonElements) {
         this.ID = ID;
-        this.problemList = problemList;
-        this.lessonText = lessonText;
+        this.lessonElements = lessonElements;
     }
 
     public double getID() {
         return ID;
     }
 
-    public ArrayList<Problem> getProblemList() {
-        return problemList;
+    public void setID(double ID) {
+        this.ID = ID;
     }
 
-    public String getLessonText() {
-        return lessonText;
+    public ArrayList<LessonElement> getLessonElements() {
+        return lessonElements;
     }
+
+    public void addLessonElement(LessonElement lessonElement) { this.lessonElements.add(lessonElement); }
+
 }

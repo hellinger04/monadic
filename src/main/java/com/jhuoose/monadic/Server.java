@@ -1,24 +1,26 @@
 package com.jhuoose.monadic;
 
-
-import com.jhuoose.monadic.repositories.UsersRepository;
+import com.jhuoose.monadic.models.Lesson;
 import io.javalin.Javalin;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-/* Class to represent a Server which runs our application. The skeleton code for this class was
-   copied from the TODOOSE application.
- */
 public class Server {
-
-    public static void main(String[] args) throws SQLException {
-        Javalin j = Javalin.create(config -> { config.addStaticFiles("/public"); });
-        Connection connection = DriverManager.getConnection("jdbc:sqlite:monadic.db");
-        UsersRepository usersRepository = new UsersRepository(connection);
-        j.events(event -> { event.serverStopped(() -> { connection.close(); }); });
-        //server functionality goes here (get, put, delete, etc)
-        j.start(System.getenv("PORT") == null ? 7000 : Integer.parseInt(System.getenv("PORT")));
+    public static void main(String[] args) {
+        var lessons = List.of(
+                new Lesson(0.0, new ArrayList<>(), "Intro to Monads"),
+                new Lesson(1.2, new ArrayList<>(), "Monad stuff"),
+                new Lesson(1.3, new ArrayList<>(), "More monad stuff")
+        );
+        Javalin app = Javalin.create(config -> { config.addStaticFiles("/public"); });
+        app.get("/lesson", ctx -> {
+            ctx.json(lessons);
+        });
+        // we don't need to add new lessons over
+        // the web...lessons only exist in the server
+        // app.post("/lesson", ctx -> {
+        //     lessons.add(new Lesson(1.4, new ArrayList<>(), "Monad nomads"));
+        // });
+        app.start(7000);
     }
-
 }
