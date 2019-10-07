@@ -4,11 +4,14 @@ import com.jhuoose.monadic.models.Course;
 import com.jhuoose.monadic.models.Lesson;
 import com.jhuoose.monadic.models.LessonElement;
 import io.javalin.Javalin;
+
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Server {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
     //    var lessons = List.of(
     //            new Lesson(0.0, new ArrayList<>()),
     //            new Lesson(1.2, new ArrayList<>()),
@@ -30,6 +33,12 @@ public class Server {
         var secondCourse = new Course(1, morelessons);
         courses.add(firstCourse);
         courses.add(secondCourse);
+
+        var connection = DriverManager.getConnection("jdbc:sqlite:monadic.db");
+        var statement = connection.createStatement();
+        statement.execute("CREATE TABLE IF NOT EXISTS courses (identifier INTEGER PRIMARY KEY AUTOINCREMENT, lessons VARCHAR)");
+
+
         Javalin app = Javalin.create(config -> { config.addStaticFiles("/public"); });
         app.get("/courses", ctx -> {
             ctx.json(courses);
