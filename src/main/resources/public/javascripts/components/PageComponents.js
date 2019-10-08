@@ -53,7 +53,8 @@ class Course extends React.Component {
                         Try course: {this.props.course.id}
                     </button>
                     <p>
-                        {this.props.course.id}
+                        {console.log(this.props.course.lessonList[0])}
+                        {this.props.course.lessonList[0].lessonElements[0].contents}
                     </p>
                 </form>
             } </li>
