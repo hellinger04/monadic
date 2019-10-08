@@ -3,19 +3,21 @@ package com.jhuoose.monadic.models;
 import java.util.ArrayList;
 
 public class Lesson {
-    double ID;
+    int ID;
     ArrayList<LessonElement> lessonElements;
+    String description;
 
-    public Lesson(double ID, ArrayList<LessonElement> lessonElements) {
+  public Lesson(double ID, ArrayList<LessonElement> lessonElements, String description) {
         this.ID = ID;
         this.lessonElements = lessonElements;
+        this.description = description;
     }
 
     public double getID() {
         return ID;
     }
 
-    public void setID(double ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 
