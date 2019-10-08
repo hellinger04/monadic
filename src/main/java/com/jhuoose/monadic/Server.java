@@ -45,7 +45,7 @@ public class Server {
             ArrayList<Lesson> lessons = new ArrayList<>();
             String JSONLessons = mapper.writeValueAsString(lessons);
             var createStatement = connection.createStatement();
-            createStatement.execute("INSERT INTO courses (lessons) VALUES" + JSONLessons);
+            createStatement.execute("INSERT INTO courses (lessons) VALUES " + JSONLessons);
         });
         app.start(7000);
     }
