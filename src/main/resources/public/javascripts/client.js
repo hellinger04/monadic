@@ -6,6 +6,7 @@ class Application extends React.Component {
             <div>
                 <Header/>
                 <CourseList/>
+                <TextBox/>
             </div>
         )
     }
