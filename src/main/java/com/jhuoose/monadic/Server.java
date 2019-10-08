@@ -1,28 +1,28 @@
 package com.jhuoose.monadic;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jhuoose.monadic.models.Course;
 import com.jhuoose.monadic.models.Lesson;
 import com.jhuoose.monadic.models.LessonElement;
 import com.jhuoose.monadic.models.Text;
 import io.javalin.Javalin;
-
+import java.io.Reader;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Server {
-    public static void main(String[] args) throws FileNotFoundException {
-    //    var lessons = List.of(
-    //            new Lesson(0.0, new ArrayList<>()),
-    //            new Lesson(1.2, new ArrayList<>()),
-    //            new Lesson(1.3, new ArrayList<>())
-    //    );
-        /* this is messy because List.of's are not mutable and
-         * for some reason, it wasn't letting me put a List instead
-         * of an ArrayList into an ArrayList of type Course
-         * - it shouldn't matter - this will all be factored out later
-         * when we connect to the DB
-         */
+    public static void main(String[] args) throws SQLException, FileNotFoundException {
+        ObjectMapper mapper = new ObjectMapper();
+        var connection = DriverManager.getConnection("jdbc:sqlite:monadic.db");
+        var statement = connection.createStatement();
+        statement.execute("CREATE TABLE IF NOT EXISTS courses (identifier INTEGER PRIMARY KEY AUTOINCREMENT, lessons VARCHAR)");
+        statement.close();
+
         var morelessons = new ArrayList<Lesson>();
 
         LessonElement element = new Text(1, "../../../../resources/lessons/course_0/1.md");
@@ -41,15 +41,31 @@ public class Server {
         var secondCourse = new Course(1, morelessons);
         courses.add(firstCourse);
         courses.add(secondCourse);
+
         Javalin app = Javalin.create(config -> { config.addStaticFiles("/public"); });
         app.get("/courses", ctx -> {
+            var getStatement = connection.createStatement();
+            var result = getStatement.executeQuery("SELECT identifier, lessons FROM courses");
+            var courses = new ArrayList<Course>();
+            while (result.next()) {
+                // get the JSON representation first, then convert to an ArrayList<Lesson>
+                String rs = result.getString("lessons");
+                // this looks fucking disgusting but Jackson documentation says to do this so ¯\_(ツ)_/¯
+                ArrayList<Lesson> lessons = mapper.readValue(rs, new TypeReference<ArrayList<Lesson>>() { } );
+                courses.add(new Course(result.getInt("identifier"), lessons));
+            }
+            result.close();
+            getStatement.close();
             ctx.json(courses);
         });
-        // we don't need to add new lessons over
-        // the web...lessons only exist in the server
-        // app.post("/lesson", ctx -> {
-        //     lessons.add(new Lesson(1.4, new ArrayList<>(), "Monad nomads"));
-        // });
+
+        app.post("/courses", ctx -> {
+            // put empty lesson list into the course. we will use update() to add lessons later.
+            ArrayList<Lesson> lessons = new ArrayList<>();
+            String JSONLessons = mapper.writeValueAsString(lessons);
+            var createStatement = connection.createStatement();
+            createStatement.execute("INSERT INTO courses (lessons) VALUES " + JSONLessons);
+        });
         app.start(7000);
     }
 }
