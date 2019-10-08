@@ -16,25 +16,7 @@ import java.util.List;
 
 public class Server {
     public static void main(String[] args) throws SQLException {
-    //    var lessons = List.of(
-    //            new Lesson(0.0, new ArrayList<>()),
-    //            new Lesson(1.2, new ArrayList<>()),
-    //            new Lesson(1.3, new ArrayList<>())
-    //    );
-        /* this is messy because List.of's are not mutable and
-         * for some reason, it wasn't letting me put a List instead
-         * of an ArrayList into an ArrayList of type Course
-         * - it shouldn't matter - this will all be factored out later
-         * when we connect to the DB
-         */
         ObjectMapper mapper = new ObjectMapper();
-        var morelessons = new ArrayList<Lesson>();
-        var firstLesson = new Lesson(0, new ArrayList<>());
-        var second = new Lesson(1 , new ArrayList<>());
-        morelessons.add(firstLesson);
-        morelessons.add(second);
-        var firstCourse = new Course(0, morelessons);
-        var secondCourse = new Course(1, morelessons);
 
         var connection = DriverManager.getConnection("jdbc:sqlite:monadic.db");
         var statement = connection.createStatement();
@@ -43,10 +25,9 @@ public class Server {
 
         Javalin app = Javalin.create(config -> { config.addStaticFiles("/public"); });
         app.get("/courses", ctx -> {
-            // ctx.json(courses);
-            var courses = new ArrayList<Course>();
             var getStatement = connection.createStatement();
-            var result = getStatement.executeQuery("SELECT (identifier, lessons) FROM courses");
+            var result = getStatement.executeQuery("SELECT identifier, lessons FROM courses");
+            var courses = new ArrayList<Course>();
             while (result.next()) {
                 // get the JSON representation first, then convert to an ArrayList<Lesson>
                 String rs = result.getString("lessons");
@@ -56,12 +37,16 @@ public class Server {
             }
             result.close();
             getStatement.close();
+            ctx.json(courses);
         });
-        // we don't need to add new lessons over
-        // the web...lessons only exist in the server
-        // app.post("/lesson", ctx -> {
-        //     lessons.add(new Lesson(1.4, new ArrayList<>(), "Monad nomads"));
-        // });
+
+        app.post("/courses", ctx -> {
+            // put empty lesson list into the course. we will use update() to add lessons later.
+            ArrayList<Lesson> lessons = new ArrayList<>();
+            String JSONLessons = mapper.writeValueAsString(lessons);
+            var createStatement = connection.createStatement();
+            createStatement.execute("INSERT INTO courses (lessons) VALUES" + JSONLessons);
+        });
         app.start(7000);
     }
 }
