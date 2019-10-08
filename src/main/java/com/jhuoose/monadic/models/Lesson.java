@@ -7,13 +7,13 @@ public class Lesson {
     ArrayList<LessonElement> lessonElements;
     String description;
 
-  public Lesson(double ID, ArrayList<LessonElement> lessonElements, String description) {
+  public Lesson(int ID, ArrayList<LessonElement> lessonElements, String description) {
         this.ID = ID;
         this.lessonElements = lessonElements;
         this.description = description;
     }
 
-    public double getID() {
+    public int getID() {
         return ID;
     }
 
