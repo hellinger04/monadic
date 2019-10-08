@@ -21,8 +21,8 @@ public class Server {
          * when we connect to the DB
          */
         var morelessons = new ArrayList<Lesson>();
-        var firstLesson = new Lesson(0, new ArrayList<>());
-        var second = new Lesson(1 , new ArrayList<>());
+        var firstLesson = new Lesson(0, new ArrayList<>(), "lesson1");
+        var second = new Lesson(1 , new ArrayList<>(), "lesson2");
         morelessons.add(firstLesson);
         morelessons.add(second);
         var courses = new ArrayList<Course>();
