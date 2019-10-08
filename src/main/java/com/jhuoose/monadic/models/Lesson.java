@@ -5,10 +5,12 @@ import java.util.ArrayList;
 public class Lesson {
     double ID;
     ArrayList<LessonElement> lessonElements;
+    String description;
 
-    public Lesson(double ID, ArrayList<LessonElement> lessonElements) {
+    public Lesson(double ID, ArrayList<LessonElement> lessonElements, String description) {
         this.ID = ID;
         this.lessonElements = lessonElements;
+        this.description = description;
     }
 
     public double getID() {
