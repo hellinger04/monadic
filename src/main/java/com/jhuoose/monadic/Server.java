@@ -3,12 +3,15 @@ package com.jhuoose.monadic;
 import com.jhuoose.monadic.models.Course;
 import com.jhuoose.monadic.models.Lesson;
 import com.jhuoose.monadic.models.LessonElement;
+import com.jhuoose.monadic.models.Text;
 import io.javalin.Javalin;
+
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Server {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
     //    var lessons = List.of(
     //            new Lesson(0.0, new ArrayList<>()),
     //            new Lesson(1.2, new ArrayList<>()),
@@ -21,10 +24,18 @@ public class Server {
          * when we connect to the DB
          */
         var morelessons = new ArrayList<Lesson>();
-        var firstLesson = new Lesson(0, new ArrayList<>(), "lesson1");
-        var second = new Lesson(1 , new ArrayList<>(), "lesson2");
+
+        LessonElement element = new Text(1, "../../../../resources/lessons/course_0/1.md");
+        var firstLesson = new Lesson(1, new ArrayList<>(), "lesson1");
+        firstLesson.addLessonElement(element);
+
+        element = new Text(2, "../../../../resources/lessons/course_0/2.md");
+        var secondLesson = new Lesson(2 , new ArrayList<>(), "lesson2");
+        secondLesson.addLessonElement(element);
+
         morelessons.add(firstLesson);
-        morelessons.add(second);
+        morelessons.add(secondLesson);
+
         var courses = new ArrayList<Course>();
         var firstCourse = new Course(0, morelessons);
         var secondCourse = new Course(1, morelessons);
