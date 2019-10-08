@@ -5,13 +5,15 @@ import java.util.ArrayList;
 public class Lesson {
     int ID;
     ArrayList<LessonElement> lessonElements;
+    String description;
 
-    public Lesson(int ID, ArrayList<LessonElement> lessonElements) {
+  public Lesson(int ID, ArrayList<LessonElement> lessonElements, String description) {
         this.ID = ID;
         this.lessonElements = lessonElements;
+        this.description = description;
     }
 
-    public double getID() {
+    public int getID() {
         return ID;
     }
 
