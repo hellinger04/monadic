@@ -6,29 +6,8 @@
     <script src="/javascripts/vendor/react.development.js" crossorigin></script>
     <script src="/javascripts/vendor/react-dom.development.js" crossorigin></script>
     <script src="/javascripts/vendor/babel.js"></script>
-    <script type="text/babel">
-        const getDataFromServer = async () => {
-            const response = await fetch("/lesson");
-            const dataFromServer = await response.json()
-            ReactDOM.render(
-                <div>
-                    <h1>Monadic</h1>
-                    <ul>
-                        {
-                            dataFromServer.map(lesson => <li key={lesson.id}>{lesson.lessonText}</li>)
-                        }
-                    </ul>
-                    <button>next</button>
-                </div>,
-                document.querySelector("#application")
-            );
-            //we can't be like todoose and let people update lessons by sending
-            //requests to the server, but later we will want to update people's
-            //answer boxes every so often so we should still have this
-            window.setTimeout(() => {getDataFromServer(); }, 200);
-        };
-        getDataFromServer();
-    </script>
+    <script type="text/babel" src="/javascripts/components/PageComponents.js"></script>
+    <script type="text/babel" src="javascripts/client.js"></script>
 </head>
 <body>
 <div id="application">

@@ -1,19 +1,42 @@
-class LessonText  extends React.Component {
-
+class GoToNext extends React.Component {
+    constructor(props) {
+        super(props);
+    }
     render() {
-        return <button className={this.props.className} onClick={() => { this.handleClick(); }}>+</button>;
+        return <button onClick={() => {
+            this.props.onClick();
+        }}>Next</button>;
     }
 }
 
-class ProblemList  extends React.Component {
+class Course extends React.Component {
+    render() {
+        return (
+            <li key={this.props.course.id}> {
+                <form>
+                    {console.log("in course")}
+                    <button onClick={() =>
+                        console.log("hello world")}>
+                        Try course: {this.props.course.id}
+                    </button>
+                    <p>
+                        {this.props.course.id}
+                    </p>
+                </form>
+            } </li>
+        );
+    }
+}
+
+class CourseList extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { items: [] };
+        this.state = { courses: [], curr: 0};
     }
 
     async getDataFromServer() {
-        this.setState({ items: await (await fetch("/items")).json() });
-        window.setTimeout(() => { this.getDataFromServer(); }, 200);
+        this.setState({ courses: await (await fetch("/courses")).json() });
+        window.setTimeout(() => { this.getDataFromServer(); }, 1000);
     }
 
     componentDidMount() {
@@ -21,63 +44,14 @@ class ProblemList  extends React.Component {
     }
 
     render() {
-        return <ul>{this.state.items.map(item => <Item key={item.identifier} item={item}/>)}</ul>;
-    }
-}
-
-class Problem extends React.Component {
-    render() {
+        console.log(this.state.courses);
+        const cc = this.state.courses.filter(course => course.id === this.state.curr)
+        console.log("curr" , this.state.curr);
         return (
-            <li>
-                <MarkItemAsDoneCheckbox item={this.props.item}/>
-                <ItemDescription item={this.props.item}/>
-            </li>
-        );
-    }
-}
-
-class RunProblem extends React.Component {
-    handleChange() {
-        fetch(`/items/${this.props.item.identifier}`, { method: "DELETE" });
-    }
-
-    render() {
-        return <input type="checkbox" onChange={() => { this.handleChange(); } } />
-    }
-}
-
-class ProblemText extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = null;
-    }
-
-    handleFocus() {
-        this.setState({ description: this.props.item.description });
-    }
-
-    handleChange(event) {
-        this.setState({ description: event.target.value });
-    }
-
-    async handleBlur() {
-        const formData = new FormData();
-        formData.append("description", this.state.description);
-        await fetch(`/items/${this.props.item.identifier}`, { method: "PUT", body: formData });
-        this.setState(null);
-    }
-
-    render() {
-        return (
-            <input
-                type="text"
-                name="description"
-                autoComplete="off"
-                value={this.state === null ? this.props.item.description : this.state.description}
-                onFocus={() => { this.handleFocus(); }}
-                onChange={event => { this.handleChange(event); }}
-                onBlur={() => { this.handleBlur(); }}
-            />
-        );
+            <div>
+                <GoToNext onClick={() => this.setState({curr: this.state.curr+1})}/>
+                <ul>{cc.map(course => <Course key={course.id} course={course}/>)}</ul>
+            </div>
+        )
     }
 }
