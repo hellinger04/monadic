@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Server {
     public static void main(String[] args) throws SQLException, FileNotFoundException {
@@ -21,12 +22,15 @@ public class Server {
         statement.close();
 
         var moreLessons = new ArrayList<Lesson>();
+        Scanner inFile = new Scanner("../../../../resources/lessons/course_0/1.md");
 
-        LessonElement element = new Text(1, "../../../../resources/lessons/course_0/1.md");
+        LessonElement element = new Text(1, inFile);
         var firstLesson = new Lesson(1, new ArrayList<>(), "lesson1");
         firstLesson.addLessonElement(element);
 
-        element = new Text(2, "../../../../resources/lessons/course_0/2.md");
+        inFile = new Scanner("../../../../resources/lessons/course_0/2.md");
+
+        element = new Text(2, inFile);
         var secondLesson = new Lesson(2 , new ArrayList<>(), "lesson2");
         secondLesson.addLessonElement(element);
 

@@ -7,21 +7,20 @@ import java.util.Scanner;
 public class Text implements LessonElement {
 
     private int ID;
-    private String filename;
     private String text;
 
-    public Text(int ID, String filename) throws FileNotFoundException {
+    //constructor for providing file with lesson text
+    public Text(int ID, Scanner inFile) {
         this.ID = ID;
-        this.filename = filename;
-        Scanner inFile;
-//        try {
-        inFile = new Scanner(filename);
-//        } catch (FileNotFoundException e) {
-//            throw new IllegalArgumentException("could not find specified file");
-//        }
         while (inFile.hasNextLine()) {
             text = text + inFile.nextLine();
         }
+    }
+
+    //constructor for providing literal lesson text
+    public Text(int ID, String text) {
+        this.ID = ID;
+        this.text = text;
     }
 
     public int getID() {
