@@ -78,12 +78,16 @@ class Course extends React.Component {
                     </button>
                     <p>
                         {console.log(this.props.course.lessonList[0])}
+                        "About to print contents of 0"
+
                         {this.props.course.lessonList[0].lessonElements[0].contents}
                     </p>
                 </form>
             } </li>
                 {console.log("about to map lessonlist")}
+                About to try to map list of lessons
                 <ul>{this.props.course.lessonList.map(lessonlist => <LessonList key={lessonlist.id} lessonlist={lessonlist}/>)}</ul>
+                about to make one single lesson list
             <LessonList lessonlist = {this.props.course.lessonList[0]}/>
             </div>
         );
