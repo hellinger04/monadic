@@ -42,9 +42,33 @@ class TextBox extends React.Component {
     }
 }
 
+class LessonElement extends React.Component {
+    render() {
+        return (
+            <div>
+                {console.log("in lesson")}
+                {console.log(this.props.lelement)}
+            </div>
+        )
+    }
+}
+
+class LessonList extends React.Component {
+    render() {
+        return (
+            <div>
+                {console.log("in lesson list")}
+                {console.log(this.props.lessonlist)}
+                <LessonElement lelement = {this.props.lessonlist.lessonElements[0]}/>
+            </div>
+        )
+    }
+}
+
 class Course extends React.Component {
     render() {
         return (
+            <div>
             <li key={this.props.course.id}> {
                 <form>
                     {console.log("in course")}
@@ -58,6 +82,10 @@ class Course extends React.Component {
                     </p>
                 </form>
             } </li>
+                {console.log("about to map lessonlist")}
+                <ul>{this.props.course.lessonList.map(lessonlist => <LessonList key={lessonlist.id} lessonlist={lessonlist}/>)}</ul>
+            <LessonList lessonlist = {this.props.course.lessonList[0]}/>
+            </div>
         );
     }
 }
@@ -65,10 +93,11 @@ class Course extends React.Component {
 class CourseList extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { courses: [], curr: 0};
+        this.state = { courses: [], curr: 0, page: "COURSE"};
     }
 
     async getDataFromServer() {
+        // TODO get what course we are on from the server
         this.setState({ courses: await (await fetch("/courses")).json() });
         window.setTimeout(() => { this.getDataFromServer(); }, 1000);
     }

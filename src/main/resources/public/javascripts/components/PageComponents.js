@@ -60,7 +60,6 @@ class LessonList extends React.Component {
                 {console.log("in lesson list")}
                 {console.log(this.props.lessonlist)}
                 <LessonElement lelement = {this.props.lessonlist.lessonElements[0]}/>
-                <ul>{this.props.lessonlist.map(lesson => <LessonElement key = {lesson.id} lesson={lesson}/>)}</ul>
             </div>
         )
     }

@@ -23,6 +23,7 @@ public class Server {
          * - it shouldn't matter - this will all be factored out later
          * when we connect to the DB
          */
+
         var morelessons = new ArrayList<Lesson>();
 
         LessonElement element = new Text(1, "../../../../resources/lessons/course_0/1.md");
