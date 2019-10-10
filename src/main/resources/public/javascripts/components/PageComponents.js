@@ -44,11 +44,10 @@ class TextBox extends React.Component {
 
 class LessonElement extends React.Component {
     render() {
+        let conv = new showdown.Converter();
+        let html = conv.makeHtml(this.props.lelement.contents);
         return (
-            <div>
-                {console.log("in lesson")}
-                {this.props.lelement.contents}
-            </div>
+            <div dangerouslySetInnerHTML={{__html: html}}/>
         )
     }
 }
@@ -68,7 +67,6 @@ class LessonList extends React.Component {
             <div>
                 {console.log("in lesson list")}
                 {console.log(this.props.lessonlist)}
-                about to map lesson elements
                 {this.props.lessonlist.lessonElements.map(lelement => <LessonElement key = {lelement.id} lelement = {lelement}/>)}
             </div>
         )
@@ -89,7 +87,6 @@ class Course extends React.Component {
                 </form>
             } </li>
                 {console.log("about to map lessonlist")}
-                About to try to map list of lessons
                 <ul>{this.props.course.lessonList.map(lessonlist => <LessonList key={lessonlist.id} lessonlist={lessonlist}/>)}</ul>
             </div>
         );

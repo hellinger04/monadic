@@ -27,11 +27,11 @@ public class Server {
         var morelessons = new ArrayList<Lesson>();
 
         // TODO Use relative paths in order to get files to render properly
-        LessonElement element = new Text(1, "/Users/kqian/projects/2019-group-monadic/src/main/resources/lessons/course_0/1.md");
+        LessonElement element = new Text(1, "/Users/robinbrooks/IdeaProjects/2019-group-monadic/src/main/resources/lessons/course_0/1.md");
         var firstLesson = new Lesson(1, new ArrayList<>(), "lesson1");
         firstLesson.addLessonElement(element);
 
-        element = new Text(2, "/Users/kqian/projects/2019-group-monadic/src/main/resources/lessons/course_0/2.md");
+        element = new Text(2, "/Users/robinbrooks/IdeaProjects/2019-group-monadic/src/main/resources/lessons/course_0/2.md");
         var secondLesson = new Lesson(2 , new ArrayList<>(), "lesson2");
         secondLesson.addLessonElement(element);
 
