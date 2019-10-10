@@ -47,7 +47,7 @@ class LessonElement extends React.Component {
         return (
             <div>
                 {console.log("in lesson")}
-                {console.log(this.props.lelement)}
+                {this.props.lelement.contents}
             </div>
         )
     }
