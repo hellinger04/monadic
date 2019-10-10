@@ -14,21 +14,16 @@ public class Text implements LessonElement {
 
     private int ID;
     private String filename;
-    private String text;
+    private String text = "";
 
-    public Text(int ID, String filename) throws FileNotFoundException {
+    public Text(int ID, String filename) {
         this.ID = ID;
         this.filename = filename;
-        List<String> lines = new ArrayList<>();
         try {
-            lines = Files.readAllLines(Path.of(filename));
+            text = new Scanner(new File(filename)).useDelimiter("\\Z").next();
         } catch (IOException e) {
             System.err.println("Bad filepath");
         }
-        for (String line : lines) {
-            text += line;
-        }
-        System.out.println(text);
         /*
         Scanner inFile;
 //        try {

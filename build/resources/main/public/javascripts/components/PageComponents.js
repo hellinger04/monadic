@@ -47,13 +47,22 @@ class LessonElement extends React.Component {
         return (
             <div>
                 {console.log("in lesson")}
-                {console.log(this.props.lelement)}
+                {this.props.lelement.contents}
             </div>
         )
     }
 }
 
 class LessonList extends React.Component {
+    /*
+    constructor(props) {
+        super(props);
+        this.state = { markdown: '' };
+    }
+    componentWillMount() {
+        fetch("../../../lessons/course_0/1.md").then(res => res.text()).then(text => this.setState({markdown: text}));
+    }
+     */
     render() {
         return (
             <div>
@@ -78,12 +87,16 @@ class Course extends React.Component {
                     </button>
                     <p>
                         {console.log(this.props.course.lessonList[0])}
+                        "About to print contents of 0"
+
                         {this.props.course.lessonList[0].lessonElements[0].contents}
                     </p>
                 </form>
             } </li>
                 {console.log("about to map lessonlist")}
+                About to try to map list of lessons
                 <ul>{this.props.course.lessonList.map(lessonlist => <LessonList key={lessonlist.id} lessonlist={lessonlist}/>)}</ul>
+                about to make one single lesson list
             <LessonList lessonlist = {this.props.course.lessonList[0]}/>
             </div>
         );

@@ -54,6 +54,15 @@ class LessonElement extends React.Component {
 }
 
 class LessonList extends React.Component {
+    /*
+    constructor(props) {
+        super(props);
+        this.state = { markdown: '' };
+    }
+    componentWillMount() {
+        fetch("../../../lessons/course_0/1.md").then(res => res.text()).then(text => this.setState({markdown: text}));
+    }
+     */
     render() {
         return (
             <div>
