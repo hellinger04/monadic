@@ -74,7 +74,20 @@ class LessonList extends React.Component {
 }
 
 class Course extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {curr: 0};
+    }
 
+    render() {
+        console.log(this.props.courses);
+        return (
+            <div>
+                <GoToNext onClick={() => this.setState({curr: this.state.curr+1})}/>
+                <ul>{this.props.courses.map(course => <CourseButton key={course.id} course={course} changePage={this.props.changePage}/>)}</ul>
+            </div>
+        )
+    }
 }
 
 class CourseButton extends React.Component {
@@ -97,10 +110,6 @@ class CourseList extends React.Component {
         this.state = {curr: 0};
     }
 
-    // componentDidMount() {
-    //     this.getDataFromServer();
-    // }
-
     render() {
         console.log(this.props.courses);
         return (
@@ -115,14 +124,12 @@ class CourseList extends React.Component {
 class Monadic extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {page: "courselist", courses: [], curr: 0};
+        this.state = {page: "courselist", curr: 0, courses: []};
         this.changePage = this.changePage.bind(this);
     }
 
-    async getDataFromServer() {
-        // TODO get what course we are on from the server
+    async componentDidMount() {
         this.setState({ courses: await (await fetch("/courses")).json() });
-        window.setTimeout(() => { this.getDataFromServer(); }, 1000);
     }
 
     changePage(newpage, index) {
@@ -143,7 +150,7 @@ class Monadic extends React.Component {
         } else if (this.state.page === "course") {
             return (
                 <div>
-                    this is a test
+                    <Course changePage={this.changePage}/>
                 </div>
             );
         }
