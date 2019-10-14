@@ -65,8 +65,8 @@ class LessonList extends React.Component {
     render() {
         return (
             <div>
-                {console.log("in lesson list")}
-                {console.log(this.props.lessonlist)}
+                {/*{console.log("in lesson list")}*/}
+                {/*{console.log(this.props.lessonlist)}*/}
                 {this.props.lessonlist.lessonElements.map(lelement => <LessonElement key = {lelement.id} lelement = {lelement}/>)}
             </div>
         )
@@ -94,7 +94,29 @@ class CourseButton extends React.Component {
 class CourseList extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { courses: [], curr: 0};
+        this.state = {curr: 0};
+    }
+
+    // componentDidMount() {
+    //     this.getDataFromServer();
+    // }
+
+    render() {
+        console.log(this.props.courses);
+        return (
+            <div>
+                <GoToNext onClick={() => this.setState({curr: this.state.curr+1})}/>
+                <ul>{this.props.courses.map(course => <CourseButton key={course.id} course={course} changePage={this.props.changePage}/>)}</ul>
+            </div>
+        )
+    }
+}
+
+class Monadic extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {page: "courselist", courses: [], curr: 0};
+        this.changePage = this.changePage.bind(this);
     }
 
     async getDataFromServer() {
@@ -103,40 +125,19 @@ class CourseList extends React.Component {
         window.setTimeout(() => { this.getDataFromServer(); }, 1000);
     }
 
-    componentDidMount() {
-        this.getDataFromServer();
-    }
-
-    render() {
-        return (
-            <div>
-                <GoToNext onClick={() => this.setState({curr: this.state.curr+1})}/>
-                <ul>{this.state.courses.map(course => <CourseButton key={course.id} course={course} changePage={this.props.changePage}/>)}</ul>
-            </div>
-        )
-    }
-}
-
-class Monadic extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {page: "courselist", curr: 0}
-        this.changePage = this.changePage.bind(this)
-    }
-
     changePage(newpage, index) {
-        console.log("in change page")
+        // console.log("in change page")
         this.setState({page: newpage})
         this.setState({curr: index})
     }
 
 
     render() {
-        console.log(this.state)
+        // console.log(this.state)
         if (this.state.page === "courselist") {
             return (
                 <div>
-                    <CourseList changePage={this.changePage}/>
+                    <CourseList changePage={this.changePage} courses={this.state.courses}/>
                 </div>
             );
         } else if (this.state.page === "course") {
