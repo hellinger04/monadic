@@ -20,7 +20,8 @@ public class Text implements LessonElement {
         this.ID = ID;
         this.filename = filename;
         try {
-            text = new Scanner(new File(filename)).useDelimiter("\\Z").next();
+            File f = new File(filename);
+            text = new Scanner(f).useDelimiter("\\Z").next();
         } catch (IOException e) {
             System.err.println("Bad filepath");
         }
