@@ -54,8 +54,8 @@ class LessonNavigation extends React.Component {
                 <li>
                     <button onClick={() => {this.props.changePage("course", this.props.currCourse, 0)} }>Back to Course {this.props.currCourse}</button>
                     <br></br>
-                    <button onClick={() => {this.props.changePage("lesson", this.props.currCourse, this.props.currLesson - 1)} }>Previous Lesson</button>
-                    <button onClick={() => {this.props.changePage("lesson", this.props.currCourse, this.props.currLesson + 1)} }>Next Lesson</button>
+                    <button style={{display: 0 <= this.props.currLesson - 1 ? "inline" : "none"}} onClick={() => {this.props.changePage("lesson", this.props.currCourse, this.props.currLesson - 1)} }>Previous Lesson</button>
+                    <button style={{display: this.props.numLessons > this.props.currLesson + 1 ? "inline" : "none"}} onClick={() => {this.props.changePage("lesson", this.props.currCourse, this.props.currLesson + 1)} }>Next Lesson</button>
                 </li>
             </div>
         );
@@ -66,13 +66,15 @@ class Lesson extends React.Component {
     render() {
         const lesson = this.props.currLesson;
         const course = this.props.currCourse;
+        const numLessons = Object.keys(this.props.courses[course].lessonList).length;
+
         let conv = new showdown.Converter();
         let html = conv.makeHtml(this.props.courses[course].lessonList[lesson].lessonElements[0].contents);
         return (
             <div>
-                <LessonNavigation currLesson={this.props.currLesson} currCourse={this.props.currCourse} changePage={this.props.changePage}/>
+                <LessonNavigation numLessons={numLessons} currLesson={this.props.currLesson} currCourse={this.props.currCourse} changePage={this.props.changePage}/>
                 <div dangerouslySetInnerHTML={{__html: html}}/>
-                <LessonNavigation currLesson={this.props.currLesson} currCourse={this.props.currCourse} changePage={this.props.changePage}/>
+                <LessonNavigation numLessons={numLessons} currLesson={this.props.currLesson} currCourse={this.props.currCourse} changePage={this.props.changePage}/>
             </div>
         );
     }
@@ -82,11 +84,9 @@ class LessonButton extends React.Component {
     render() {
         return (
             <div>
-                <li> {
-                    <form>
-                        <button onClick={() => {this.props.changePage("lesson", this.props.currCourse, this.props.lesson.id)} }>Lesson {this.props.lesson.id}</button>
-                    </form>
-                } </li>
+                <li>
+                    <button onClick={() => {this.props.changePage("lesson", this.props.currCourse, this.props.lesson.id)} }>Lesson {this.props.lesson.id}</button>
+                </li>
             </div>
         );
     }
@@ -133,6 +133,7 @@ class CourseList extends React.Component {
 
     render() {
         console.log(this.props.courses);
+        console.log(Object.keys(this.props.courses).length);
         return (
             <div>
                 <ul>{this.props.courses.map(course => <CourseButton key={course.id} course={course} changePage={this.props.changePage}/>)}</ul>
