@@ -17,13 +17,21 @@ import java.util.List;
 public class Server {
     public static void main(String[] args) throws SQLException {
         ObjectMapper mapper = new ObjectMapper();
-
+        Javalin app = Javalin.create(config ->
+            { config.addStaticFiles("/public");
+        });
         var connection = DriverManager.getConnection("jdbc:sqlite:monadic.db");
-        var statement = connection.createStatement();
-        statement.execute("CREATE TABLE IF NOT EXISTS courses (identifier INTEGER PRIMARY KEY AUTOINCREMENT, lessons VARCHAR)");
-        statement.close();
+        app.events(event -> {
+            event.serverStarting(() -> {
+                var statement = connection.createStatement();
+                statement.execute("CREATE TABLE IF NOT EXISTS courses (identifier INTEGER PRIMARY KEY AUTOINCREMENT, lessons VARCHAR)");
+                statement.close();
+            });
+            event.serverStopped(() -> {
+                connection.close();
+            });
+        });
 
-        Javalin app = Javalin.create(config -> { config.addStaticFiles("/public"); });
         app.get("/courses", ctx -> {
             var getStatement = connection.createStatement();
             var result = getStatement.executeQuery("SELECT identifier, lessons FROM courses");
@@ -46,6 +54,31 @@ public class Server {
             String JSONLessons = mapper.writeValueAsString(lessons);
             var createStatement = connection.createStatement();
             createStatement.execute("INSERT INTO courses (lessons) VALUES " + JSONLessons);
+            createStatement.close();
+            ctx.status(201);
+        });
+
+        app.delete("/items/:identifier", ctx -> {
+            var statement = connection.prepareStatement("DELETE FROM courses WHERE identifier = ?");
+            statement.setInt(1, Integer.parseInt(ctx.pathParam("identifier")));
+            if (statement.executeUpdate() == 0) {
+                ctx.status(404);
+            } else {
+                ctx.status(204);
+            }
+            statement.close();
+        });
+
+        app.put("/items/:identifier", ctx -> {
+            var statement = connection.prepareStatement("UPDATE courses SET lessons = ? WHERE identifier = ?");
+            statement.setString(1, ctx.formParam("lessons", ""));
+            statement.setInt(2, Integer.parseInt(ctx.pathParam("identifier")));
+            if (statement.executeUpdate() == 0) {
+                ctx.status(404);
+            } else {
+                ctx.status(204);
+            }
+            statement.close();
         });
         app.start(7000);
     }
