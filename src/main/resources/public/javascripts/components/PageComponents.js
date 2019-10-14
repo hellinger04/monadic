@@ -74,20 +74,18 @@ class LessonList extends React.Component {
 }
 
 class Course extends React.Component {
+
+}
+
+class CourseButton extends React.Component {
     render() {
         return (
             <div>
             <li key={this.props.course.id}> {
                 <form>
-                    {console.log("in course")}
-                    <button onClick={() =>
-                        console.log("hello world")}>
-                        Try course: {this.props.course.id}
-                    </button>
+                    <button onClick={() => {this.props.changePage("course", this.props.course.id)} }>Try course: {this.props.course.id}</button>
                 </form>
             } </li>
-                {console.log("about to map lessonlist")}
-                <ul>{this.props.course.lessonList.map(lessonlist => <LessonList key={lessonlist.id} lessonlist={lessonlist}/>)}</ul>
             </div>
         );
     }
@@ -110,13 +108,10 @@ class CourseList extends React.Component {
     }
 
     render() {
-        console.log(this.state.courses);
-        const cc = this.state.courses.filter(course => course.id === this.state.curr)
-        console.log("curr" , this.state.curr);
         return (
             <div>
                 <GoToNext onClick={() => this.setState({curr: this.state.curr+1})}/>
-                <ul>{this.state.courses.map(course => <Course key={course.id} course={course}/>)}</ul>
+                <ul>{this.state.courses.map(course => <CourseButton key={course.id} course={course} changePage={this.props.changePage}/>)}</ul>
             </div>
         )
     }
@@ -125,13 +120,22 @@ class CourseList extends React.Component {
 class Monadic extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {page: "COURSES"}
+        this.state = {page: "courselist", curr: 0}
+        this.changePage = this.changePage.bind(this)
     }
 
+    changePage(newpage, index) {
+        console.log("in change page")
+        this.setState({page: newpage})
+        this.setState({curr: index})
+    }
+
+
     render() {
+        console.log(this.state)
         return (
             <div>
-                <CourseList/>
+                <CourseList changePage={this.changePage}/>
             </div>
         )
     }
