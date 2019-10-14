@@ -96,7 +96,7 @@ class Course extends React.Component {
 class CourseList extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { courses: [], curr: 0, page: "COURSE"};
+        this.state = { courses: [], curr: 0};
     }
 
     async getDataFromServer() {
@@ -116,8 +116,24 @@ class CourseList extends React.Component {
         return (
             <div>
                 <GoToNext onClick={() => this.setState({curr: this.state.curr+1})}/>
-                <ul>{cc.map(course => <Course key={course.id} course={course}/>)}</ul>
+                <ul>{this.state.courses.map(course => <Course key={course.id} course={course}/>)}</ul>
             </div>
         )
     }
+}
+
+class Monadic extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {page: "COURSES"}
+    }
+
+    render() {
+        return (
+            <div>
+                <CourseList/>
+            </div>
+        )
+    }
+
 }
