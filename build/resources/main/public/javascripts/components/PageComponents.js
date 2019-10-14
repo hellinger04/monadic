@@ -44,11 +44,10 @@ class TextBox extends React.Component {
 
 class LessonElement extends React.Component {
     render() {
+        let conv = new showdown.Converter();
+        let html = conv.makeHtml(this.props.lelement.contents);
         return (
-            <div>
-                {console.log("in lesson")}
-                {this.props.lelement.contents}
-            </div>
+            <div dangerouslySetInnerHTML={{__html: html}}/>
         )
     }
 }
@@ -68,66 +67,95 @@ class LessonList extends React.Component {
             <div>
                 {console.log("in lesson list")}
                 {console.log(this.props.lessonlist)}
-                <LessonElement lelement = {this.props.lessonlist.lessonElements[0]}/>
+                {this.props.lessonlist.lessonElements.map(lelement => <LessonElement key = {lelement.id} lelement = {lelement}/>)}
             </div>
         )
     }
 }
 
 class Course extends React.Component {
+
+}
+
+class CourseButton extends React.Component {
     render() {
         return (
             <div>
             <li key={this.props.course.id}> {
                 <form>
-                    {console.log("in course")}
-                    <button onClick={() =>
-                        console.log("hello world")}>
-                        Try course: {this.props.course.id}
-                    </button>
-                    <p>
-                        {console.log(this.props.course.lessonList[0])}
-                        "About to print contents of 0"
-
-                        {this.props.course.lessonList[0].lessonElements[0].contents}
-                    </p>
+                    <button onClick={() => {this.props.changePage("course", this.props.course.id)} }>Try course: {this.props.course.id}</button>
                 </form>
             } </li>
-                {console.log("about to map lessonlist")}
-                About to try to map list of lessons
-                <ul>{this.props.course.lessonList.map(lessonlist => <LessonList key={lessonlist.id} lessonlist={lessonlist}/>)}</ul>
-                about to make one single lesson list
-            <LessonList lessonlist = {this.props.course.lessonList[0]}/>
             </div>
         );
     }
 }
 
 class CourseList extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { courses: [], curr: 0, page: "COURSE"};
-    }
-
-    async getDataFromServer() {
-        // TODO get what course we are on from the server
-        this.setState({ courses: await (await fetch("/courses")).json() });
-        window.setTimeout(() => { this.getDataFromServer(); }, 1000);
-    }
-
+    // constructor(props) {
+    //     super(props);
+    //     this.state = { courses: [], curr: 0};
+    // }
+    //
+    // async getDataFromServer() {
+    //     // TODO get what course we are on from the server
+    //     this.setState({ courses: await (await fetch("/courses")).json() });
+    //     window.setTimeout(() => { this.getDataFromServer(); }, 1000);
+    // }
+    //
     componentDidMount() {
-        this.getDataFromServer();
+        // this.getDataFromServer();
+        console.log("in componentDidMount");
     }
 
     render() {
-        console.log(this.state.courses);
-        const cc = this.state.courses.filter(course => course.id === this.state.curr)
-        console.log("curr" , this.state.curr);
+        // console.log(this.state.courses);
+        // const cc = this.state.courses.filter(course => course.id === this.state.curr);
+        console.log("test");
+        // return (
+        //     <div>
+        //         <GoToNext onClick={() => this.setState({curr: this.state.curr+1})}/>
+        //         <ul>{this.state.courses[0].lessonlist.lessonElements.map(lelement => <LessonElement key={lelement.id} lelement={lelement}/>)}</ul>
+        //     </div>
+        // )
+    }
+}
+
+class Monadic extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {page: "courselist", curr: 0}
+        this.changePage = this.changePage.bind(this)
+    }
+
+    changePage(newpage, index) {
+        console.log("in change page")
+        this.setState({page: newpage})
+        this.setState({curr: index})
+    }
+
+
+    render() {
+        //console.log(this.state)
         return (
             <div>
-                <GoToNext onClick={() => this.setState({curr: this.state.curr+1})}/>
-                <ul>{cc.map(course => <Course key={course.id} course={course}/>)}</ul>
+                <CourseList changePage={this.changePage}/>
             </div>
-        )
+        );
+
+        // if (this.state.page === "courselist") {
+        //     return (
+        //         <div>
+        //             <CourseList changePage={this.changePage}/>
+        //         </div>
+        //     );
+        // } else if (this.state.page === "course") {
+        //     return (
+        //         <div>
+        //             this is a test
+        //         </div>
+        //     );
+        // }
     }
+
 }
