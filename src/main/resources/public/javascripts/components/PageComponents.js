@@ -78,9 +78,9 @@ class LessonButton extends React.Component {
     render() {
         return (
             <div>
-                <li key={this.props.course.id}> {
+                <li> {
                     <form>
-                        <button onClick={() => {this.props.changePage("course", this.props.course.id)} }>Try course: {this.props.course.id}</button>
+                        <button onClick={() => {this.props.changePage("course", this.props.lesson.id)} }>Try lesson {this.props.lesson.id}</button>
                     </form>
                 } </li>
             </div>
@@ -99,7 +99,7 @@ class Course extends React.Component {
         return (
             <div>
                 <button onClick={() => {this.props.changePage("course", this.props.currCourse + 1, 0)}}>Next</button>
-                <ul>{this.props.courses[course].lessonList.map(lesson => <LessonButton lesson={lesson} changePage={this.props.changePage}/>)}</ul>
+                <ul>{this.props.courses[course].lessonList.map(lesson => <LessonButton key={lesson.id} lesson={lesson} changePage={this.props.changePage}/>)}</ul>
             </div>
         )
     }
