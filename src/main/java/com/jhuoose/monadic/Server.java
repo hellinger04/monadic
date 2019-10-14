@@ -35,7 +35,7 @@ public class Server {
         var firstLesson = new Lesson(1, new ArrayList<>(), "lesson1");
         firstLesson.addLessonElement(element);
 
-        element = new Text(2, "src/main/resources/lessons/course_0/2.md");
+        element = new Text(2, "src/main/resources/lessons/course_0/3.md");
         var secondLesson = new Lesson(2 , new ArrayList<>(), "lesson2");
         secondLesson.addLessonElement(element);
 
