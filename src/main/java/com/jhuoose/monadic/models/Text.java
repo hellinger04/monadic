@@ -16,26 +16,26 @@ public class Text implements LessonElement {
     private String filename;
     private String text = "";
 
-    public Text(int ID, String filename) {
-        this.ID = ID;
+    public Text(int ID, String filename) throws FileNotFoundException {
+        /*this.ID = ID;
         this.filename = filename;
         try {
             File f = new File(filename);
             text = new Scanner(f).useDelimiter("\\Z").next();
         } catch (IOException e) {
             System.err.println("Bad filepath");
-        }
-        /*
+        }*/
+
         Scanner inFile;
 //        try {
-        inFile = new Scanner(filename);
+        inFile = new Scanner(new File(filename));
 //        } catch (FileNotFoundException e) {
 //            throw new IllegalArgumentException("could not find specified file");
 //        }
         while (inFile.hasNextLine()) {
-            text = text + inFile.nextLine();
+            this.text = this.text + inFile.nextLine();
         }
-         */
+
     }
 
     public int getID() {
