@@ -49,6 +49,8 @@ class TextBox extends React.Component {
 
 class LessonNavigation extends React.Component {
     render() {
+        let conv = new showdown.Converter();
+        let html = conv.makeHtml(this.props.lelement.contents);
         return (
             <div>
                 <li>
