@@ -49,6 +49,8 @@ class TextBox extends React.Component {
 
 class LessonNavigation extends React.Component {
     render() {
+        let conv = new showdown.Converter();
+        let html = conv.makeHtml(this.props.lelement.contents);
         return (
             <div>
                 <li>
@@ -104,6 +106,7 @@ class Course extends React.Component {
 
         return (
             <div>
+
                 <button onClick={() => {this.props.changePage("courselist", 0, 0)}}>Back to Courses</button>
                 <br></br>
                 <button style={{display: 0 <= this.props.currCourse - 1 ? "inline" : "none"}} onClick={() => {this.props.changePage("course", this.props.currCourse - 1, 0)}}>Previous Course</button>
@@ -129,6 +132,17 @@ class CourseButton extends React.Component {
 class CourseList extends React.Component {
     constructor(props) {
         super(props);
+        this.state = { courses: [], curr: 0};
+    }
+
+    async getDataFromServer() {
+        // TODO get what course we are on from the server
+        this.setState({ courses: await (await fetch("/courses")).json() });
+        window.setTimeout(() => { this.getDataFromServer(); }, 1000);
+    }
+
+    componentDidMount() {
+        this.getDataFromServer();
     }
 
     render() {
@@ -137,6 +151,7 @@ class CourseList extends React.Component {
         return (
             <div>
                 <ul>{this.props.courses.map(course => <CourseButton key={course.id} course={course} changePage={this.props.changePage}/>)}</ul>
+
             </div>
         )
     }
