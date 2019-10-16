@@ -64,6 +64,6 @@ public class Server {
             ctx.json(courses);
         });
 
-        app.start(7000);
+        app.start(System.getenv("PORT") == null ? 7000 : Integer.parseInt(System.getenv("PORT")));
     }
 }
