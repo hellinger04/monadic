@@ -5,22 +5,10 @@ import com.jhuoose.monadic.models.Lesson;
 import com.jhuoose.monadic.models.LessonElement;
 import com.jhuoose.monadic.models.Text;
 import io.javalin.Javalin;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class Server {
-    public static void main(String[] args) throws FileNotFoundException {
-    //    var lessons = List.of(
-    //            new Lesson(0.0, new ArrayList<>()),
-    //            new Lesson(1.2, new ArrayList<>()),
-    //            new Lesson(1.3, new ArrayList<>())
-    //    );
-        /* this is messy because List.of's are not mutable and
-         * for some reason, it wasn't letting me put a List instead
-         * of an ArrayList into an ArrayList of type Course
-         * - it shouldn't matter - this will all be factored out later
-         * when we connect to the DB
-         */
+    public static void main(String[] args) {
 
         var courseZeroLessons = new ArrayList<Lesson>();
         var courseOneLessons = new ArrayList<Lesson>();
