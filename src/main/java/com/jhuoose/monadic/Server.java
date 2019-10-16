@@ -1,18 +1,12 @@
 package com.jhuoose.monadic;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jhuoose.monadic.models.Course;
 import com.jhuoose.monadic.models.Lesson;
 import com.jhuoose.monadic.models.LessonElement;
 import com.jhuoose.monadic.models.Text;
 import io.javalin.Javalin;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.io.FileNotFoundException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Server {
     public static void main(String[] args) throws FileNotFoundException {
@@ -43,7 +37,7 @@ public class Server {
         courseZeroLessons.add(secondLesson);
 
       
-        element = new Text(0, "src/main/resources/lessons/course_0/0.md");
+        element = new Text(0, "src/main/resources/lessons/course_1/0.md");
         firstLesson = new Lesson(0, new ArrayList<>(), "lesson1");
         firstLesson.addLessonElement(element);
 
