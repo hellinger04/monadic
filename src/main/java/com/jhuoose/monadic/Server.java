@@ -26,7 +26,7 @@ public class Server {
 
       
         element = new Text(0, "src/main/resources/lessons/course_1/0.md");
-        firstLesson = new Lesson(0, new ArrayList<>(), "lesson1");
+        firstLesson = new Lesson(0, new ArrayList<>(), "lesson0");
         firstLesson.addLessonElement(element);
 
         element = new Text(1, "src/main/resources/lessons/course_1/1.md");
