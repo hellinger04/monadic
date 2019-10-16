@@ -39,11 +39,11 @@ public class Text implements LessonElement {
          */
     }
 
-    //constructor for providing literal lesson text
-    public Text(int ID, String text) {
-        this.ID = ID;
-        this.text = text;
-    }
+//    //constructor for providing literal lesson text
+//    public Text(int ID, String text) {
+//        this.ID = ID;
+//        this.text = text;
+//    }
 
     public int getID() {
         return this.ID;
