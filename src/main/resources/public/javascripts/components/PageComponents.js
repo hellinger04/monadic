@@ -1,49 +1,18 @@
-// class LessonList extends React.Component {
-//     constructor(props) {
-//         super(props);
-//     }
-//
-//     render() {
-//         return (
-//             <div>
-//                 {/*{console.log("in lesson list")}*/}
-//                 {/*{console.log(this.props.lessonlist)}*/}
-//                 {this.props.lessonlist.lessonElements.map(lelement => <LessonElement key = {lelement.id} lelement = {lelement}/>)}
-//             </div>
-//         )
-//     }
-// }
-
-class TextBox extends React.Component {
+class LessonElement extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            value: 'Enter code here'
-        };
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleChange(event) {
-        this.setState({value: event.target.value});
-    }
-
-    handleSubmit(event) {
-        alert('An answer was submitted: ' + this.state.value);
-        event.preventDefault();
     }
 
     render() {
+        let conv = new showdown.Converter();
+        let html = conv.makeHtml(this.props.element.contents);
         return (
-            <form onSubmit={this.handleSubmit}>
-                <label>
-                    Answer Code:
-                    <textarea value={this.state.value} onChange={this.handleChange} />
-                </label>
-                <input type="submit" value="Submit" />
-            </form>
-        );
+            <div>
+                <li>
+                    <div dangerouslySetInnerHTML={{__html: html}}/>
+                </li>
+            </div>
+        )
     }
 }
 
@@ -73,7 +42,8 @@ class Lesson extends React.Component {
         return (
             <div>
                 <LessonNavigation numLessons={numLessons} currLesson={this.props.currLesson} currCourse={this.props.currCourse} changePage={this.props.changePage}/>
-                <div dangerouslySetInnerHTML={{__html: html}}/>
+                <li>{this.props.courses[course].lessonList[lesson].lessonElements.map(element => <LessonElement key={lesson.id} element={element} courses={this.state.courses} currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>)}</li>
+                {/*<div dangerouslySetInnerHTML={{__html: html}}/>*/}
                 <LessonNavigation numLessons={numLessons} currLesson={this.props.currLesson} currCourse={this.props.currCourse} changePage={this.props.changePage}/>
             </div>
         );

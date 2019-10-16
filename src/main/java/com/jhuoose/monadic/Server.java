@@ -13,18 +13,24 @@ public class Server {
         var courseZeroLessons = new ArrayList<Lesson>();
         var courseOneLessons = new ArrayList<Lesson>();
 
-        LessonElement element = new Text(0, "src/main/resources/lessons/course_0/0.md");
+        LessonElement element0 = new Text(0, "src/main/resources/lessons/course_0/lesson_0/0.md");
+        LessonElement element1 = new Text(1, "src/main/resources/lessons/course_0/lesson_0/1.md");
+        LessonElement element2 = new Text(2, "src/main/resources/lessons/course_0/lesson_0/2.md");
+        LessonElement element3 = new Text(3, "src/main/resources/lessons/course_0/lesson_0/3.md");
         var firstLesson = new Lesson(0, new ArrayList<>(), "lesson0");
-        firstLesson.addLessonElement(element);
+        firstLesson.addLessonElement(element0);
+        firstLesson.addLessonElement(element1);
+        firstLesson.addLessonElement(element2);
+        firstLesson.addLessonElement(element3);
 
-        element = new Text(1, "src/main/resources/lessons/course_0/1.md");
+        LessonElement element = new Text(1, "src/main/resources/lessons/course_0/1.md");
         var secondLesson = new Lesson(1 , new ArrayList<>(), "lesson1");
         secondLesson.addLessonElement(element);
 
         courseZeroLessons.add(firstLesson);
         courseZeroLessons.add(secondLesson);
 
-      
+
         element = new Text(0, "src/main/resources/lessons/course_1/0.md");
         firstLesson = new Lesson(0, new ArrayList<>(), "lesson0");
         firstLesson.addLessonElement(element);

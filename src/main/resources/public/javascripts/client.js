@@ -3,7 +3,6 @@ class Application extends React.Component {
         return (
             <div>
                 <Monadic/>
-                <TextBox/>
             </div>
         )
     }
