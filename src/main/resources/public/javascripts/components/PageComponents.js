@@ -18,7 +18,7 @@ class TextBox extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: 'Please write an essay about your favorite DOM element.'
+            value: 'Enter code here'
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -30,7 +30,7 @@ class TextBox extends React.Component {
     }
 
     handleSubmit(event) {
-        alert('An essay was submitted: ' + this.state.value);
+        alert('An answer was submitted: ' + this.state.value);
         event.preventDefault();
     }
 
@@ -38,7 +38,7 @@ class TextBox extends React.Component {
         return (
             <form onSubmit={this.handleSubmit}>
                 <label>
-                    Essay:
+                    Answer Code:
                     <textarea value={this.state.value} onChange={this.handleChange} />
                 </label>
                 <input type="submit" value="Submit" />

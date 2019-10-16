@@ -1,15 +1,18 @@
 package com.jhuoose.monadic;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jhuoose.monadic.models.Course;
 import com.jhuoose.monadic.models.Lesson;
 import com.jhuoose.monadic.models.LessonElement;
 import com.jhuoose.monadic.models.Text;
 import io.javalin.Javalin;
-
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.io.FileNotFoundException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Scanner;
 
 public class Server {
     public static void main(String[] args) throws FileNotFoundException {
@@ -60,22 +63,38 @@ public class Server {
         courseOneLessons.add(secondLesson);
         courseOneLessons.add(thirdLesson);
         courseOneLessons.add(fourthLesson);
-
-      
+  
         var courses = new ArrayList<Course>();
         var firstCourse = new Course(0, courseZeroLessons);
         var secondCourse = new Course(1, courseOneLessons);
+
         courses.add(firstCourse);
         courses.add(secondCourse);
+
         Javalin app = Javalin.create(config -> { config.addStaticFiles("/public"); });
         app.get("/courses", ctx -> {
-            ctx.json(courses);
+            var getStatement = connection.createStatement();
+            var result = getStatement.executeQuery("SELECT identifier, lessons FROM courses");
+            var retrieveCourses = new ArrayList<Course>();
+            while (result.next()) {
+                // get the JSON representation first, then convert to an ArrayList<Lesson>
+                String rs = result.getString("lessons");
+                // this looks disgusting but Jackson documentation says to do this so ¯\_(ツ)_/¯
+                ArrayList<Lesson> lessons = mapper.readValue(rs, new TypeReference<ArrayList<Lesson>>() { } );
+                retrieveCourses.add(new Course(result.getInt("identifier"), lessons));
+            }
+            result.close();
+            getStatement.close();
+            ctx.json(retrieveCourses);
         });
-        // we don't need to add new lessons over
-        // the web...lessons only exist in the server
-        // app.post("/lesson", ctx -> {
-        //     lessons.add(new Lesson(1.4, new ArrayList<>(), "Monad nomads"));
-        // });
+
+        app.post("/courses", ctx -> {
+            // put empty lesson list into the course. we will use update() to add lessons later.
+            ArrayList<Lesson> lessons = new ArrayList<>();
+            String JSONLessons = mapper.writeValueAsString(lessons);
+            var createStatement = connection.createStatement();
+            createStatement.execute("INSERT INTO courses (lessons) VALUES " + JSONLessons);
+        });
         app.start(7000);
     }
 }

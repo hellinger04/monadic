@@ -32,10 +32,17 @@ public class Text implements LessonElement {
 //        } catch (FileNotFoundException e) {
 //            throw new IllegalArgumentException("could not find specified file");
 //        }
+
         while (inFile.hasNextLine()) {
             text = text + inFile.nextLine();
         }
          */
+    }
+
+    //constructor for providing literal lesson text
+    public Text(int ID, String text) {
+        this.ID = ID;
+        this.text = text;
     }
 
     public int getID() {
