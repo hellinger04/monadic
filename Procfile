@@ -1,1 +1,1 @@
-web: -Dserver.port=$PORT ./gradlew run
+web: ./gradlew run -Dserver.port=$PORT
