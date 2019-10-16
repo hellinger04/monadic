@@ -5,7 +5,7 @@ class Application extends React.Component {
         return (
             <div>
                 <Header/>
-                <CourseList/>
+                <Monadic/>
                 <TextBox/>
             </div>
         )
