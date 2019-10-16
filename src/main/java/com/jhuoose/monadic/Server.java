@@ -25,7 +25,8 @@ public class Server {
          * when we connect to the DB
          */
 
-        var morelessons = new ArrayList<Lesson>();
+        var courseZeroLessons = new ArrayList<Lesson>();
+        var courseOneLessons = new ArrayList<Lesson>();
 
         LessonElement element = new Text(0, "src/main/resources/lessons/course_0/0.md");
         var firstLesson = new Lesson(0, new ArrayList<>(), "lesson0");
@@ -39,8 +40,8 @@ public class Server {
         courseZeroLessons.add(secondLesson);
 
       
-        LessonElement element = new Text(1, "src/main/resources/lessons/course_0/1.md");
-        var firstLesson = new Lesson(1, new ArrayList<>(), "lesson1");
+        element = new Text(0, "src/main/resources/lessons/course_0/0.md");
+        firstLesson = new Lesson(0, new ArrayList<>(), "lesson1");
         firstLesson.addLessonElement(element);
 
         element = new Text(1, "src/main/resources/lessons/course_1/1.md");
@@ -62,8 +63,8 @@ public class Server {
 
       
         var courses = new ArrayList<Course>();
-        var firstCourse = new Course(0, morelessons);
-        var secondCourse = new Course(1, morelessons);
+        var firstCourse = new Course(0, courseZeroLessons);
+        var secondCourse = new Course(1, courseOneLessons);
         courses.add(firstCourse);
         courses.add(secondCourse);
         Javalin app = Javalin.create(config -> { config.addStaticFiles("/public"); });
