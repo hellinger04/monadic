@@ -28,7 +28,6 @@ public class Server {
         var courseZeroLessons = new ArrayList<Lesson>();
         var courseOneLessons = new ArrayList<Lesson>();
 
-        // TODO Use relative paths in order to get files to render properly
         LessonElement element = new Text(0, "src/main/resources/lessons/course_0/0.md");
         var firstLesson = new Lesson(0, new ArrayList<>(), "lesson0");
         firstLesson.addLessonElement(element);
@@ -40,8 +39,9 @@ public class Server {
         courseZeroLessons.add(firstLesson);
         courseZeroLessons.add(secondLesson);
 
-        element = new Text(1, "src/main/resources/lessons/course_1/0.md");
-        firstLesson = new Lesson(0, new ArrayList<>(), "lesson0");
+      
+        element = new Text(0, "src/main/resources/lessons/course_0/0.md");
+        firstLesson = new Lesson(0, new ArrayList<>(), "lesson1");
         firstLesson.addLessonElement(element);
 
         element = new Text(1, "src/main/resources/lessons/course_1/1.md");
@@ -61,7 +61,7 @@ public class Server {
         courseOneLessons.add(thirdLesson);
         courseOneLessons.add(fourthLesson);
 
-
+      
         var courses = new ArrayList<Course>();
         var firstCourse = new Course(0, courseZeroLessons);
         var secondCourse = new Course(1, courseOneLessons);
