@@ -25,26 +25,46 @@ public class Server {
          * when we connect to the DB
          */
 
-        var morelessons = new ArrayList<Lesson>();
+        var courseZeroLessons = new ArrayList<Lesson>();
+        var courseOneLessons = new ArrayList<Lesson>();
 
-        // TODO Use relative paths in order to get files to render properly
-        //LessonElement element = new Text(1, "/Users/robinbrooks/IdeaProjects/2019-group-monadic/src/main/resources/lessons/course_0/1.md");
-        //String coursesPath = Paths.get(System.getProperty("user.dir"), ;
-
-        LessonElement element = new Text(1, "src/main/resources/lessons/course_0/1.md");
-        var firstLesson = new Lesson(1, new ArrayList<>(), "lesson1");
+        LessonElement element = new Text(0, "src/main/resources/lessons/course_0/0.md");
+        var firstLesson = new Lesson(0, new ArrayList<>(), "lesson0");
         firstLesson.addLessonElement(element);
 
-        element = new Text(2, "src/main/resources/lessons/course_0/3.md");
-        var secondLesson = new Lesson(2 , new ArrayList<>(), "lesson2");
+        element = new Text(1, "src/main/resources/lessons/course_0/1.md");
+        var secondLesson = new Lesson(1 , new ArrayList<>(), "lesson1");
         secondLesson.addLessonElement(element);
 
-        morelessons.add(firstLesson);
-        morelessons.add(secondLesson);
+        courseZeroLessons.add(firstLesson);
+        courseZeroLessons.add(secondLesson);
 
+      
+        element = new Text(0, "src/main/resources/lessons/course_0/0.md");
+        firstLesson = new Lesson(0, new ArrayList<>(), "lesson1");
+        firstLesson.addLessonElement(element);
+
+        element = new Text(1, "src/main/resources/lessons/course_1/1.md");
+        secondLesson = new Lesson(1 , new ArrayList<>(), "lesson1");
+        secondLesson.addLessonElement(element);
+
+        element = new Text(2, "src/main/resources/lessons/course_1/2.md");
+        var thirdLesson = new Lesson(2, new ArrayList<>(), "lesson2");
+        thirdLesson.addLessonElement(element);
+
+        element = new Text(3, "src/main/resources/lessons/course_1/3.md");
+        var fourthLesson = new Lesson(3 , new ArrayList<>(), "lesson3");
+        fourthLesson.addLessonElement(element);
+
+        courseOneLessons.add(firstLesson);
+        courseOneLessons.add(secondLesson);
+        courseOneLessons.add(thirdLesson);
+        courseOneLessons.add(fourthLesson);
+
+      
         var courses = new ArrayList<Course>();
-        var firstCourse = new Course(0, morelessons);
-        var secondCourse = new Course(1, morelessons);
+        var firstCourse = new Course(0, courseZeroLessons);
+        var secondCourse = new Course(1, courseOneLessons);
         courses.add(firstCourse);
         courses.add(secondCourse);
         Javalin app = Javalin.create(config -> { config.addStaticFiles("/public"); });
