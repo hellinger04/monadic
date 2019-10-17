@@ -2,6 +2,9 @@ package com.jhuoose.monadic.models;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.util.Iterator;
 import java.util.Scanner;
 
 
@@ -15,8 +18,13 @@ public class Text implements LessonElement {
         this.ID = ID;
         this.filename = filename;
         try {
-            File f = new File(filename);
-            text = new Scanner(f).useDelimiter("\\Z").next();
+            BufferedReader reader = new BufferedReader(new FileReader(
+            new File(filename)));
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                this.text = this.text + line + "\n";
+            }
         } catch (IOException e) {
             System.err.println("Bad filepath");
         }
