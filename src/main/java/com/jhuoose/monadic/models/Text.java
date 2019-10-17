@@ -1,14 +1,12 @@
 package com.jhuoose.monadic.models;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.util.Iterator;
 import java.util.Scanner;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 public class Text implements LessonElement {
 
@@ -16,27 +14,28 @@ public class Text implements LessonElement {
     private String filename;
     private String text = "";
 
-    public Text(int ID, String filename) throws FileNotFoundException {
-        /*this.ID = ID;
+    public Text(int ID, String filename) {
+        this.ID = ID;
         this.filename = filename;
         try {
-            File f = new File(filename);
-            text = new Scanner(f).useDelimiter("\\Z").next();
+            BufferedReader reader = new BufferedReader(new FileReader(
+            new File(filename)));
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                this.text = this.text + line + "\n";
+            }
         } catch (IOException e) {
             System.err.println("Bad filepath");
-        }*/
-
-        Scanner inFile;
-//        try {
-        inFile = new Scanner(new File(filename));
-//        } catch (FileNotFoundException e) {
-//            throw new IllegalArgumentException("could not find specified file");
-//        }
-        while (inFile.hasNextLine()) {
-            this.text = this.text + inFile.nextLine();
         }
-
     }
+/* Do not delete, might be used in the future.
+   This is a constructor for providing literal lesson text
+    public Text(int ID, String text) {
+        this.ID = ID;
+        this.text = text;
+    }
+ */
 
     public int getID() {
         return this.ID;

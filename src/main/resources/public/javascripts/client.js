@@ -3,7 +3,6 @@ class Application extends React.Component {
         return (
             <div>
                 <Monadic/>
-                <TextBox/>
             </div>
         )
     }
@@ -13,3 +12,9 @@ ReactDOM.render(
     <Application/>,
     document.querySelector("#application")
 )
+
+// var myCodeMirror = CodeMirror(document.body, {
+//     value: "function myScript(){return 100;}\n",
+//     mode:  "javascript",
+//     theme: "lucario"
+// });
