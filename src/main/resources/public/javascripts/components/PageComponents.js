@@ -4,15 +4,14 @@ class LessonElement extends React.Component {
     }
 
     render() {
+        console.log(this.props.element.contents);
         let conv = new showdown.Converter();
         let html = conv.makeHtml(this.props.element.contents);
         return (
             <div>
-                <li>
-                    <div dangerouslySetInnerHTML={{__html: html}}/>
-                </li>
+                <div dangerouslySetInnerHTML={{__html: html}}/>
             </div>
-        )
+        );
     }
 }
 
@@ -20,12 +19,10 @@ class LessonNavigation extends React.Component {
     render() {
         return (
             <div>
-                <li>
-                    <button onClick={() => {this.props.changePage("course", this.props.currCourse, 0)} }>Back to Course {this.props.currCourse}</button>
-                    <br></br>
-                    <button style={{display: 0 <= this.props.currLesson - 1 ? "inline" : "none"}} onClick={() => {this.props.changePage("lesson", this.props.currCourse, this.props.currLesson - 1)} }>Previous Lesson</button>
-                    <button style={{display: this.props.numLessons > this.props.currLesson + 1 ? "inline" : "none"}} onClick={() => {this.props.changePage("lesson", this.props.currCourse, this.props.currLesson + 1)} }>Next Lesson</button>
-                </li>
+                <button onClick={() => {this.props.changePage("course", this.props.currCourse, 0)} }>Back to Course {this.props.currCourse}</button>
+                <br></br>
+                <button style={{display: 0 <= this.props.currLesson - 1 ? "inline" : "none"}} onClick={() => {this.props.changePage("lesson", this.props.currCourse, this.props.currLesson - 1)} }>Previous Lesson</button>
+                <button style={{display: this.props.numLessons > this.props.currLesson + 1 ? "inline" : "none"}} onClick={() => {this.props.changePage("lesson", this.props.currCourse, this.props.currLesson + 1)} }>Next Lesson</button>
             </div>
         );
     }
@@ -42,7 +39,7 @@ class Lesson extends React.Component {
         return (
             <div>
                 <LessonNavigation numLessons={numLessons} currLesson={this.props.currLesson} currCourse={this.props.currCourse} changePage={this.props.changePage}/>
-                <li>{this.props.courses[course].lessonList[lesson].lessonElements.map(element => <LessonElement key={lesson.id} element={element} courses={this.state.courses} currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>)}</li>
+                {this.props.courses[course].lessonList[lesson].lessonElements.map(element => <LessonElement key={lesson.id} element={element}/>)}
                 {/*<div dangerouslySetInnerHTML={{__html: html}}/>*/}
                 <LessonNavigation numLessons={numLessons} currLesson={this.props.currLesson} currCourse={this.props.currCourse} changePage={this.props.changePage}/>
             </div>
@@ -79,7 +76,7 @@ class Course extends React.Component {
                 <button style={{display: numCourses > this.props.currCourse + 1 ? "inline" : "none"}} onClick={() => {this.props.changePage("course", this.props.currCourse + 1, 0)}}>Next Course</button>
                 <ul>{this.props.courses[course].lessonList.map(lesson => <LessonButton key={lesson.id} lesson={lesson} currCourse={this.props.currCourse} changePage={this.props.changePage}/>)}</ul>
             </div>
-        )
+        );
     }
 }
 
@@ -103,13 +100,12 @@ class CourseList extends React.Component {
     }
 
     render() {
-        console.log(this.props.courses);
-        console.log(Object.keys(this.props.courses).length);
+        // console.log(this.props.courses);
         return (
             <div>
                 <ul>{this.props.courses.map(course => <CourseButton key={course.id} course={course} changePage={this.props.changePage}/>)}</ul>
             </div>
-        )
+        );
     }
 }
 
@@ -125,7 +121,6 @@ class Monadic extends React.Component {
     }
 
     changePage(newpage, course, lesson) {
-        // console.log("in change page")
         this.setState({page: newpage});
         this.setState({currCourse: course});
         this.setState({currLesson: lesson});
@@ -133,7 +128,6 @@ class Monadic extends React.Component {
 
 
     render() {
-        // console.log(this.state)
         if (this.state.page === "courselist") {
             return (
                 <div>
