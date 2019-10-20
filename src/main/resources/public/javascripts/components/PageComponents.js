@@ -4,14 +4,27 @@ class LessonElement extends React.Component {
     }
 
     render() {
-        console.log(this.props.element.contents);
+        // console.log(this.props.element.contents);
         let conv = new showdown.Converter();
         let html = conv.makeHtml(this.props.element.contents);
-        return (
-            <div>
-                <div dangerouslySetInnerHTML={{__html: html}}/>
-            </div>
-        );
+        // const myCodeMirror = CodeMirror.fromTextArea(this.props.key, {
+        //     value: "function myScript(){return 100;}\n",
+        //     mode:  "javascript"
+        // });
+        if (this.props.element.problem) {
+            return (
+                <div>
+                    {/*<textarea id={this.props.key}>{myCodeMirror}</textarea>*/}
+                </div>
+            );
+        }
+        else if (!this.props.element.problem) {
+            return (
+                <div>
+                    <div dangerouslySetInnerHTML={{__html: html}}/>
+                </div>
+            );
+        }
     }
 }
 
@@ -34,13 +47,10 @@ class Lesson extends React.Component {
         const course = this.props.currCourse;
         const numLessons = Object.keys(this.props.courses[course].lessonList).length;
 
-        let conv = new showdown.Converter();
-        let html = conv.makeHtml(this.props.courses[course].lessonList[lesson].lessonElements[0].contents);
         return (
             <div>
                 <LessonNavigation numLessons={numLessons} currLesson={this.props.currLesson} currCourse={this.props.currCourse} changePage={this.props.changePage}/>
-                {this.props.courses[course].lessonList[lesson].lessonElements.map(element => <LessonElement key={lesson.id} element={element}/>)}
-                {/*<div dangerouslySetInnerHTML={{__html: html}}/>*/}
+                <ul>{this.props.courses[course].lessonList[lesson].lessonElements.map(element => <LessonElement key={element.id} element={element}/>)}</ul>
                 <LessonNavigation numLessons={numLessons} currLesson={this.props.currLesson} currCourse={this.props.currCourse} changePage={this.props.changePage}/>
             </div>
         );
