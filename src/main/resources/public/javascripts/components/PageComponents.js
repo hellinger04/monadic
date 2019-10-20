@@ -5,8 +5,6 @@ class LessonElement extends React.Component {
 
     render() {
         // console.log(this.props.element.contents);
-        let conv = new showdown.Converter();
-        let html = conv.makeHtml(this.props.element.contents);
         // const myCodeMirror = CodeMirror.fromTextArea(this.props.key, {
         //     value: "function myScript(){return 100;}\n",
         //     mode:  "javascript"
@@ -19,6 +17,8 @@ class LessonElement extends React.Component {
             );
         }
         else if (!this.props.element.problem) {
+            let conv = new showdown.Converter();
+            let html = conv.makeHtml(this.props.element.contents);
             return (
                 <div>
                     <div dangerouslySetInnerHTML={{__html: html}}/>
