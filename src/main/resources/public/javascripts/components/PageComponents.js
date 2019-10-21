@@ -1,6 +1,16 @@
 class LessonElement extends React.Component {
+
     constructor(props) {
         super(props);
+        this.idd = (Math.floor(Math.random() * 100000)).toString();
+    }
+
+    componentDidMount() {
+        let mirror;
+        mirror = CodeMirror.fromTextArea(document.getElementById('problem' + this.idd), {
+            mode: "javascript",
+            theme: "solarized"
+        });
     }
 
     render() {
@@ -10,6 +20,7 @@ class LessonElement extends React.Component {
         return (
             <div>
                 <div dangerouslySetInnerHTML={{__html: html}}/>
+                <textarea id = {"problem" + this.idd}> // Insert code here </textarea>
             </div>
         );
     }
