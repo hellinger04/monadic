@@ -137,7 +137,7 @@ class CourseList extends React.Component {
 }
 
 const Space = window.styled.div`
-  background-image: url("/outrspc2.gif");
+  background-image: url("/img/outrspc2.gif");
   height: 100%;
   position: absolute;
   left: 0;
@@ -146,7 +146,7 @@ const Space = window.styled.div`
 `;
 
 const EarthBound = window.styled.div`
-  background-image: url("/325.png");
+  background-image: url("/img/325.png");
   height: auto;
   position: absolute;
   left: 0;
