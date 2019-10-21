@@ -34,13 +34,10 @@ class Lesson extends React.Component {
         const course = this.props.currCourse;
         const numLessons = Object.keys(this.props.courses[course].lessonList).length;
 
-        let conv = new showdown.Converter();
-        let html = conv.makeHtml(this.props.courses[course].lessonList[lesson].lessonElements[0].contents);
         return (
             <div>
                 <LessonNavigation numLessons={numLessons} currLesson={this.props.currLesson} currCourse={this.props.currCourse} changePage={this.props.changePage}/>
                 {this.props.courses[course].lessonList[lesson].lessonElements.map(element => <LessonElement key={lesson.id} element={element}/>)}
-                {/*<div dangerouslySetInnerHTML={{__html: html}}/>*/}
                 <LessonNavigation numLessons={numLessons} currLesson={this.props.currLesson} currCourse={this.props.currCourse} changePage={this.props.changePage}/>
             </div>
         );
