@@ -50,11 +50,11 @@ class Lesson extends React.Component {
 class LessonButton extends React.Component {
     render() {
         return (
-            <div>
+            <NoBullet>
                 <li>
                     <button onClick={() => {this.props.changePage("lesson", this.props.currCourse, this.props.lesson.id)} }>Lesson {this.props.lesson.id}</button>
                 </li>
-            </div>
+            </NoBullet>
         );
     }
 }
@@ -69,13 +69,13 @@ class Course extends React.Component {
         const course = this.props.currCourse;
         const numCourses = Object.keys(this.props.courses).length;
         return (
-            <div>
+            <NoBullet>
                 <button onClick={() => {this.props.changePage("courselist", 0, 0)}}>Back to Courses</button>
                 <br></br>
                 <button style={{display: 0 <= this.props.currCourse - 1 ? "inline" : "none"}} onClick={() => {this.props.changePage("course", this.props.currCourse - 1, 0)}}>Previous Course</button>
                 <button style={{display: numCourses > this.props.currCourse + 1 ? "inline" : "none"}} onClick={() => {this.props.changePage("course", this.props.currCourse + 1, 0)}}>Next Course</button>
                 <ul>{this.props.courses[course].lessonList.map(lesson => <LessonButton key={lesson.id} lesson={lesson} currCourse={this.props.currCourse} changePage={this.props.changePage}/>)}</ul>
-            </div>
+            </NoBullet>
         );
     }
 }
@@ -102,34 +102,55 @@ class CourseList extends React.Component {
     render() {
         // console.log(this.props.courses);
         return (
-            <div>
+            <NoBullet>
                 <ul>{this.props.courses.map(course => <CourseButton key={course.id} course={course} changePage={this.props.changePage}/>)}</ul>
-            </div>
+            </NoBullet>
         );
     }
 }
 
-// const Space = window.styled.div`
-//   background-image: url("/outrspc2.gif");
-//   height: 100%;
-//   position: absolute;
-//   left: 0;
-//   width: 100%;
-//   overflow: hidden;
-// `;
-//
-// const Format = window.styled.div`
-//     font-family: "Comic Sans MS", "Comic Sans", cursive;
-//     color: white;
-//     text-align: center;
-//     font-size: 1em;
-// `;
-//
-// const Title = window.styled.h1`
-//   font-size: 5em;
-//   text-align: center;
-//   color: white;
-// `;
+const Space = window.styled.div`
+  background-image: url("/outrspc2.gif");
+  height: 100%;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+`;
+
+const EarthBound = window.styled.div`
+  background-image: url("/325.png");
+  height: auto;
+  position: absolute;
+  left: 0;
+  width: auto;
+  background-size: auto auto;
+`;
+
+const LessonBack = window.styled.div`
+    font-family: "Times New Roman", Times, serif;
+    color: white;
+    text-align: left;
+    font-size: 1em;
+`;
+
+const NoBullet = window.styled.div`
+    list-style: none;
+`;
+
+const Format = window.styled.div`
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    color: white;
+    text-align: center;
+    font-size: 1em;
+    list-style: none;
+`;
+
+const Title = window.styled.h1`
+  font-size: 5em;
+  text-align: center;
+  color: white;
+`;
 
 class Monadic extends React.Component {
     constructor(props) {
@@ -152,27 +173,31 @@ class Monadic extends React.Component {
     render() {
         if (this.state.page === "courselist") {
             return (
-                <div>
-                    <h1>Welcome to Monadic!</h1>
-                    <h2>Available Courses</h2>
-                    <CourseList changePage={this.changePage} courses={this.state.courses} currCourse={this.state.currCourse}/>
-                </div>
+                <Space>
+                    <Format>
+                        <Title>Welcome to Monadic!</Title>
+                        <h2>Available Courses</h2>
+                        <CourseList changePage={this.changePage} courses={this.state.courses} currCourse={this.state.currCourse}/>
+                    </Format>
+                </Space>
             );
         } else if (this.state.page === "course") {
             return (
-                <div>
-                    <h1>Course {this.state.currCourse}</h1>
-                    <h2>Available Lessons</h2>
-                    <Course changePage={this.changePage} courses={this.state.courses} currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
-                </div>
+                <Space>
+                    <Format>
+                        <Title>Course {this.state.currCourse}</Title>
+                        <h2>Available Lessons</h2>
+                        <Course changePage={this.changePage} courses={this.state.courses} currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
+                    </Format>
+                </Space>
             );
         } else if (this.state.page === "lesson") {
             return (
-                <div>
-                    <h1>Course {this.state.currCourse}</h1>
-                    <h2>Available Lessons</h2>
-                    <Course changePage={this.changePage} courses={this.state.courses} currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
-                </div>
+                <EarthBound>
+                    <LessonBack>
+                        <Lesson changePage={this.changePage} courses={this.state.courses} currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
+                    </LessonBack>
+                </EarthBound>
             );
         }
     }
