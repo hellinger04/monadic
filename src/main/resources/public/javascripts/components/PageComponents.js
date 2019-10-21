@@ -69,13 +69,13 @@ class Course extends React.Component {
         const course = this.props.currCourse;
         const numCourses = Object.keys(this.props.courses).length;
         return (
-            <NoBullet>
+            <div>
                 <button onClick={() => {this.props.changePage("courselist", 0, 0)}}>Back to Courses</button>
                 <br></br>
                 <button style={{display: 0 <= this.props.currCourse - 1 ? "inline" : "none"}} onClick={() => {this.props.changePage("course", this.props.currCourse - 1, 0)}}>Previous Course</button>
                 <button style={{display: numCourses > this.props.currCourse + 1 ? "inline" : "none"}} onClick={() => {this.props.changePage("course", this.props.currCourse + 1, 0)}}>Next Course</button>
                 <ul>{this.props.courses[course].lessonList.map(lesson => <LessonButton key={lesson.id} lesson={lesson} currCourse={this.props.currCourse} changePage={this.props.changePage}/>)}</ul>
-            </NoBullet>
+            </div>
         );
     }
 }
@@ -102,9 +102,9 @@ class CourseList extends React.Component {
     render() {
         // console.log(this.props.courses);
         return (
-            <NoBullet>
+            <div>
                 <ul>{this.props.courses.map(course => <CourseButton key={course.id} course={course} changePage={this.props.changePage}/>)}</ul>
-            </NoBullet>
+            </div>
         );
     }
 }
