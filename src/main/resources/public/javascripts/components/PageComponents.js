@@ -1,17 +1,47 @@
 class LessonElement extends React.Component {
+
     constructor(props) {
         super(props);
+        // this.idd = (Math.floor(Math.random() * 100000)).toString();
+    }
+
+    componentDidMount() {
+        if (this.props.element.problem) {
+            let mirror;
+            mirror = CodeMirror.fromTextArea(document.getElementById('problem' + this.props.element.id), {
+                mode: "javascript",
+                theme: "solarized"
+            });
+        }
     }
 
     render() {
-        console.log(this.props.element.contents);
-        let conv = new showdown.Converter();
-        let html = conv.makeHtml(this.props.element.contents);
-        return (
-            <div>
-                <div dangerouslySetInnerHTML={{__html: html}}/>
-            </div>
-        );
+        // console.log(this.props.element.contents);
+        if (this.props.element.problem) {
+            return (
+                <div>
+                    <textarea id = {'problem' + this.props.element.id}> // Insert code here </textarea>
+                </div>
+            );
+        }
+        else if (!this.props.element.problem) {
+            let conv = new showdown.Converter();
+            let html = conv.makeHtml(this.props.element.contents);
+            return (
+                <div>
+                    <div dangerouslySetInnerHTML={{__html: html}}/>
+                </div>
+            );
+        }
+
+        // let conv = new showdown.Converter();
+        // let html = conv.makeHtml(this.props.element.contents);
+        // return (
+        //     <div>
+        //         <div dangerouslySetInnerHTML={{__html: html}}/>
+        //         <textarea id = {"problem" + this.props.element.id}> // Insert code here </textarea>
+        //     </div>
+        // );
     }
 }
 
@@ -37,7 +67,7 @@ class Lesson extends React.Component {
         return (
             <div>
                 <LessonNavigation numLessons={numLessons} currLesson={this.props.currLesson} currCourse={this.props.currCourse} changePage={this.props.changePage}/>
-                {this.props.courses[course].lessonList[lesson].lessonElements.map(element => <LessonElement key={lesson.id} element={element}/>)}
+                {this.props.courses[course].lessonList[lesson].lessonElements.map(element => <LessonElement key={element.id} element={element}/>)}
                 <LessonNavigation numLessons={numLessons} currLesson={this.props.currLesson} currCourse={this.props.currCourse} changePage={this.props.changePage}/>
             </div>
         );
