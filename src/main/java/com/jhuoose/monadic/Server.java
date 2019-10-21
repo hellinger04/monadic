@@ -1,9 +1,6 @@
 package com.jhuoose.monadic;
 
-import com.jhuoose.monadic.models.Course;
-import com.jhuoose.monadic.models.Lesson;
-import com.jhuoose.monadic.models.LessonElement;
-import com.jhuoose.monadic.models.Text;
+import com.jhuoose.monadic.models.*;
 import io.javalin.Javalin;
 import java.util.ArrayList;
 
@@ -16,6 +13,7 @@ public class Server {
 
         Lesson firstLesson = createLesson(0, 0, 4);
         Lesson secondLesson = createLesson(0, 1, 3);
+        secondLesson.addLessonElement(new Problem(3, "this is sample text"));
         Lesson thirdLesson = createLesson(0, 2, 4);
         Lesson fourthLesson = createLesson(0, 3, 4);
         Lesson fifthLesson = createLesson(0, 4, 3);

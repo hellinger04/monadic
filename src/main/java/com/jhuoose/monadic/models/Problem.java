@@ -18,6 +18,11 @@ public class Problem implements LessonElement {
         this.starterCode = starterCode;
     }
 
+    public Problem(int ID, String starterCode) {
+        this.ID = ID;
+        this.starterCode = starterCode;
+    }
+
     public boolean isProblem() {
         return true;
     }
