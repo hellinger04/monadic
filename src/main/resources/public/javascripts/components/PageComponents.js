@@ -109,6 +109,28 @@ class CourseList extends React.Component {
     }
 }
 
+// const Space = window.styled.div`
+//   background-image: url("/outrspc2.gif");
+//   height: 100%;
+//   position: absolute;
+//   left: 0;
+//   width: 100%;
+//   overflow: hidden;
+// `;
+//
+// const Format = window.styled.div`
+//     font-family: "Comic Sans MS", "Comic Sans", cursive;
+//     color: white;
+//     text-align: center;
+//     font-size: 1em;
+// `;
+//
+// const Title = window.styled.h1`
+//   font-size: 5em;
+//   text-align: center;
+//   color: white;
+// `;
+
 class Monadic extends React.Component {
     constructor(props) {
         super(props);
@@ -147,7 +169,9 @@ class Monadic extends React.Component {
         } else if (this.state.page === "lesson") {
             return (
                 <div>
-                    <Lesson changePage={this.changePage} courses={this.state.courses} currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
+                    <h1>Course {this.state.currCourse}</h1>
+                    <h2>Available Lessons</h2>
+                    <Course changePage={this.changePage} courses={this.state.courses} currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
                 </div>
             );
         }
