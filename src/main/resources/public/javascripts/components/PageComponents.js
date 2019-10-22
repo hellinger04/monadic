@@ -2,7 +2,6 @@ class LessonElement extends React.Component {
 
     constructor(props) {
         super(props);
-        // this.idd = (Math.floor(Math.random() * 100000)).toString();
     }
 
     componentDidMount() {
@@ -15,12 +14,14 @@ class LessonElement extends React.Component {
         }
     }
 
+    //might need to use this to prevent CodeMirror boxes from showing up on multiple pages
+    componentWillUnmount() {}
+
     render() {
-        // console.log(this.props.element.contents);
         if (this.props.element.problem) {
             return (
                 <div>
-                    <textarea id = {'problem' + this.props.element.id}> // Insert code here </textarea>
+                    <textarea id = {'problem' + this.props.element.id}>{this.props.element.starterCode}</textarea>
                 </div>
             );
         }

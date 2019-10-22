@@ -3,9 +3,6 @@ package com.jhuoose.monadic;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jhuoose.monadic.models.Course;
 import com.jhuoose.monadic.models.Lesson;
-import com.jhuoose.monadic.models.LessonElement;
-import com.jhuoose.monadic.models.Text;
-import com.jhuoose.monadic.models.Problem;
 import io.javalin.Javalin;
 
 import java.sql.DriverManager;
@@ -19,12 +16,11 @@ public class Server {
         var courseZeroLessons = new ArrayList<Lesson>();
         var courseOneLessons = new ArrayList<Lesson>();
 
-        Lesson firstLesson = createLesson(0, 0, 4);
-        Lesson secondLesson = createLesson(0, 1, 3);
-        secondLesson.addLessonElement(new Problem(3, "this is sample text"));
-        Lesson thirdLesson = createLesson(0, 2, 4);
-        Lesson fourthLesson = createLesson(0, 3, 4);
-        Lesson fifthLesson = createLesson(0, 4, 3);
+        Lesson firstLesson = new Lesson(0, 0, new boolean[]{false, true, false, false, false});
+        Lesson secondLesson = new Lesson(0, 1, new boolean[]{false, false, false, true});
+        Lesson thirdLesson = new Lesson(0, 2, new boolean[]{false, false, false, false});
+        Lesson fourthLesson = new Lesson(0, 3, new boolean[]{false, false, false, true, false, true});
+        Lesson fifthLesson = new Lesson(0, 4, new boolean[]{false, false, false});
 
         courseZeroLessons.add(firstLesson);
         courseZeroLessons.add(secondLesson);
@@ -32,10 +28,10 @@ public class Server {
         courseZeroLessons.add(fourthLesson);
         courseZeroLessons.add(fifthLesson);
 
-        firstLesson = createLesson(1, 0, 3);
-        secondLesson = createLesson(1, 1, 2);
-        thirdLesson = createLesson(1, 2, 2);
-        fourthLesson = createLesson(1, 3, 1);
+        firstLesson = new Lesson(1, 0, new boolean[]{false, false, false});
+        secondLesson = new Lesson(1, 1, new boolean[]{false, false});
+        thirdLesson = new Lesson(1, 2, new boolean[]{false, false, true});
+        fourthLesson = new Lesson(1, 3, new boolean[]{false});
 
         courseOneLessons.add(firstLesson);
         courseOneLessons.add(secondLesson);
@@ -106,20 +102,5 @@ public class Server {
         });
 
         app.start(System.getenv("PORT") == null ? 7000 : Integer.parseInt(System.getenv("PORT")));
-    }
-
-    private static Lesson createLesson(int courseID, int lessonID, int numElements) {
-        //construct empty Lesson
-        Lesson lesson = new Lesson(lessonID, new ArrayList<>(), "lesson" + lessonID);
-
-        //create LessonElements and add to Lesson
-        for (int i = 0; i < numElements; i++) {
-            String filename = "src/main/resources/lessons/course_" + courseID + "/lesson_" + lessonID + "/" + i + ".md";
-            //System.out.println("filename" + filename);
-            LessonElement element = new Text(i, filename);
-            lesson.addLessonElement(element);
-        }
-
-        return lesson;
     }
 }
