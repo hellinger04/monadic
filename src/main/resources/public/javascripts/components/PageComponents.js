@@ -68,7 +68,7 @@ class Lesson extends React.Component {
         return (
             <div>
                 <LessonNavigation numLessons={numLessons} currLesson={this.props.currLesson} currCourse={this.props.currCourse} changePage={this.props.changePage}/>
-                {this.props.courses[course].lessonList[lesson].lessonElements.map(element => <LessonElement key={element.id} element={element}/>)}
+                {this.props.courses[course].lessonList[lesson].lessonElements.map(element => <LessonElement key={this.props.courses[course].lessonList[lesson].id + " " + element.id} element={element}/>)}
                 <LessonNavigation numLessons={numLessons} currLesson={this.props.currLesson} currCourse={this.props.currCourse} changePage={this.props.changePage}/>
             </div>
         );
