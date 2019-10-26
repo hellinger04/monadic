@@ -24,6 +24,5 @@ hs_err_pid*
 
 # IDEA-specific folders
 .gradle/
-.idea/
 build/
 /monadic.db
