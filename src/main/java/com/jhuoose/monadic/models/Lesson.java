@@ -15,7 +15,9 @@ public class Lesson {
     String description;
 
     public Lesson(int courseID, int lessonID) {
-        String filePath = "src/main/resources/lessons/course_" + courseID + "/lesson_" + lessonID + ".md";
+        this.ID = lessonID;
+
+        String filePath = "src/main/resources/lessons/course_" + courseID + "/" + lessonID + ".md";
         String text = "";
         try {
             text = this.readFile(filePath);
