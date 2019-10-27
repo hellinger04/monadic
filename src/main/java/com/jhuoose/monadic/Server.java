@@ -16,7 +16,8 @@ public class Server {
         var courseZeroLessons = new ArrayList<Lesson>();
         var courseOneLessons = new ArrayList<Lesson>();
 
-        Lesson firstLesson = new Lesson(0, 0, new boolean[]{false, true, false, false, false});
+        // Lesson firstLesson = new Lesson(0, 0, new boolean[]{false, true, false, false, false});
+        Lesson firstLesson = new Lesson(0, 0);
         Lesson secondLesson = new Lesson(0, 1, new boolean[]{false, false, false, true});
         Lesson thirdLesson = new Lesson(0, 2, new boolean[]{false, false, false, false});
         Lesson fourthLesson = new Lesson(0, 3, new boolean[]{false, false, false, true, false, true});
