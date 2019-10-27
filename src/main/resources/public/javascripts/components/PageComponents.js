@@ -86,6 +86,52 @@ class LessonButton extends React.Component {
         );
     }
 }
+class Register extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        // console.log(this.props.courses);
+        return (
+            <div>
+                <button onClick={() => {this.props.changePage("landing", 0, 0)}}>Go home</button>
+                <br></br>
+                <button onClick={() => {this.props.changePage("landing", 0, 0)} }>Already registered? Login!</button>
+                <form>
+                    <label>
+                        Name:
+                        <input type="text" name="new name" />
+                    </label>
+                    <input type="submit" value="Register" />
+                </form>
+            </div>
+        );
+    }
+}
+class Login extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        // console.log(this.props.courses);
+        return (
+            <div>
+                <button onClick={() => {this.props.changePage("landing", 0, 0)}}>Go home</button>
+                <br></br>
+                <button onClick={() => {this.props.changePage("register", 0, 0)} }>Register</button>
+                <form>
+                    <label>
+                        Name:
+                        <input type="text" name="name" />
+                    </label>
+                    <input type="submit" value="Submit" />
+                </form>
+            </div>
+        );
+    }
+}
 
 class Course extends React.Component {
     constructor(props) {
@@ -183,7 +229,7 @@ const Title = window.styled.h1`
 class Monadic extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {page: "courselist", currCourse: 0, currLesson: 0, courses: []};
+        this.state = {page: "landing", currCourse: 0, currLesson: 0, courses: []};
         this.changePage = this.changePage.bind(this);
     }
 
@@ -206,6 +252,26 @@ class Monadic extends React.Component {
                         <Title>Welcome to Monadic!</Title>
                         <h2>Available Courses</h2>
                         <CourseList changePage={this.changePage} courses={this.state.courses} currCourse={this.state.currCourse}/>
+                    </Format>
+                </Space>
+            );
+        } else if (this.state.page === "landing") {
+            return (
+                <Space>
+                    <Format>
+                        <Title>Welcome to Monadic!!!</Title>
+                        <h2>You should login to an account</h2>
+                        <Login changePage={this.changePage} courses={this.state.courses} currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
+                    </Format>
+                </Space>
+            );
+        } else if (this.state.page === "register") {
+            return (
+                <Space>
+                    <Format>
+                        <Title>Register now!!!</Title>
+                        <h2>You should make an account</h2>
+                        <Register changePage={this.changePage} courses={this.state.courses} currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
                     </Format>
                 </Space>
             );
