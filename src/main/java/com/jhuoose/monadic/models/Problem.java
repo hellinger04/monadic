@@ -27,20 +27,6 @@ public class Problem implements LessonElement {
         this.starterCode = text;
     }
 
-    public Problem(int ID, File file) {
-        this.id = ID;
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                this.starterCode = this.starterCode + line + "\n";
-            }
-        } catch (IOException e) {
-            System.err.println("Bad filepath");
-        }
-    }
-
     public boolean isProblem() {
         return true;
     }

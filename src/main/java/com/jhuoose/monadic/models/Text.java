@@ -11,25 +11,8 @@ import java.util.Scanner;
 public class Text implements LessonElement {
 
     private int ID;
-    private String filename;
-    private String text = "";
+    private String text;
 
-    public Text(int ID, File file) {
-        this.ID = ID;
-        this.filename = filename;
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                this.text = this.text + line + "\n";
-            }
-        } catch (IOException e) {
-            System.err.println("Bad filepath");
-        }
-    }
-// Do not delete, might be used in the future.
-// This is a constructor for providing literal lesson text
     public Text(int ID, String text) {
         this.ID = ID;
         this.text = text;

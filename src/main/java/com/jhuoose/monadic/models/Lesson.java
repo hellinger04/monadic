@@ -36,28 +36,6 @@ public class Lesson {
         }
     }
 
-    public Lesson(int courseID, int lessonID, boolean[] elements) {
-        this.ID = lessonID;
-        this.description = "lesson" + lessonID;
-
-        //create LessonElements and add to Lesson
-        for (int i = 0; i < elements.length; i++) {
-            File file = new File("src/main/resources/lessons/course_" + courseID + "/lesson_" + lessonID + "/" + i + ".md");
-            LessonElement element;
-            if (elements[i]) {
-                // element = new Problem(i, "src/main/resources/lessons/course_" + courseID + "/lesson_" + lessonID + "/" + i + ".md");
-                element = new Problem(i, file);
-                lessonElements.add(element);
-            }
-            else if (!elements[i]) {
-                String filename = "src/main/resources/lessons/course_" + courseID + "/lesson_" + lessonID + "/" + i + ".md";
-                // element = new Text(i, filename);
-                element = new Text(i, file);
-                lessonElements.add(element);
-            }
-        }
-    }
-
     private String readFile(String filePath) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(new File(filePath)));
         String line;
