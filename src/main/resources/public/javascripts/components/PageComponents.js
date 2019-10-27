@@ -89,6 +89,12 @@ class LessonButton extends React.Component {
 class Register extends React.Component {
     constructor(props) {
         super(props);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit(event) {
+        console.log("in handle submit")
+        this.props.changePage("courselist", 0, 0)
     }
 
     render() {
@@ -98,10 +104,14 @@ class Register extends React.Component {
                 <button onClick={() => {this.props.changePage("landing", 0, 0)}}>Go home</button>
                 <br></br>
                 <button onClick={() => {this.props.changePage("landing", 0, 0)} }>Already registered? Login!</button>
-                <form>
+                <form onSubmit={this.handleSubmit}>
                     <label>
                         Name:
                         <input type="text" name="new name" />
+                    </label>
+                    <label>
+                        Password:
+                        <input type="text" password="password" />
                     </label>
                     <input type="submit" value="Register" />
                 </form>
@@ -112,6 +122,12 @@ class Register extends React.Component {
 class Login extends React.Component {
     constructor(props) {
         super(props);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit(event) {
+        console.log("in handle submit")
+        this.props.changePage("courselist", 0, 0)
     }
 
     render() {
@@ -121,10 +137,14 @@ class Login extends React.Component {
                 <button onClick={() => {this.props.changePage("landing", 0, 0)}}>Go home</button>
                 <br></br>
                 <button onClick={() => {this.props.changePage("register", 0, 0)} }>Register</button>
-                <form>
+                <form onSubmit={this.handleSubmit}>
                     <label>
                         Name:
                         <input type="text" name="name" />
+                    </label>
+                    <label>
+                        Password:
+                        <input type="text" password="password" />
                     </label>
                     <input type="submit" value="Submit" />
                 </form>
