@@ -16,27 +16,13 @@ public class Server {
         var courseZeroLessons = new ArrayList<Lesson>();
         var courseOneLessons = new ArrayList<Lesson>();
 
-        Lesson firstLesson = new Lesson(0, 0, new boolean[]{false, true, false, false, false});
-        Lesson secondLesson = new Lesson(0, 1, new boolean[]{false, false, false, true});
-        Lesson thirdLesson = new Lesson(0, 2, new boolean[]{false, false, false, false});
-        Lesson fourthLesson = new Lesson(0, 3, new boolean[]{false, false, false, true, false, true});
-        Lesson fifthLesson = new Lesson(0, 4, new boolean[]{false, false, false});
+        for (int i = 0; i < 5; ++i) {
+            courseZeroLessons.add(new Lesson(0, i));
+        }
 
-        courseZeroLessons.add(firstLesson);
-        courseZeroLessons.add(secondLesson);
-        courseZeroLessons.add(thirdLesson);
-        courseZeroLessons.add(fourthLesson);
-        courseZeroLessons.add(fifthLesson);
-
-        firstLesson = new Lesson(1, 0, new boolean[]{false, false, false});
-        secondLesson = new Lesson(1, 1, new boolean[]{false, false});
-        thirdLesson = new Lesson(1, 2, new boolean[]{false, false, true});
-        fourthLesson = new Lesson(1, 3, new boolean[]{false});
-
-        courseOneLessons.add(firstLesson);
-        courseOneLessons.add(secondLesson);
-        courseOneLessons.add(thirdLesson);
-        courseOneLessons.add(fourthLesson);
+        for (int i = 0; i < 4; ++i) {
+            courseOneLessons.add(new Lesson(1, i));
+        }
 
 
         //construct an ArrayList to hold Courses

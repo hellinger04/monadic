@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Problem implements LessonElement {
 
-    private int ID;
+    private int id;
     private ArrayList<TestCase> tests;
     private CanonicalAnswer canonicalAnswer;
     private String description;
@@ -22,18 +22,9 @@ public class Problem implements LessonElement {
 ////        this.starterCode = starterCode;
 ////    }
 
-    public Problem(int ID, String filename) {
-        this.ID = ID;
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(new File(filename)));
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                this.starterCode = this.starterCode + line + "\n";
-            }
-        } catch (IOException e) {
-            System.err.println("Bad filepath");
-        }
+    public Problem(int ID, String text) {
+        this.id = ID;
+        this.starterCode = text;
     }
 
     public boolean isProblem() {
@@ -45,7 +36,7 @@ public class Problem implements LessonElement {
     }
 
     public int getID() {
-        return ID;
+        return id;
     }
 
     public ArrayList<TestCase> getTests() {
