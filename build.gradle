@@ -18,6 +18,7 @@ dependencies {
     compile 'org.slf4j:slf4j-simple:1.7.26'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.9.8'
     compile 'org.xerial:sqlite-jdbc:3.27.2.1'
+    compile 'at.favre.lib:bcrypt:0.8.0'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.4.2'
 }
 
