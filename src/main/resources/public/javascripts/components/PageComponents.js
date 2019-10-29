@@ -101,18 +101,20 @@ class Register extends React.Component {
         // console.log(this.props.courses);
         return (
             <div>
-                <button onClick={() => {this.props.changePage("landing", 0, 0)}}>Go home</button>
-                <br></br>
-                <button onClick={() => {this.props.changePage("landing", 0, 0)} }>Already registered? Login!</button>
+                <button onClick={() => {this.props.changePage("login", 0, 0)} }>Already registered? Login!</button>
                 <form onSubmit={this.handleSubmit}>
+                    <br></br>
                     <label>
-                        Name:
+                        Username:
                         <input type="text" name="new name" />
                     </label>
+                    <br></br>
                     <label>
                         Password:
                         <input type="text" password="password" />
                     </label>
+                    <br></br>
+                    <br></br>
                     <input type="submit" value="Register" />
                 </form>
             </div>
@@ -134,19 +136,21 @@ class Login extends React.Component {
         // console.log(this.props.courses);
         return (
             <div>
-                <button onClick={() => {this.props.changePage("landing", 0, 0)}}>Go home</button>
-                <br></br>
-                <button onClick={() => {this.props.changePage("register", 0, 0)} }>Register</button>
+                <button onClick={() => {this.props.changePage("register", 0, 0)} }>No account? Register now!</button>
                 <form onSubmit={this.handleSubmit}>
+                    <br></br>
                     <label>
-                        Name:
+                        Username:
                         <input type="text" name="name" />
                     </label>
+                    <br></br>
                     <label>
                         Password:
                         <input type="text" password="password" />
                     </label>
-                    <input type="submit" value="Submit" />
+                    <br></br>
+                    <br></br>
+                    <input type="submit" value="Login" />
                 </form>
             </div>
         );
@@ -249,7 +253,7 @@ const Title = window.styled.h1`
 class Monadic extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {page: "landing", currCourse: 0, currLesson: 0, courses: []};
+        this.state = {page: "register", currCourse: 0, currLesson: 0, courses: []};
         this.changePage = this.changePage.bind(this);
     }
 
@@ -275,12 +279,12 @@ class Monadic extends React.Component {
                     </Format>
                 </Space>
             );
-        } else if (this.state.page === "landing") {
+        } else if (this.state.page === "login") {
             return (
                 <Space>
                     <Format>
-                        <Title>Welcome to Monadic!!!</Title>
-                        <h2>You should login to an account</h2>
+                        <Title>Welcome to Monadic!</Title>
+                        <h2>Login to View Courses</h2>
                         <Login changePage={this.changePage} courses={this.state.courses} currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
                     </Format>
                 </Space>
@@ -289,8 +293,9 @@ class Monadic extends React.Component {
             return (
                 <Space>
                     <Format>
-                        <Title>Register now!!!</Title>
-                        <h2>You should make an account</h2>
+                        <Title>Welcome to Monadic!</Title>
+                        <h2>Register Now</h2>
+                        <h3>It's quick and easy</h3>
                         <Register changePage={this.changePage} courses={this.state.courses} currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
                     </Format>
                 </Space>
