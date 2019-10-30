@@ -1,16 +1,24 @@
-class LessonElement extends React.Component {
+class Grader extends React.Component {
+    constructor(props) {
+        super(props)
+    }
 
+
+}
+
+class LessonElement extends React.Component {
     constructor(props) {
         super(props);
     }
 
     componentDidMount() {
         if (this.props.element.problem) {
-            let mirror;
-            mirror = CodeMirror.fromTextArea(document.getElementById('problem' + this.props.element.id), {
+            this.mirror = CodeMirror.fromTextArea(document.getElementById('problem' + this.props.element.id), {
                 mode: "javascript",
                 theme: "solarized"
             });
+            console.log(this.props)
+            console.log(this.mirror.getValue())
         }
     }
 
@@ -22,6 +30,7 @@ class LessonElement extends React.Component {
             return (
                 <div>
                     <textarea id = {'problem' + this.props.element.id}>{this.props.element.starterCode}</textarea>
+                    <button onClick={() => console.log(eval(this.mirror.getValue()))}>Submit</button>
                 </div>
             );
         }
@@ -249,7 +258,11 @@ const Title = window.styled.h1`
 class Monadic extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {page: "landing", currCourse: 0, currLesson: 0, courses: []};
+        //I SET THIS TO GO TO COURSE LIST BECAUSE LOGIN WON'T LET ME
+        //GET TO COURSE LIST EVEN IF I REGISTER BECAUSE
+        //WE ARE NOT SENDING ANYTHING TO THE SERVER FROM LOGIN RIGHT NOW BUT
+        //JUST IGNORE THAT
+        this.state = {page: "courselist", currCourse: 0, currLesson: 0, courses: []};
         this.changePage = this.changePage.bind(this);
     }
 
