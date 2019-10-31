@@ -1,9 +1,16 @@
-class Grader extends React.Component {
+class TestResults extends React.Component {
     constructor(props) {
         super(props)
     }
 
+}
 
+function grade(studentAnswer, problem) {
+    console.log("w00t")
+    console.log(problem)
+
+    let str = studentAnswer + "console.log(adder(1,2) === 3)"
+    eval(str)
 }
 
 class LessonElement extends React.Component {
@@ -31,6 +38,8 @@ class LessonElement extends React.Component {
                 <div>
                     <textarea id = {'problem' + this.props.element.id}>{this.props.element.starterCode}</textarea>
                     <button onClick={() => console.log(eval(this.mirror.getValue()))}>Submit</button>
+                    <button onClick={() => grade(this.mirror.getValue(), this.props.problem)}> Pass to grader </button>
+                    
                 </div>
             );
         }
