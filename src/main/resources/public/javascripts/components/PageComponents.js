@@ -5,12 +5,11 @@ class TestResults extends React.Component {
 
 }
 
-function grade(studentAnswer, problem) {
-    console.log("w00t")
-    console.log(problem)
+function grade(studentAnswer, test) {
+    console.log(test)
 
-    let str = studentAnswer + "console.log(adder(1,2) === 3)"
-    eval(str)
+    // let str = studentAnswer + "console.log(adder(1,2) === 3)"
+    // eval(str)
 }
 
 class LessonElement extends React.Component {
@@ -37,8 +36,8 @@ class LessonElement extends React.Component {
             return (
                 <div>
                     <textarea id = {'problem' + this.props.element.id}>{this.props.element.starterCode}</textarea>
-                    <button onClick={() => console.log(this.props.problem)}>Submit</button>
-                    <button onClick={() => grade(this.mirror.getValue(), this.props.problem)}> Pass to grader </button>
+                    {/*<button onClick={() => grade(this.mirror.getValue(), this.props.problem)}> Pass to grader </button>*/}
+                    <button onClick={() => this.props.element.tests.map(test => grade(this.mirror.getValue(), test))}> Pass to grader </button>
                     
                 </div>
             );
@@ -52,15 +51,6 @@ class LessonElement extends React.Component {
                 </div>
             );
         }
-
-        // let conv = new showdown.Converter();
-        // let html = conv.makeHtml(this.props.element.contents);
-        // return (
-        //     <div>
-        //         <div dangerouslySetInnerHTML={{__html: html}}/>
-        //         <textarea id = {"problem" + this.props.element.id}> // Insert code here </textarea>
-        //     </div>
-        // );
     }
 }
 
