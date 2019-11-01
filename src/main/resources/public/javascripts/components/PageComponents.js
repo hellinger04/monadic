@@ -29,8 +29,20 @@ class TestResults extends React.Component {
 
 function grade(studentAnswer, test) {
 
-    let str = studentAnswer + "console.log(" + test.input + " === " + test.output + ")";
-    eval(str);
+    // let str = studentAnswer + "console.log(" + test.input + " === " + test.output + ")";
+    // eval(str);
+
+    let script = studentAnswer + test.input;
+    let output = eval(script).toString();
+    let passed = output === (test.output);
+
+    if (passed) {
+        console.log("Test passed: " + test.input + " ==> " + test.output);
+    } else {
+        console.log("Test failed: " + test.input);
+        console.log("- Expected Output: " + test.output);
+        console.log("- Actual Output: " + output);
+    }
 }
 
 class LessonElement extends React.Component {
@@ -44,8 +56,8 @@ class LessonElement extends React.Component {
                 mode: "javascript",
                 theme: "solarized"
             });
-            console.log(this.props.element);
-            console.log(this.mirror.getValue())
+            // console.log(this.props.element);
+            // console.log(this.mirror.getValue())
         }
     }
 
