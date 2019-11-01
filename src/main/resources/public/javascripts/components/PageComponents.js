@@ -43,52 +43,54 @@ const Title = window.styled.h1`
 
 class TestResults extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
+        this.state = {submissions: 0};
     }
 
-    // render() {
-    //
-    //     // TEST ONCE VARIABLES ARE FINALIZED (ex: student results, expected results)
-    //     var tests = [];
-    //     var student_result = [1, 2, 3];
-    //     var expected_result = [1, 3, 3];
-    //     for(let i; i < student_result.length; i++) {
-    //         if(expected_result[i] === student_result[i]) {
-    //             tests.push(<p style="color:green" className='test' key={i}>
-    //                 Correct! Expected output was {expected_result[i]} and actual output was {student_result[i]}
-    //             </p>);
-    //         } else if (expected_result[i] === student_result[i]) {
-    //             tests.push(<p style="color:red" className='test' key={i}>
-    //                 Wrong! Expected output was {expected_result[i]} but actual output was {student_result[i]}
-    //             </p>);
-    //         }
-    //     }
-    //     return {
-    //         tests
-    //     }
-    // }
+    changeResults() {
+        this.forceUpdate();
+    }
+
+    render() {
+
+        let student = this.props.student;
+        let expected_result = [1, 3, 3];
+        let tests = [];
+        console.log("w00t");
+        console.log(student);
+
+        for(let i = 0; i < student.length; i++) {
+            console.log("w00t");
+            if(expected_result[i] === student[i]) {
+                tests.push(<p style="color:green" className='test' key={i}>
+                    Correct! Expected output was {expected_result[i]} and actual output was {student[i]}
+                </p>);
+            } else if (expected_result[i] !== student[i]) {
+                tests.push(<p style="color:red" className='test' key={i}>
+                    Wrong! Expected output was {expected_result[i]} but actual output was {student[i]}
+                </p>);
+            }
+            console.log(tests.pop());
+        }
+        return (
+            <div>
+                Test text
+                {tests.pop()}
+                {/*{tests.map(test => <li>{test}</li>)}*/}
+            </div>
+        );
+    }
 
 }
 
-function grade(studentAnswer, test) {
-
-    // let str = studentAnswer + "console.log(" + test.input + " === " + test.output + ")";
-    // eval(str);
-
-    let script = studentAnswer + test.input;
-    let output = eval(script).toString();
-    let passed = output === (test.output);
-
-    if (passed) {
-        console.log("Test passed: " + test.input + " ==> " + test.output);
-    } else {
-        console.log("Test failed: " + test.input);
-        console.log("- Expected Output: " + test.output);
-        console.log("- Actual Output: " + output);
-    }
-}
 
 class Problem extends React.Component {
+    constructor(props) {
+        super(props);
+        this.grade = this.grade.bind(this);
+        // this.studentResults = [];
+    }
+
     componentDidMount() {
        this.mirror = CodeMirror.fromTextArea(document.getElementById('problem' + this.props.element.id), {
            mode: "javascript",
@@ -96,12 +98,35 @@ class Problem extends React.Component {
        });
     }
 
+    grade(studentAnswer, test) {
+        let script = studentAnswer + test.input;
+        let output = eval(script).toString();
+        return output;
+        // this.studentResults.push(output);
+        // this.studentResults.push(output);
+        // console.log(this.studentResults.pop());
+        // TestResults.changeResults()
+        // for displaying more detailed results to console
+        // let passed = output === (test.output);
+        //
+        // if (passed) {
+        //     console.log("Test passed: " + test.input + " ==> " + test.output);
+        // } else {
+        //     console.log("Test failed: " + test.input);
+        //     console.log("- Expected Output: " + test.output);
+        //     console.log("- Actual Output: " + output);
+        // }
+    }
+
     render()  {
-       return (
+        let studentResults = [];
+        return (
            <div>
                <textarea id = {'problem' + this.props.element.id}>{this.props.element.starterCode}</textarea>
-               <button onClick={() => this.props.element.tests.map(test => grade(this.mirror.getValue(), test))}> Pass to grader </button>
-               {/*<TestResults/>*/}
+               <button onClick={() =>
+                   this.props.element.tests.map(test => studentResults.push(this.grade(this.mirror.getValue(), test)))}
+               >Submit for Grading</button>
+               <TestResults key={this.props.element.id} student={studentResults}/>
            </div>
        );
     }
@@ -123,8 +148,7 @@ class LessonNavigation extends React.Component {
     render() {
         return (
             <div>
-                <button
-                    onClick={() => {
+                <button onClick={() => {
                         this.props.changePage("course", this.props.currCourse, 0)}}
                 >Back to Course {this.props.currCourse}</button>
 
