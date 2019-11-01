@@ -45,45 +45,35 @@ function grade(studentAnswer, test) {
     }
 }
 
-class LessonElement extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
+class Problem extends React.Component {
     componentDidMount() {
-        if (this.props.element.problem) {
-            this.mirror = CodeMirror.fromTextArea(document.getElementById('problem' + this.props.element.id), {
-                mode: "javascript",
-                theme: "solarized"
-            });
-            // console.log(this.props.element);
-            // console.log(this.mirror.getValue())
-        }
+       this.mirror = CodeMirror.fromTextArea(document.getElementById('problem' + this.props.element.id), {
+           mode: "javascript",
+           theme: "solarized"
+       });
     }
 
-    //might need to use this to prevent CodeMirror boxes from showing up on multiple pages
-    componentWillUnmount() {}
-
-    render() {
-        if (this.props.element.problem) {
-            return (
-                <div>
-                    <textarea id = {'problem' + this.props.element.id}>{this.props.element.starterCode}</textarea>
-                    <button onClick={() => this.props.element.tests.map(test => grade(this.mirror.getValue(), test))}> Pass to grader </button>
-                    {/*<TestResults/>*/}
-                </div>
-            );
-        }
-        else if (!this.props.element.problem) {
-            let conv = new showdown.Converter();
-            let html = conv.makeHtml(this.props.element.contents);
-            return (
-                <div>
-                    <div dangerouslySetInnerHTML={{__html: html}}/>
-                </div>
-            );
-        }
+    render()  {
+       return (
+           <div>
+               <textarea id = {'problem' + this.props.element.id}>{this.props.element.starterCode}</textarea>
+               <button onClick={() => this.props.element.tests.map(test => grade(this.mirror.getValue(), test))}> Pass to grader </button>
+               {/*<TestResults/>*/}
+           </div>
+       );
     }
+}
+
+class TextElement extends React.Component {
+   render() {
+       let conv = new showdown.Converter();
+       let html = conv.makeHtml(this.props.element.contents);
+       return (
+           <div>
+               <div dangerouslySetInnerHTML={{__html: html}}/>
+           </div>
+       );
+   }
 }
 
 class LessonNavigation extends React.Component {
@@ -105,11 +95,13 @@ class Lesson extends React.Component {
         const course = this.props.currCourse;
         const numLessons = Object.keys(this.props.courses[course].lessonList).length;
 
+        const l = this.props.courses[course].lessonList[lesson];
+        const lessonElements = l.lessonElements;
         return (
             <div>
-                <LessonNavigation numLessons={numLessons} currLesson={this.props.currLesson} currCourse={this.props.currCourse} changePage={this.props.changePage}/>
-                {this.props.courses[course].lessonList[lesson].lessonElements.map(element => <LessonElement key={this.props.courses[course].lessonList[lesson].id + " " + element.id} element={element}/>)}
-                <LessonNavigation numLessons={numLessons} currLesson={this.props.currLesson} currCourse={this.props.currCourse} changePage={this.props.changePage}/>
+                <LessonNavigation numLessons={numLessons} currLesson={lesson} currCourse={course} changePage={this.props.changePage}/>
+                {lessonElements.map(element => { return element.problem ? <Problem key={l.id} element={element}/> : <TextElement key={l.id} element={element}/> })}
+                <LessonNavigation numLessons={numLessons} currLesson={lesson} currCourse={course} changePage={this.props.changePage}/>
             </div>
         );
     }
