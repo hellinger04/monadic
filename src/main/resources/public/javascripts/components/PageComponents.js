@@ -1,3 +1,46 @@
+const Space = window.styled.div`
+  background-image: url("/img/outrspc2.gif");
+  height: 100%;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+`;
+
+const EarthBound = window.styled.div`
+  background-image: url("/img/325.png");
+  height: auto;
+  position: absolute;
+  left: 0;
+  width: auto;
+  background-size: auto auto;
+`;
+
+const LessonBack = window.styled.div`
+    font-family: "Times New Roman", Times, serif;
+    color: white;
+    text-align: left;
+    font-size: 1em;
+`;
+
+const NoBullet = window.styled.div`
+    list-style: none;
+`;
+
+const Format = window.styled.div`
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    color: white;
+    text-align: center;
+    font-size: 1em;
+    list-style: none;
+`;
+
+const Title = window.styled.h1`
+  font-size: 5em;
+  text-align: center;
+  color: white;
+`;
+
 class TestResults extends React.Component {
     constructor(props) {
         super(props)
@@ -91,17 +134,17 @@ class LessonNavigation extends React.Component {
 
 class Lesson extends React.Component {
     render() {
-        const lesson = this.props.currLesson;
-        const course = this.props.currCourse;
-        const numLessons = Object.keys(this.props.courses[course].lessonList).length;
+        const lessonID = this.props.currLesson;
+        const courseID = this.props.currCourse;
+        const numLessons = Object.keys(this.props.courses[courseID].lessonList).length;
 
-        const l = this.props.courses[course].lessonList[lesson];
+        const l = this.props.courses[courseID].lessonList[lessonID];
         const lessonElements = l.lessonElements;
         return (
             <div>
-                <LessonNavigation numLessons={numLessons} currLesson={lesson} currCourse={course} changePage={this.props.changePage}/>
-                {lessonElements.map(element => { return element.problem ? <Problem key={l.id} element={element}/> : <TextElement key={l.id} element={element}/> })}
-                <LessonNavigation numLessons={numLessons} currLesson={lesson} currCourse={course} changePage={this.props.changePage}/>
+                <LessonNavigation numLessons={numLessons} currLesson={lessonID} currCourse={courseID} changePage={this.props.changePage}/>
+                {lessonElements.map(element => { return element.problem ? <Problem key={lessonID + " " + element.id} element={element}/> : <TextElement key={lessonID + " " + element.id} element={element}/> })}
+                <LessonNavigation numLessons={numLessons} currLesson={lessonID} currCourse={courseID} changePage={this.props.changePage}/>
             </div>
         );
     }
@@ -118,6 +161,57 @@ class LessonButton extends React.Component {
         );
     }
 }
+
+class Course extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        // console.log(this.props.courses);
+        const course = this.props.currCourse;
+        const numCourses = Object.keys(this.props.courses).length;
+        return (
+            <div>
+                <button onClick={() => {this.props.changePage("courselist", 0, 0)}}>Back to Courses</button>
+                <br></br>
+                <button style={{display: 0 <= this.props.currCourse - 1 ? "inline" : "none"}} onClick={() => {this.props.changePage("course", this.props.currCourse - 1, 0)}}>Previous Course</button>
+                <button style={{display: numCourses > this.props.currCourse + 1 ? "inline" : "none"}} onClick={() => {this.props.changePage("course", this.props.currCourse + 1, 0)}}>Next Course</button>
+                <ul>{this.props.courses[course].lessonList.map(lesson => <LessonButton key={lesson.id} lesson={lesson} currCourse={this.props.currCourse} changePage={this.props.changePage}/>)}</ul>
+            </div>
+        );
+    }
+}
+
+class CourseButton extends React.Component {
+    render() {
+        return (
+            <div>
+                <li> {
+                    <form>
+                        <button onClick={() => {this.props.changePage("course", this.props.course.id, 0)} }>Course {this.props.course.id}</button>
+                    </form>
+                } </li>
+            </div>
+        );
+    }
+}
+
+class CourseList extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        // console.log(this.props.courses);
+        return (
+            <div>
+                <ul>{this.props.courses.map(course => <CourseButton key={course.id} course={course} changePage={this.props.changePage}/>)}</ul>
+            </div>
+        );
+    }
+}
+
 class Register extends React.Component {
     constructor(props) {
         super(props);
@@ -184,99 +278,6 @@ class Login extends React.Component {
         );
     }
 }
-
-class Course extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        // console.log(this.props.courses);
-        const course = this.props.currCourse;
-        const numCourses = Object.keys(this.props.courses).length;
-        return (
-            <div>
-                <button onClick={() => {this.props.changePage("courselist", 0, 0)}}>Back to Courses</button>
-                <br></br>
-                <button style={{display: 0 <= this.props.currCourse - 1 ? "inline" : "none"}} onClick={() => {this.props.changePage("course", this.props.currCourse - 1, 0)}}>Previous Course</button>
-                <button style={{display: numCourses > this.props.currCourse + 1 ? "inline" : "none"}} onClick={() => {this.props.changePage("course", this.props.currCourse + 1, 0)}}>Next Course</button>
-                <ul>{this.props.courses[course].lessonList.map(lesson => <LessonButton key={lesson.id} lesson={lesson} currCourse={this.props.currCourse} changePage={this.props.changePage}/>)}</ul>
-            </div>
-        );
-    }
-}
-
-class CourseButton extends React.Component {
-    render() {
-        return (
-            <div>
-                <li> {
-                    <form>
-                        <button onClick={() => {this.props.changePage("course", this.props.course.id, 0)} }>Course {this.props.course.id}</button>
-                    </form>
-                } </li>
-            </div>
-        );
-    }
-}
-
-class CourseList extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        // console.log(this.props.courses);
-        return (
-            <div>
-                <ul>{this.props.courses.map(course => <CourseButton key={course.id} course={course} changePage={this.props.changePage}/>)}</ul>
-            </div>
-        );
-    }
-}
-
-const Space = window.styled.div`
-  background-image: url("/img/outrspc2.gif");
-  height: 100%;
-  position: absolute;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-`;
-
-const EarthBound = window.styled.div`
-  background-image: url("/img/325.png");
-  height: auto;
-  position: absolute;
-  left: 0;
-  width: auto;
-  background-size: auto auto;
-`;
-
-const LessonBack = window.styled.div`
-    font-family: "Times New Roman", Times, serif;
-    color: white;
-    text-align: left;
-    font-size: 1em;
-`;
-
-const NoBullet = window.styled.div`
-    list-style: none;
-`;
-
-const Format = window.styled.div`
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
-    color: white;
-    text-align: center;
-    font-size: 1em;
-    list-style: none;
-`;
-
-const Title = window.styled.h1`
-  font-size: 5em;
-  text-align: center;
-  color: white;
-`;
 
 class Monadic extends React.Component {
     constructor(props) {
