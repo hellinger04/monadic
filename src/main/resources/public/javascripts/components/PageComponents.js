@@ -45,35 +45,55 @@ class TestResults extends React.Component {
     constructor(props) {
         super(props);
         this.state = {submissions: 0};
+        this.studentResults = [];
     }
 
     changeResults() {
         this.forceUpdate();
     }
 
-    render() {
+    grade(studentAnswer, test) {
+        let script = studentAnswer + test.input;
+        let output = eval(script).toString();
+        this.studentResults.push(output);
+        this.changeResults();
 
-        let student = this.props.student;
+        // for displaying more detailed results to console
+        // let passed = output === (test.output);
+        //
+        // if (passed) {
+        //     console.log("Test passed: " + test.input + " ==> " + test.output);
+        // } else {
+        //     console.log("Test failed: " + test.input);
+        //     console.log("- Expected Output: " + test.output);
+        //     console.log("- Actual Output: " + output);
+        // }
+    }
+
+    render() {
         let expected_result = [1, 3, 3];
         let tests = [];
         console.log("w00t");
-        console.log(student);
+        console.log(this.studentResults);
 
-        for(let i = 0; i < student.length; i++) {
+        for(let i = 0; i < this.studentResults.length; i++) {
             console.log("w00t");
-            if(expected_result[i] === student[i]) {
+            if(expected_result[i] === this.studentResults[i]) {
                 tests.push(<p style="color:green" className='test' key={i}>
-                    Correct! Expected output was {expected_result[i]} and actual output was {student[i]}
+                    Correct! Expected output was {expected_result[i]} and actual output was {this.studentResults[i]}
                 </p>);
-            } else if (expected_result[i] !== student[i]) {
+            } else if (expected_result[i] !== this.studentResults[i]) {
                 tests.push(<p style="color:red" className='test' key={i}>
-                    Wrong! Expected output was {expected_result[i]} but actual output was {student[i]}
+                    Wrong! Expected output was {expected_result[i]} but actual output was {this.studentResults[i]}
                 </p>);
             }
             console.log(tests.pop());
         }
         return (
             <div>
+                <button onClick={() =>
+                    this.props.element.tests.map(test => this.grade(this.props.studentCode, test))}
+                >Submit for Grading</button>
                 Test text
                 {tests.pop()}
                 {/*{tests.map(test => <li>{test}</li>)}*/}
@@ -87,7 +107,7 @@ class TestResults extends React.Component {
 class Problem extends React.Component {
     constructor(props) {
         super(props);
-        this.grade = this.grade.bind(this);
+        // this.grade = this.grade.bind(this);
         // this.studentResults = [];
     }
 
@@ -98,35 +118,11 @@ class Problem extends React.Component {
        });
     }
 
-    grade(studentAnswer, test) {
-        let script = studentAnswer + test.input;
-        let output = eval(script).toString();
-        return output;
-        // this.studentResults.push(output);
-        // this.studentResults.push(output);
-        // console.log(this.studentResults.pop());
-        // TestResults.changeResults()
-        // for displaying more detailed results to console
-        // let passed = output === (test.output);
-        //
-        // if (passed) {
-        //     console.log("Test passed: " + test.input + " ==> " + test.output);
-        // } else {
-        //     console.log("Test failed: " + test.input);
-        //     console.log("- Expected Output: " + test.output);
-        //     console.log("- Actual Output: " + output);
-        // }
-    }
-
     render()  {
-        let studentResults = [];
         return (
            <div>
                <textarea id = {'problem' + this.props.element.id}>{this.props.element.starterCode}</textarea>
-               <button onClick={() =>
-                   this.props.element.tests.map(test => studentResults.push(this.grade(this.mirror.getValue(), test)))}
-               >Submit for Grading</button>
-               <TestResults key={this.props.element.id} student={studentResults}/>
+               <TestResults key={this.props.element.id} element={this.props.element} studentCode={this.mirror.getValue()}/>
            </div>
        );
     }
