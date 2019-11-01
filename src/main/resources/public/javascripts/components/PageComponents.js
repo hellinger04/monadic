@@ -3,13 +3,34 @@ class TestResults extends React.Component {
         super(props)
     }
 
+    // render() {
+    //
+    //     // TEST ONCE VARIABLES ARE FINALIZED (ex: student results, expected results)
+    //     var tests = [];
+    //     var student_result = [1, 2, 3];
+    //     var expected_result = [1, 3, 3];
+    //     for(let i; i < student_result.length; i++) {
+    //         if(expected_result[i] === student_result[i]) {
+    //             tests.push(<p style="color:green" className='test' key={i}>
+    //                 Correct! Expected output was {expected_result[i]} and actual output was {student_result[i]}
+    //             </p>);
+    //         } else if (expected_result[i] === student_result[i]) {
+    //             tests.push(<p style="color:red" className='test' key={i}>
+    //                 Wrong! Expected output was {expected_result[i]} but actual output was {student_result[i]}
+    //             </p>);
+    //         }
+    //     }
+    //     return {
+    //         tests
+    //     }
+    // }
+
 }
 
 function grade(studentAnswer, test) {
-    console.log(test)
 
-    // let str = studentAnswer + "console.log(adder(1,2) === 3)"
-    // eval(str)
+    let str = studentAnswer + "console.log(" + test.input + " === " + test.output + ")";
+    eval(str);
 }
 
 class LessonElement extends React.Component {
@@ -36,9 +57,8 @@ class LessonElement extends React.Component {
             return (
                 <div>
                     <textarea id = {'problem' + this.props.element.id}>{this.props.element.starterCode}</textarea>
-                    {/*<button onClick={() => grade(this.mirror.getValue(), this.props.problem)}> Pass to grader </button>*/}
                     <button onClick={() => this.props.element.tests.map(test => grade(this.mirror.getValue(), test))}> Pass to grader </button>
-                    
+                    {/*<TestResults/>*/}
                 </div>
             );
         }
