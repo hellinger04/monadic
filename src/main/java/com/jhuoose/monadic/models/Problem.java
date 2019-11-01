@@ -14,14 +14,6 @@ public class Problem implements LessonElement {
     // private CanonicalAnswer canonicalAnswer;
     private String starterCode;
 
-//    public Problem(int ID, ArrayList<TestCase> tests, CanonicalAnswer canonicalAnswer, String description, String starterCode) {
-////        this.ID = ID;
-////        this.tests = tests;
-////        this.canonicalAnswer = canonicalAnswer;
-////        this.description = description;
-////        this.starterCode = starterCode;
-////    }
-
     public Problem(int ID, String text) {
         this.id = ID;
         String[] texts = text.split("//\\s?TESTS\n");
@@ -32,7 +24,7 @@ public class Problem implements LessonElement {
             this.tests = new ArrayList<>();
             for (String testString : testStrings) {
                 String[] inputOutput = testString.split("\\s*==>\\s*");
-                tests.add(new TestCase(inputOutput[0], inputOutput[1]));
+                tests.add(new TestCase(inputOutput[0].substring(3), inputOutput[1]));
             }
         }
     }
@@ -57,10 +49,6 @@ public class Problem implements LessonElement {
     public List<TestCase> getTests() {
         return tests;
     }
-
-    /*public CanonicalAnswer getCanonicalAnswer() {
-        return canonicalAnswer;
-    }*/
 
     public String getStarterCode() {
         return starterCode;
