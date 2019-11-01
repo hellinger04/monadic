@@ -37,7 +37,7 @@ public class Server {
         courseList.add(secondCourse);
 
         ObjectMapper mapper = new ObjectMapper();
-        System.out.println(mapper.writeValueAsString(firstCourse));
+        // System.out.println(mapper.writeValueAsString(firstCourse));
 
         Javalin app = Javalin.create(config -> {
             config.addStaticFiles("/public");

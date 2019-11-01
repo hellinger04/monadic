@@ -24,7 +24,7 @@ class LessonElement extends React.Component {
                 mode: "javascript",
                 theme: "solarized"
             });
-            console.log(this.props)
+            console.log(this.props.element);
             console.log(this.mirror.getValue())
         }
     }
@@ -37,7 +37,7 @@ class LessonElement extends React.Component {
             return (
                 <div>
                     <textarea id = {'problem' + this.props.element.id}>{this.props.element.starterCode}</textarea>
-                    <button onClick={() => console.log(eval(this.mirror.getValue()))}>Submit</button>
+                    <button onClick={() => console.log(this.props.problem)}>Submit</button>
                     <button onClick={() => grade(this.mirror.getValue(), this.props.problem)}> Pass to grader </button>
                     
                 </div>
