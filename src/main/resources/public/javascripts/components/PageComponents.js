@@ -47,10 +47,6 @@ class TestResults extends React.Component {
         this.state = {submissions: 0};
     }
 
-    changeResults() {
-        this.setState({submissions: this.state.submissions});
-    }
-
     render() {
 
         let student = this.props.student;
