@@ -110,37 +110,16 @@ class Problem extends React.Component {
         let script = studentAnswer + test.input;
         let output = eval(script).toString();
         this.studentResults[test.id] = output;
-
-        // for displaying more detailed results to console
-        // let passed = output === (test.output);
-        //
-        // if (passed) {
-        //     console.log("Test passed: " + test.input + " ==> " + test.output);
-        // } else {
-        //     console.log("Test failed: " + test.input);
-        //     console.log("- Expected Output: " + test.output);
-        //     console.log("- Actual Output: " + output);
-        // }
     }
 
     render()  {
-        let studentResults = [];
-        if (this.state.results) {
-            return (
-                <div>
-                    <textarea id = {'problem' + this.props.element.id}>{this.props.element.starterCode}</textarea>
-                    <button onClick={() => this.handleClick()}>Save and Submit</button>
-                    <TestResults numSubmissions={this.count} studentResults={this.studentResults}/>
-                </div>
-            );
-        } else if (!this.state.results) {
-            return (
-                <div>
-                    <textarea id = {'problem' + this.props.element.id}>{this.props.element.starterCode}</textarea>
-                    <button onClick={() => this.handleClick()}>Save and Grade</button>
-                </div>
-            );
-        }
+        return (
+            <div>
+                <textarea id = {'problem' + this.props.element.id}>{this.props.element.starterCode}</textarea>
+                <button onClick={() => this.handleClick()}>Save and Submit</button>
+                <TestResults numSubmissions={this.count} studentResults={this.studentResults}/>
+            </div>
+        );
     }
 }
 
