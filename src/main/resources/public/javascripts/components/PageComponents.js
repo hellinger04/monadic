@@ -53,20 +53,20 @@ class TestResults extends React.Component {
 
     render() {
 
-        let student = this.props.studentResults;
-        let expected_result = ["5", "0", "FooBar"];
+        let student = this.props.student;
+        let expected = this.props.expected;
         let tests = [];
         console.log(student);
 
         for(let i = 0; i < student.length; i++) {
             console.log("current index: " + i);
             console.log("current value: " + student[i]);
-            if(expected_result[i] === student[i]) {
+            if(expected[i] === student[i]) {
                 tests.push(<p style={{color: 'white'}} className='test' key={i}>
-                    Correct! Expected output was {expected_result[i]} and actual output was {student[i]}</p>);
-            } else if (expected_result !== student[i]) {
+                    Correct! Expected output was {expected[i]} and actual output was {student[i]}</p>);
+            } else if (expected !== student[i]) {
                 tests.push(<p style={{color: 'red'}} className='test' key={i}>
-                    Wrong! Expected output was {expected_result[i]} but actual output was {student[i]}</p>);
+                    Wrong! Expected output was {expected[i]} but actual output was {student[i]}</p>);
             }
         }
         return (
@@ -113,11 +113,16 @@ class Problem extends React.Component {
     }
 
     render()  {
+        // store expected output values in array to pass to TestResults
+        let expectedOutputs = [];
+        for (let i = 0; i < this.props.element.tests.length; i++) {
+            expectedOutputs[i] = this.props.element.tests[i].output;
+        }
         return (
             <div>
                 <textarea id = {'problem' + this.props.element.id}>{this.props.element.starterCode}</textarea>
                 <button onClick={() => this.handleClick()}>Save and Submit</button>
-                <TestResults numSubmissions={this.count} studentResults={this.studentResults}/>
+                <TestResults numSubmissions={this.count} student={this.studentResults} expected={expectedOutputs}/>
             </div>
         );
     }
