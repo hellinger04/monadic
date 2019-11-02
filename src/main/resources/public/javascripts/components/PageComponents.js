@@ -45,19 +45,68 @@ class TestResults extends React.Component {
     constructor(props) {
         super(props);
         this.state = {submissions: 0};
-        this.studentResults = [];
     }
 
     changeResults() {
-        this.forceUpdate();
+        this.setState({submissions: this.state.submissions});
+    }
+
+    render() {
+
+        let student = this.props.studentResults;
+        let expected_result = ["5", "0", "FooBar"];
+        let tests = [];
+        // console.log("w00t");
+        // console.log(student);
+
+        for(let i = 0; i < student.length; i++) {
+            console.log(i);
+            console.log(student[i]);
+            if(expected_result[i] === student[i]) {
+                tests.push(<p style={{color: 'white'}} className='test' key={i}>
+                    Correct! Expected output was {expected_result[i]} and actual output was {student[i]}</p>);
+            } else if (expected_result !== student[i]) {
+                tests.push(<p style={{color: 'red'}} className='test' key={i}>
+                    Wrong! Expected output was {expected_result[i]} but actual output was {student[i]}</p>);
+            }
+        }
+        return (
+            <div>
+                <button onClick={() => this.changeResults()}>Grade Work</button>
+                <br></br>
+                Number of submissions: {this.props.numSubmissions}
+                {/*<p>{tests.pop()}</p>*/}
+                {tests.map(test => <li>{test}</li>)}
+            </div>
+        );
+    }
+
+}
+
+
+class Problem extends React.Component {
+    constructor(props) {
+        super(props);
+        this.grade = this.grade.bind(this);
+        this.count = 0;
+        this.studentResults = [];
+    }
+
+    componentDidMount() {
+       this.mirror = CodeMirror.fromTextArea(document.getElementById('problem' + this.props.element.id), {
+           mode: "javascript",
+           theme: "solarized"
+       });
     }
 
     grade(studentAnswer, test) {
         let script = studentAnswer + test.input;
         let output = eval(script).toString();
+        this.count++;
         this.studentResults.push(output);
-        this.changeResults();
-
+        // this.studentResults.push(output);
+        // console.log(this.studentResults.pop());
+        // TestResults.changeResults()
         // for displaying more detailed results to console
         // let passed = output === (test.output);
         //
@@ -70,59 +119,15 @@ class TestResults extends React.Component {
         // }
     }
 
-    render() {
-        let expected_result = [1, 3, 3];
-        let tests = [];
-        console.log("w00t");
-        console.log(this.studentResults);
-
-        for(let i = 0; i < this.studentResults.length; i++) {
-            console.log("w00t");
-            if(expected_result[i] === this.studentResults[i]) {
-                tests.push(<p style="color:green" className='test' key={i}>
-                    Correct! Expected output was {expected_result[i]} and actual output was {this.studentResults[i]}
-                </p>);
-            } else if (expected_result[i] !== this.studentResults[i]) {
-                tests.push(<p style="color:red" className='test' key={i}>
-                    Wrong! Expected output was {expected_result[i]} but actual output was {this.studentResults[i]}
-                </p>);
-            }
-            console.log(tests.pop());
-        }
-        return (
-            <div>
-                <button onClick={() =>
-                    this.props.element.tests.map(test => this.grade(this.props.studentCode, test))}
-                >Submit for Grading</button>
-                Test text
-                {tests.pop()}
-                {/*{tests.map(test => <li>{test}</li>)}*/}
-            </div>
-        );
-    }
-
-}
-
-
-class Problem extends React.Component {
-    constructor(props) {
-        super(props);
-        // this.grade = this.grade.bind(this);
-        // this.studentResults = [];
-    }
-
-    componentDidMount() {
-       this.mirror = CodeMirror.fromTextArea(document.getElementById('problem' + this.props.element.id), {
-           mode: "javascript",
-           theme: "solarized"
-       });
-    }
-
     render()  {
+        let studentResults = [];
         return (
            <div>
                <textarea id = {'problem' + this.props.element.id}>{this.props.element.starterCode}</textarea>
-               <TestResults key={this.props.element.id} element={this.props.element} studentCode={this.mirror.getValue()}/>
+               <button onClick={() =>
+                   this.props.element.tests.map(test => this.grade(this.mirror.getValue(), test))}
+               >Save Work</button>
+               <TestResults numSubmissions={this.count} studentResults={this.studentResults}/>
            </div>
        );
     }
