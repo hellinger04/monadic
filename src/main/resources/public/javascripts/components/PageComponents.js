@@ -71,10 +71,7 @@ class TestResults extends React.Component {
         }
         return (
             <div>
-                <button onClick={() => this.changeResults()}>Grade Work</button>
-                <br></br>
                 Number of submissions: {this.props.numSubmissions}
-                {/*<p>{tests.pop()}</p>*/}
                 {tests.map(test => <li>{test}</li>)}
             </div>
         );
@@ -89,6 +86,7 @@ class Problem extends React.Component {
         this.grade = this.grade.bind(this);
         this.count = 0;
         this.studentResults = [];
+        this.state = {results: false};
     }
 
     componentDidMount() {
@@ -98,14 +96,21 @@ class Problem extends React.Component {
        });
     }
 
+    showResults() {
+        this.setState({results: true});
+    }
+
+    handleClick() {
+        this.props.element.tests.map(test => this.grade(this.mirror.getValue(), test))
+        this.count++;
+        this.showResults();
+    }
+
     grade(studentAnswer, test) {
         let script = studentAnswer + test.input;
         let output = eval(script).toString();
-        this.count++;
         this.studentResults[test.id] = output;
-        // this.studentResults.push(output);
-        // console.log(this.studentResults.pop());
-        // TestResults.changeResults()
+
         // for displaying more detailed results to console
         // let passed = output === (test.output);
         //
@@ -120,15 +125,22 @@ class Problem extends React.Component {
 
     render()  {
         let studentResults = [];
-        return (
-           <div>
-               <textarea id = {'problem' + this.props.element.id}>{this.props.element.starterCode}</textarea>
-               <button onClick={() =>
-                   this.props.element.tests.map(test => this.grade(this.mirror.getValue(), test))}
-               >Save Work</button>
-               <TestResults numSubmissions={this.count} studentResults={this.studentResults}/>
-           </div>
-       );
+        if (this.state.results) {
+            return (
+                <div>
+                    <textarea id = {'problem' + this.props.element.id}>{this.props.element.starterCode}</textarea>
+                    <button onClick={() => this.handleClick()}>Save and Submit</button>
+                    <TestResults numSubmissions={this.count} studentResults={this.studentResults}/>
+                </div>
+            );
+        } else if (!this.state.results) {
+            return (
+                <div>
+                    <textarea id = {'problem' + this.props.element.id}>{this.props.element.starterCode}</textarea>
+                    <button onClick={() => this.handleClick()}>Save and Grade</button>
+                </div>
+            );
+        }
     }
 }
 
