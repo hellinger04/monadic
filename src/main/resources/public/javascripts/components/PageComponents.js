@@ -56,12 +56,11 @@ class TestResults extends React.Component {
         let student = this.props.studentResults;
         let expected_result = ["5", "0", "FooBar"];
         let tests = [];
-        // console.log("w00t");
-        // console.log(student);
+        console.log(student);
 
         for(let i = 0; i < student.length; i++) {
-            console.log(i);
-            console.log(student[i]);
+            console.log("current index: " + i);
+            console.log("current value: " + student[i]);
             if(expected_result[i] === student[i]) {
                 tests.push(<p style={{color: 'white'}} className='test' key={i}>
                     Correct! Expected output was {expected_result[i]} and actual output was {student[i]}</p>);
@@ -103,7 +102,7 @@ class Problem extends React.Component {
         let script = studentAnswer + test.input;
         let output = eval(script).toString();
         this.count++;
-        this.studentResults.push(output);
+        this.studentResults[test.id] = output;
         // this.studentResults.push(output);
         // console.log(this.studentResults.pop());
         // TestResults.changeResults()

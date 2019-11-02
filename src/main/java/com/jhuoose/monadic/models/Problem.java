@@ -22,9 +22,11 @@ public class Problem implements LessonElement {
         if (texts.length > 1) {
             String[] testStrings = texts[1].split("\n");
             this.tests = new ArrayList<>();
+            int currTest = 0;
             for (String testString : testStrings) {
                 String[] inputOutput = testString.split("\\s*==>\\s*");
-                tests.add(new TestCase(inputOutput[0].substring(3), inputOutput[1]));
+                tests.add(new TestCase(currTest, inputOutput[0].substring(3), inputOutput[1]));
+                currTest++;
             }
         }
     }
