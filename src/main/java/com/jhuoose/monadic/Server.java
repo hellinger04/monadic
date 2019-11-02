@@ -1,43 +1,38 @@
 package com.jhuoose.monadic;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jhuoose.monadic.models.Course;
 import com.jhuoose.monadic.models.Lesson;
 import io.javalin.Javalin;
-
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Server {
-    public static void main(String[] args) throws SQLException, JsonProcessingException {
+    public static void main(String[] args) throws SQLException {
 
-        //construct ArrayList to hold Course lessons
+        // construct ArrayLists to hold Course lessons and to hold Courses
         var courseZeroLessons = new ArrayList<Lesson>();
         var courseOneLessons = new ArrayList<Lesson>();
+        var courseList = new ArrayList<Course>();
 
+        // construct course 0 lessons
         for (int i = 0; i < 5; ++i) {
             courseZeroLessons.add(new Lesson(0, i));
         }
 
+        // construct course 1 lessons
         for (int i = 0; i < 4; ++i) {
             courseOneLessons.add(new Lesson(1, i));
         }
 
-
-        //construct an ArrayList to hold Courses
-        var courseList = new ArrayList<Course>();
-
-        //construct Courses and add them to list of courses
+        // construct Courses and add them to list of courses
         Course firstCourse = new Course(0, courseZeroLessons);
         Course secondCourse = new Course(1, courseOneLessons);
-
         courseList.add(firstCourse);
         courseList.add(secondCourse);
 
         ObjectMapper mapper = new ObjectMapper();
-        // System.out.println(mapper.writeValueAsString(firstCourse));
 
         Javalin app = Javalin.create(config -> {
             config.addStaticFiles("/public");

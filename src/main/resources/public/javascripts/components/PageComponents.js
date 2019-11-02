@@ -48,27 +48,28 @@ class TestResults extends React.Component {
     }
 
     render() {
-
+        // store student results and expected results from props in variables for easier access
         let student = this.props.student;
         let expected = this.props.expected;
-        let tests = [];
-        console.log(student);
+        // create array to store test results
+        let results = [];
 
-        for(let i = 0; i < student.length; i++) {
-            console.log("current index: " + i);
-            console.log("current value: " + student[i]);
+        for (let i = 0; i < student.length; i++) {
             if(expected[i] === student[i]) {
-                tests.push(<p style={{color: 'white'}} className='test' key={i}>
+                // if student result matches expected result, save 'correct' statement to results array
+                results.push(<p style={{color: 'white'}} className='result' key={i}>
                     Correct! Expected output was {expected[i]} and actual output was {student[i]}</p>);
             } else if (expected !== student[i]) {
-                tests.push(<p style={{color: 'red'}} className='test' key={i}>
+                // if student result does not match expected result, save 'incorrect' statement to results array
+                results.push(<p style={{color: 'red'}} className='result' key={i}>
                     Wrong! Expected output was {expected[i]} but actual output was {student[i]}</p>);
             }
         }
+
         return (
             <div>
                 Number of submissions: {this.props.numSubmissions}
-                {tests.map(test => <li>{test}</li>)}
+                {results.map(result => <li>{result}</li>)}
             </div>
         );
     }
@@ -93,18 +94,24 @@ class Problem extends React.Component {
     }
 
     showResults() {
+        // causes TestResults component to re-render
         this.setState({results: true});
     }
 
     handleClick() {
+        // map over available tests for current problem and grade student submission for each test
         this.props.element.tests.map(test => this.grade(this.mirror.getValue(), test))
+
+        // increment submission count and call method to update TestResults component
         this.count++;
         this.showResults();
     }
 
     grade(studentAnswer, test) {
-        let script = studentAnswer + test.input;
-        let output = eval(script).toString();
+        // run student's code using the specified test value
+        let output = eval(studentAnswer + test.input).toString();
+
+        // update student results array with test output
         this.studentResults[test.id] = output;
     }
 
@@ -114,6 +121,7 @@ class Problem extends React.Component {
         for (let i = 0; i < this.props.element.tests.length; i++) {
             expectedOutputs[i] = this.props.element.tests[i].output;
         }
+
         return (
             <div>
                 <textarea id = {'problem' + this.props.element.id}>{this.props.element.starterCode}</textarea>
@@ -141,22 +149,22 @@ class LessonNavigation extends React.Component {
         return (
             <div>
                 <button onClick={() => {
-                        this.props.changePage("course", this.props.currCourse, 0)}}
-                >Back to Course {this.props.currCourse}</button>
+                    this.props.changePage("course", this.props.currCourse, 0)}}>Back to Course {this.props.currCourse}
+                </button>
 
                 <br></br>
 
                 <button style={{display: 0 <= this.props.currLesson - 1 ? "inline" : "none"}}
                         onClick={() => {
                             this.props.changePage("lesson", this.props.currCourse, this.props.currLesson - 1)
-                        }}
-                >Previous Lesson</button>
+                        }}>Previous Lesson
+                </button>
 
                 <button style={{display: this.props.numLessons > this.props.currLesson + 1 ? "inline" : "none"}}
                         onClick={() => {
                             this.props.changePage("lesson", this.props.currCourse, this.props.currLesson + 1)
-                        }}
-                >Next Lesson</button>
+                        }}>Next Lesson
+                </button>
             </div>
         );
     }
@@ -164,12 +172,13 @@ class LessonNavigation extends React.Component {
 
 class Lesson extends React.Component {
     render() {
-        const lessonID = this.props.currLesson;
+        // store current course/lesson indices and lessonElements from props into variables for easy access
         const courseID = this.props.currCourse;
+        const lessonID = this.props.currLesson;
+        const lessonElements = this.props.courses[courseID].lessonList[lessonID].lessonElements;
+        // count the total lessons available in current course (used to determine which buttons to display)
         const numLessons = Object.keys(this.props.courses[courseID].lessonList).length;
 
-        const l = this.props.courses[courseID].lessonList[lessonID];
-        const lessonElements = l.lessonElements;
         return (
             <div>
                 <LessonNavigation numLessons={numLessons} currLesson={lessonID} currCourse={courseID}
@@ -195,8 +204,9 @@ class LessonButton extends React.Component {
             <NoBullet>
                 <li>
                     <button onClick={() => {
-                        this.props.changePage("lesson", this.props.currCourse, this.props.lesson.id)}}
-                    >Lesson {this.props.lesson.id}</button>
+                        this.props.changePage("lesson", this.props.currCourse, this.props.lesson.id)}}>
+                        Lesson {this.props.lesson.id}
+                    </button>
                 </li>
             </NoBullet>
         );
@@ -209,32 +219,34 @@ class Course extends React.Component {
     }
 
     render() {
-        // console.log(this.props.courses);
+        // store current course index and count total number of available courses
         const course = this.props.currCourse;
         const numCourses = Object.keys(this.props.courses).length;
+
         return (
             <div>
                 <button onClick={() => {
-                    this.props.changePage("courselist", 0, 0)}}
-                >Back to Courses</button>
+                    this.props.changePage("courselist", 0, 0)}}>Back to Courses
+                </button>
 
                 <br></br>
 
                 <button style={{display: 0 <= this.props.currCourse - 1 ? "inline" : "none"}}
                         onClick={() => {
                             this.props.changePage("course", this.props.currCourse - 1, 0)
-                        }}
-                >Previous Course</button>
+                        }}>Previous Course
+                </button>
 
                 <button style={{display: numCourses > this.props.currCourse + 1 ? "inline" : "none"}}
                         onClick={() => {
                             this.props.changePage("course", this.props.currCourse + 1, 0)
-                        }}
-                >Next Course</button>
+                        }}>Next Course
+                </button>
 
                 <ul>{this.props.courses[course].lessonList.map(lesson =>
-                    <LessonButton key={lesson.id} lesson={lesson} currCourse={this.props.currCourse}
-                                  changePage={this.props.changePage}/>)}
+                        <LessonButton key={lesson.id} lesson={lesson} currCourse={this.props.currCourse}
+                                  changePage={this.props.changePage}/>
+                    )}
                 </ul>
             </div>
         );
@@ -248,8 +260,8 @@ class CourseButton extends React.Component {
                 <li> {
                     <form>
                         <button onClick={() => {
-                            this.props.changePage("course", this.props.course.id, 0)}}
-                        >Course {this.props.course.id}</button>
+                            this.props.changePage("course", this.props.course.id, 0)}}>Course {this.props.course.id}
+                        </button>
                     </form>
                 } </li>
             </div>
@@ -267,7 +279,9 @@ class CourseList extends React.Component {
         return (
             <div>
                 <ul>{this.props.courses.map(course =>
-                    <CourseButton key={course.id} course={course} changePage={this.props.changePage}/>)}</ul>
+                        <CourseButton key={course.id} course={course} changePage={this.props.changePage}/>
+                    )}
+                </ul>
             </div>
         );
     }
