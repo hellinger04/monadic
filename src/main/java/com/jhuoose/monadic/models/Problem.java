@@ -1,9 +1,5 @@
 package com.jhuoose.monadic.models;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +7,8 @@ public class Problem implements LessonElement {
 
     private int id;
     private List<TestCase> tests;
-    // private CanonicalAnswer canonicalAnswer;
     private String starterCode;
+    // private CanonicalAnswer canonicalAnswer;
 
     public Problem(int ID, String text) {
         this.id = ID;

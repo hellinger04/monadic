@@ -2,6 +2,7 @@ package com.jhuoose.monadic.models;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -25,6 +26,43 @@ class LessonTests {
                 "\n" + "**Problem 0.2.1:** Create a function `filterFunctional` that takes two arguments:\n\n");
         LessonElement actualText = lesson.getLessonElements().get(2);
         assertEquals(actualText.getContents(), expectedText.getContents());
+    }
+
+    @Test
+    void testCourseConstructor() {
+        // construct four lessons to comprise the course
+        Lesson lesson0 = new Lesson(0, 0);
+        Lesson lesson1 = new Lesson(0, 1);
+        Lesson lesson2 = new Lesson (0, 2);
+        Lesson lesson3 = new Lesson (0, 3);
+
+        // construct an ArrayList and add each lesson to it
+        ArrayList<Lesson> lessons = new ArrayList<>();
+        lessons.add(lesson0);
+        lessons.add(lesson1);
+        lessons.add(lesson2);
+        lessons.add(lesson3);
+
+        // construct Course and get a sample problem and text from the Course's lessons
+        Course course = new Course(1, lessons);
+        LessonElement problem = course.getLessonList().get(0).getLessonElements().get(1);
+        LessonElement text = course.getLessonList().get(3).getLessonElements().get(4);
+
+        // set expected values for problem and text
+        String expectedProblem = "function adder(x, y) {\n" +
+                "    // your code here\n" +
+                "    // solution added for development purposes\n" +
+                "    return x + y\n" + "}\n\n";
+        String expectedText = "\n\n" +
+                "- A predicate, ie. a function that takes in a single argument and returns true or false.\n" +
+                "- A `List`\n" + "\n" +
+                "Your `filterFunctional` will run the predicate repeatedly over each element in the list. The output is a new `List` where only elements that make the predicate return `true` exist. For instance, if `greaterThan2` is your predicate and `[1, 3, 2, 5, 7]` is your `List`, then `filterFunctional` should return `[3, 5, 7]`.\n" +
+                "\n" + "Again, you should not mutate the `List`, nor should you use for or while loops.\n";
+
+        // assert that values from Course are as expected
+        assertEquals(1, course.getID());
+        assertEquals(problem.getContents(), expectedProblem);
+        assertEquals(text.getContents(), expectedText);
     }
 
     @Test
