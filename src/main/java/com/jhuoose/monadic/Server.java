@@ -1,5 +1,6 @@
 package com.jhuoose.monadic;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jhuoose.monadic.models.Course;
 import com.jhuoose.monadic.models.Lesson;
@@ -10,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Server {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, JsonProcessingException {
 
         //construct ArrayList to hold Course lessons
         var courseZeroLessons = new ArrayList<Lesson>();
@@ -36,6 +37,8 @@ public class Server {
         courseList.add(secondCourse);
 
         ObjectMapper mapper = new ObjectMapper();
+        // System.out.println(mapper.writeValueAsString(firstCourse));
+
         Javalin app = Javalin.create(config -> {
             config.addStaticFiles("/public");
         });
@@ -64,28 +67,28 @@ public class Server {
             ctx.status(201);
         });
 
-        app.delete("/items/:identifier", ctx -> {
-            var statement = connection.prepareStatement("DELETE FROM courses WHERE identifier = ?");
-            statement.setInt(1, Integer.parseInt(ctx.pathParam("identifier")));
-            if (statement.executeUpdate() == 0) {
-                ctx.status(404);
-            } else {
-                ctx.status(204);
-            }
-            statement.close();
-        });
+   //     app.delete("/items/:identifier", ctx -> {
+   //         var statement = connection.prepareStatement("DELETE FROM courses WHERE identifier = ?");
+   //         statement.setInt(1, Integer.parseInt(ctx.pathParam("identifier")));
+   //         if (statement.executeUpdate() == 0) {
+   //             ctx.status(404);
+   //         } else {
+   //             ctx.status(204);
+   //         }
+   //         statement.close();
+   //     });
 
-        app.put("/items/:identifier", ctx -> {
-            var statement = connection.prepareStatement("UPDATE courses SET lessons = ? WHERE identifier = ?");
-            statement.setString(1, ctx.formParam("lessons", ""));
-            statement.setInt(2, Integer.parseInt(ctx.pathParam("identifier")));
-            if (statement.executeUpdate() == 0) {
-                ctx.status(404);
-            } else {
-                ctx.status(204);
-            }
-            statement.close();
-        });
+   //     app.put("/items/:identifier", ctx -> {
+   //         var statement = connection.prepareStatement("UPDATE courses SET lessons = ? WHERE identifier = ?");
+   //         statement.setString(1, ctx.formParam("lessons", ""));
+   //         statement.setInt(2, Integer.parseInt(ctx.pathParam("identifier")));
+   //         if (statement.executeUpdate() == 0) {
+   //             ctx.status(404);
+   //         } else {
+   //             ctx.status(204);
+   //         }
+   //         statement.close();
+   //     });
 
         app.start(System.getenv("PORT") == null ? 7000 : Integer.parseInt(System.getenv("PORT")));
     }
