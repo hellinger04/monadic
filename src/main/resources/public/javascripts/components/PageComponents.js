@@ -41,6 +41,7 @@ const Title = window.styled.h1`
   color: white;
 `;
 
+
 class TestResults extends React.Component {
     constructor(props) {
         super(props);
@@ -132,6 +133,7 @@ class Problem extends React.Component {
     }
 }
 
+
 class TextElement extends React.Component {
    render() {
        let conv = new showdown.Converter();
@@ -143,6 +145,7 @@ class TextElement extends React.Component {
        );
    }
 }
+
 
 class LessonNavigation extends React.Component {
     render() {
@@ -169,6 +172,7 @@ class LessonNavigation extends React.Component {
         );
     }
 }
+
 
 class Lesson extends React.Component {
     render() {
@@ -198,6 +202,7 @@ class Lesson extends React.Component {
     }
 }
 
+
 class LessonButton extends React.Component {
     render() {
         return (
@@ -212,6 +217,7 @@ class LessonButton extends React.Component {
         );
     }
 }
+
 
 class Course extends React.Component {
     constructor(props) {
@@ -253,6 +259,7 @@ class Course extends React.Component {
     }
 }
 
+
 class CourseButton extends React.Component {
     render() {
         return (
@@ -269,13 +276,13 @@ class CourseButton extends React.Component {
     }
 }
 
+
 class CourseList extends React.Component {
     constructor(props) {
         super(props);
     }
 
     render() {
-        // console.log(this.props.courses);
         return (
             <div>
                 <ul>{this.props.courses.map(course =>
@@ -287,67 +294,29 @@ class CourseList extends React.Component {
     }
 }
 
-class Register extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
 
-    handleSubmit(event) {
-        console.log("in handle submit")
-        this.props.changePage("courselist", 0, 0)
-    }
-
-    render() {
-        // console.log(this.props.courses);
-        return (
-            <div>
-                <button onClick={() => {this.props.changePage("login", 0, 0)} }>Already registered? Login!</button>
-                <form onSubmit={this.handleSubmit}>
-                    <br></br>
-                    <label>
-                        Username:
-                        <input type="text" name="new name" />
-                    </label>
-                    <br></br>
-                    <label>
-                        Password:
-                        <input type="text" password="password" />
-                    </label>
-                    <br></br>
-                    <br></br>
-                    <input type="submit" value="Register" />
-                </form>
-            </div>
-        );
-    }
-}
 class Login extends React.Component {
     constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit(event) {
-        console.log("in handle submit")
+    handleSubmit() {
         this.props.changePage("courselist", 0, 0)
     }
 
     render() {
-        // console.log(this.props.courses);
         return (
             <div>
                 <button onClick={() => {this.props.changePage("register", 0, 0)} }>No account? Register now!</button>
                 <form onSubmit={this.handleSubmit}>
                     <br></br>
                     <label>
-                        Username:
-                        <input type="text" name="name" />
+                        Username: <input type="text" name="name" />
                     </label>
                     <br></br>
                     <label>
-                        Password:
-                        <input type="text" password="password" />
+                        Password: <input type="text" password="password" />
                     </label>
                     <br></br>
                     <br></br>
@@ -357,6 +326,40 @@ class Login extends React.Component {
         );
     }
 }
+
+
+class Register extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit() {
+        this.props.changePage("courselist", 0, 0)
+    }
+
+    render() {
+        return (
+            <div>
+                <button onClick={() => {this.props.changePage("login", 0, 0)} }>Already registered? Login!</button>
+                <form onSubmit={this.handleSubmit}>
+                    <br></br>
+                    <label>
+                        Username: <input type="text" name="new name" />
+                    </label>
+                    <br></br>
+                    <label>
+                        Password: <input type="text" password="password" />
+                    </label>
+                    <br></br>
+                    <br></br>
+                    <input type="submit" value="Register" />
+                </form>
+            </div>
+        );
+    }
+}
+
 
 class Monadic extends React.Component {
     constructor(props) {
@@ -370,6 +373,7 @@ class Monadic extends React.Component {
     }
 
     changePage(newpage, course, lesson) {
+        // update current page string and current course/lesson indices
         this.setState({page: newpage});
         this.setState({currCourse: course});
         this.setState({currLesson: lesson});
@@ -377,14 +381,15 @@ class Monadic extends React.Component {
 
 
     render() {
-        if (this.state.page === "courselist") {
+        if (this.state.page === "register") {
             return (
                 <Space>
                     <Format>
                         <Title>Welcome to Monadic!</Title>
-                        <h2>Available Courses</h2>
-                        <CourseList changePage={this.changePage} courses={this.state.courses}
-                                    currCourse={this.state.currCourse}/>
+                        <h2>Register Now</h2>
+                        <h3>It's quick and easy</h3>
+                        <Register changePage={this.changePage} courses={this.state.courses}
+                                  currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
                     </Format>
                 </Space>
             );
@@ -394,19 +399,19 @@ class Monadic extends React.Component {
                     <Format>
                         <Title>Welcome to Monadic!</Title>
                         <h2>Login to View Courses</h2>
-                        <Login changePage={this.changePage} courses={this.state.courses} 
-                                    currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
+                        <Login changePage={this.changePage} courses={this.state.courses}
+                               currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
                     </Format>
                 </Space>
             );
-        } else if (this.state.page === "register") {
+        } else if (this.state.page === "courselist") {
             return (
                 <Space>
                     <Format>
                         <Title>Welcome to Monadic!</Title>
-                        <h2>Register Now</h2>
-                        <h3>It's quick and easy</h3>
-                        <Register changePage={this.changePage} courses={this.state.courses} currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
+                        <h2>Available Courses</h2>
+                        <CourseList changePage={this.changePage} courses={this.state.courses}
+                                    currCourse={this.state.currCourse}/>
                     </Format>
                 </Space>
             );
