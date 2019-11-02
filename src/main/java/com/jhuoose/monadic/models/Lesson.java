@@ -9,10 +9,8 @@ import java.util.ArrayList;
 public class Lesson {
 
     private static final String problemRegex = "\\*\\*Problem \\d\\.\\d\\.\\d\\.:\\*\\*";
-
-    int ID;
-    ArrayList<LessonElement> lessonElements = new ArrayList<>();
-    String description;
+    private int ID;
+    private ArrayList<LessonElement> lessonElements = new ArrayList<>();
 
     public Lesson(int courseID, int lessonID) {
         this.ID = lessonID;
@@ -49,10 +47,6 @@ public class Lesson {
 
     public int getID() {
         return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
     }
 
     public ArrayList<LessonElement> getLessonElements() {
