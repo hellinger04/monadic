@@ -334,8 +334,16 @@ class Register extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit() {
-        this.props.changePage("courselist", 0, 0)
+    handleSubmit(event) {
+        //this.props.changePage("courselist", 0, 0)
+
+        event.preventDefault();
+        const data = new FormData(event.target);
+
+        fetch('/users', {
+            method: 'POST',
+            body: data,
+        });
     }
 
     render() {
@@ -345,11 +353,11 @@ class Register extends React.Component {
                 <form onSubmit={this.handleSubmit}>
                     <br></br>
                     <label>
-                        Username: <input type="text" name="new name" />
+                        Username: <input type="text" name="login" />
                     </label>
                     <br></br>
                     <label>
-                        Password: <input type="text" password="password" />
+                        Password: <input type="password" name="password" />
                     </label>
                     <br></br>
                     <br></br>

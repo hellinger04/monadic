@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: at.favre.lib:bcrypt:0.8.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/at.favre.lib/bcrypt/0.8.0/b55bf6f7d93a4526646252bb2dc6f181ed59f242/bcrypt-0.8.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/at.favre.lib/bcrypt/0.8.0/11aa02685f0ef4052f1b4987766cc5cfbe4020a0/bcrypt-0.8.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
