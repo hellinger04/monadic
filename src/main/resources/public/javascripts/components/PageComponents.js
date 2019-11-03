@@ -332,32 +332,27 @@ class Register extends React.Component {
     constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.changePage = this.props.changePage.bind(this);
     }
 
-    async validateUsername(exists) {
-
+    validateUsername(response) {
+        if (response.status === 401) {
+            alert("That username already exists. Please try another username.")
+        } else if (response.status === 201) {
+            this.props.changePage("courselist", 0, 0)
+        }
     }
 
     handleSubmit(event) {
+        // the form lets me submit when empty, this needs to be fixed
         event.preventDefault();
         const data = new FormData(event.target);
-        let username = data.entries().next().value[1];
-        console.log(username);
 
         fetch('/users', {
             method: 'POST',
             body: data,
-        }).then(function(exists) {
-            // console.log(invalid.status);
-            if (exists.status === 401) {
-                alert("That username already exists. Please try another username.")
-            } else if (exists.status === 201) {
-                alert("The username is unique!");
-                this.changePage("courselist", 0, 0)
-            }
-        });
+        }).then((function(exists) { this.validateUsername(exists) }).bind(this));
     }
+
 
     render() {
         return (
