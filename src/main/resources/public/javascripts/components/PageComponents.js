@@ -334,11 +334,19 @@ class Register extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    async validateUsername(username) {
+        await (await fetch("/users")).json();
+    }
+
     handleSubmit(event) {
         //this.props.changePage("courselist", 0, 0)
 
         event.preventDefault();
         const data = new FormData(event.target);
+        let username = data.entries().next().value[1];
+        console.log(username);
+        this.validateUsername(username);
+
 
         fetch('/users', {
             method: 'POST',
