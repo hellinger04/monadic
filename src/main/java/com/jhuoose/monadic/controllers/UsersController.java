@@ -23,6 +23,11 @@ public class UsersController {
         ctx.status(201);
     }
 
+    public void username(Context ctx) throws SQLException, UserNotFoundException {
+        var userfound = usersRepository.userExists(ctx.formParam("login"));
+        ctx.json(userfound);
+    }
+
     public void login(Context ctx) throws SQLException, UserNotFoundException {
         var user = usersRepository.getOne(ctx.formParam("login", ""));
         BCrypt.Result result = BCrypt.verifyer().verify(user.getPassword().toCharArray(),
