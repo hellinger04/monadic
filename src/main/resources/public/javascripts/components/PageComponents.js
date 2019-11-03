@@ -316,7 +316,7 @@ class Login extends React.Component {
                     </label>
                     <br></br>
                     <label>
-                        Password: <input type="text" password="password" />
+                        Password: <input type="password" password="password" />
                     </label>
                     <br></br>
                     <br></br>
@@ -349,7 +349,7 @@ class Register extends React.Component {
                     </label>
                     <br></br>
                     <label>
-                        Password: <input type="text" password="password" />
+                        Password: <input type="password" password="password" />
                     </label>
                     <br></br>
                     <br></br>

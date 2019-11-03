@@ -1,12 +1,14 @@
 # Monadic
 
-To run:
+## Getting Started
+This application can be run in Google Chrome. 
+[Click here to launch the web application.](https://jhumonadic.herokuapp.com/)
 
-In IntelliJ, click the green (run program) button in Server.java.
+## Registering for a New Account
+On the home page, you should be given the option to enter a username and password.
+Complete this form and then click the "Register" button.
+![](docs/register.png)
 
-![](docs/Running-Instructions-1.PNG)
-
-Once the server (and javalin, and other associated build files) starts, navigate to [localhost:7000](http://localhost:7000)
-in the browser. This is where the code should be running.
-
-![](docs/Running-Instructions-2.PNG)
+## Signing Into an Existing Account
+If you already have an account, click the "Already Registered? Login!" button 
+on the home page. 
