@@ -332,25 +332,30 @@ class Register extends React.Component {
     constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.changePage = this.props.changePage.bind(this);
     }
 
     async validateUsername(username) {
-        await (await fetch("/users")).json();
+        return await (await fetch("/users")).json();
     }
 
     handleSubmit(event) {
-        //this.props.changePage("courselist", 0, 0)
-
         event.preventDefault();
         const data = new FormData(event.target);
         let username = data.entries().next().value[1];
         console.log(username);
-        this.validateUsername(username);
 
-
-        fetch('/users', {
-            method: 'POST',
-            body: data,
+        this.validateUsername(username).then(function(invalid) {
+            if (invalid) {
+                alert("That username already exists. Please try another username.")
+            } else {
+                fetch('/users', {
+                    method: 'POST',
+                    body: data,
+                });
+                console.log("The username is unique!");
+                //this.changePage("courselist", 0, 0)
+            }
         });
     }
 
