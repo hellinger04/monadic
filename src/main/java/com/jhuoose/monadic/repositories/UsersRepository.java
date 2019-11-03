@@ -15,6 +15,23 @@ public class UsersRepository {
         statement.close();
     }
 
+    public boolean userExists(String username) throws SQLException, UserNotFoundException {
+        var statement = connection.prepareStatement( "SELECT username FROM users WHERE username = ?");
+        statement.setString( 1, username);
+        var result = statement.executeQuery();
+        try {
+            if (result.next()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        finally {
+            statement.close();
+            result.close();
+        }
+    }
+
     public User getOne(String username) throws SQLException, UserNotFoundException {
         var statement = connection.prepareStatement("SELECT username, password FROM users WHERE username = ?");
         statement.setString(1, username);
