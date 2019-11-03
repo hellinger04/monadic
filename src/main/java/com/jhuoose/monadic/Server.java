@@ -106,7 +106,6 @@ public class Server {
         app.routes(() -> {
             path("users", () -> {
                 post(usersController::signup);
-                get(usersController::username);
                 path("login", () -> {
                     post(usersController::login);
                 });

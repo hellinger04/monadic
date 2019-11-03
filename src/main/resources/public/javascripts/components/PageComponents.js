@@ -335,8 +335,8 @@ class Register extends React.Component {
         this.changePage = this.props.changePage.bind(this);
     }
 
-    async validateUsername(username) {
-        return await (await fetch("/users")).json();
+    async validateUsername(exists) {
+
     }
 
     handleSubmit(event) {
@@ -345,16 +345,16 @@ class Register extends React.Component {
         let username = data.entries().next().value[1];
         console.log(username);
 
-        this.validateUsername(username).then(function(invalid) {
-            if (invalid) {
+        fetch('/users', {
+            method: 'POST',
+            body: data,
+        }).then(function(exists) {
+            // console.log(invalid.status);
+            if (exists.status === 401) {
                 alert("That username already exists. Please try another username.")
-            } else {
-                fetch('/users', {
-                    method: 'POST',
-                    body: data,
-                });
-                console.log("The username is unique!");
-                //this.changePage("courselist", 0, 0)
+            } else if (exists.status === 201) {
+                alert("The username is unique!");
+                this.changePage("courselist", 0, 0)
             }
         });
     }

@@ -17,19 +17,22 @@ public class UsersController {
     }
 
     public void signup(Context ctx) throws SQLException {
-        usersRepository.create(new User(ctx.formParam("login", ""),
-                BCrypt.withDefaults().hashToString(12, ctx.formParam("password", "").toCharArray()))
-        );
-        ctx.status(201);
-    }
+        var userExists = 201;
 
-    public void username(Context ctx) throws SQLException, UserNotFoundException {
-        var userfound = usersRepository.userExists(ctx.formParam("login"));
-        ctx.json(userfound);
+        try {
+            usersRepository.create(new User(ctx.formParam("login", ""),
+                    BCrypt.withDefaults().hashToString(12, ctx.formParam("password", "").toCharArray()))
+            );
+        } catch (SQLException e) {
+            userExists = 401;
+        }
+
+        ctx.status(userExists);
     }
 
     public void login(Context ctx) throws SQLException, UserNotFoundException {
         var user = usersRepository.getOne(ctx.formParam("login", ""));
+        System.out.println(ctx.formParam("login", ""));
         BCrypt.Result result = BCrypt.verifyer().verify(user.getPassword().toCharArray(),
                 BCrypt.withDefaults().hashToString(12, ctx.formParam("password", "").toCharArray()));
         if (!result.verified) {
