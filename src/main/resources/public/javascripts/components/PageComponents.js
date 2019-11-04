@@ -360,6 +360,10 @@ class Register extends React.Component {
         }
     }
 
+    checkPassword(event) {
+        console.log(event.target.value);
+    }
+
     handleSubmit(event) {
         // the form lets me submit when empty, this needs to be fixed
         event.preventDefault();
@@ -376,7 +380,7 @@ class Register extends React.Component {
         return (
             <div>
                 <button onClick={() => {this.props.changePage("login", 0, 0)} }>Already registered? Login!</button>
-                <form onSubmit={this.handleSubmit}>
+                <form onChange={this.checkPassword} onSubmit={this.handleSubmit}>
                     <br></br>
                     <label>
                         Username: <input type="text" name="username" />
