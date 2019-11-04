@@ -2,8 +2,8 @@ package com.jhuoose.monadic;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jhuoose.monadic.models.Course;
-import com.jhuoose.monadic.models.Lesson;
+import com.jhuoose.monadic.models.lesson.Course;
+import com.jhuoose.monadic.models.lesson.Lesson;
 import com.jhuoose.monadic.controllers.UsersController;
 import com.jhuoose.monadic.repositories.UsersRepository;
 import io.javalin.Javalin;

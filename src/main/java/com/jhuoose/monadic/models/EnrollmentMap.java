@@ -1,5 +1,7 @@
 package com.jhuoose.monadic.models;
 
+import com.jhuoose.monadic.models.lesson.Lesson;
+
 import java.util.ArrayList;
 import java.util.Map;
 

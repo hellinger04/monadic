@@ -1,4 +1,4 @@
-package com.jhuoose.monadic.models;
+package com.jhuoose.monadic.models.lesson;
 
 import java.util.ArrayList;
 

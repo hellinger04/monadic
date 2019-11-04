@@ -1,4 +1,8 @@
-package com.jhuoose.monadic.models;
+package com.jhuoose.monadic.models.lesson;
+
+import com.jhuoose.monadic.models.lesson.element.LessonElement;
+import com.jhuoose.monadic.models.lesson.element.Problem;
+import com.jhuoose.monadic.models.lesson.element.Text;
 
 import java.io.BufferedReader;
 import java.io.File;

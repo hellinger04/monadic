@@ -1,4 +1,6 @@
-package com.jhuoose.monadic.models;
+package com.jhuoose.monadic.models.lesson.element;
+
+import com.jhuoose.monadic.models.lesson.answer.TestCase;
 
 import java.util.ArrayList;
 import java.util.List;
