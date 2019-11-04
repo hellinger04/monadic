@@ -20,7 +20,7 @@ public class UsersController {
         var userExists = 201;
 
         try {
-            usersRepository.create(new User(ctx.formParam("login", ""),
+            usersRepository.create(new User(ctx.formParam("username", ""),
                     BCrypt.withDefaults().hashToString(12, ctx.formParam("password", "").toCharArray()))
             );
         } catch (SQLException e) {
@@ -31,15 +31,15 @@ public class UsersController {
     }
 
     public void login(Context ctx) throws SQLException, UserNotFoundException {
-        var user = usersRepository.getOne(ctx.formParam("login", ""));
-        System.out.println(ctx.formParam("login", ""));
+        var user = usersRepository.getOne(ctx.formParam("username", ""));
         BCrypt.Result result = BCrypt.verifyer().verify(user.getPassword().toCharArray(),
                 BCrypt.withDefaults().hashToString(12, ctx.formParam("password", "").toCharArray()));
         if (!result.verified) {
-            throw new ForbiddenResponse();
+            ctx.status(401);
+        } else {
+            ctx.sessionAttribute("user", user);
+            ctx.status(200);
         }
-        ctx.sessionAttribute("user", user);
-        ctx.status(200);
     }
 
     public User currentUser(Context ctx) {
