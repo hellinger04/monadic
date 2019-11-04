@@ -1,5 +1,10 @@
 package com.jhuoose.monadic.models;
 
+import com.jhuoose.monadic.models.lesson.answer.TestCase;
+import com.jhuoose.monadic.models.lesson.*;
+import com.jhuoose.monadic.models.lesson.element.LessonElement;
+import com.jhuoose.monadic.models.lesson.element.Problem;
+import com.jhuoose.monadic.models.lesson.element.Text;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
