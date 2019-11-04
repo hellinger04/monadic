@@ -316,7 +316,7 @@ class Login extends React.Component {
         event.preventDefault();
         const data = new FormData(event.target);
 
-        fetch('/users', {
+        fetch('/users/login', {
             method: 'POST',
             body: data,
         }).then((function(response) { this.validateLogin(response) }).bind(this));
