@@ -1,5 +1,8 @@
 package com.jhuoose.monadic.models;
 
+import com.jhuoose.monadic.models.lesson.answer.StudentAnswer;
+import com.jhuoose.monadic.models.lesson.element.Problem;
+
 public class Grader {
 
     public Grader() {

@@ -90,7 +90,8 @@ class Problem extends React.Component {
     componentDidMount() {
        this.mirror = CodeMirror.fromTextArea(document.getElementById('problem' + this.props.element.id), {
            mode: "javascript",
-           theme: "solarized"
+           theme: "solarized",
+           lineNumbers: true
        });
     }
 
@@ -316,7 +317,7 @@ class Login extends React.Component {
                     </label>
                     <br></br>
                     <label>
-                        Password: <input type="password" password="password" />
+                        Password: <input type="password" name="password" />
                     </label>
                     <br></br>
                     <br></br>
@@ -334,9 +335,25 @@ class Register extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit() {
-        this.props.changePage("courselist", 0, 0)
+    validateUsername(response) {
+        if (response.status === 401) {
+            alert("That username already exists. Please try another username.")
+        } else if (response.status === 201) {
+            this.props.changePage("courselist", 0, 0)
+        }
     }
+
+    handleSubmit(event) {
+        // the form lets me submit when empty, this needs to be fixed
+        event.preventDefault();
+        const data = new FormData(event.target);
+
+        fetch('/users', {
+            method: 'POST',
+            body: data,
+        }).then((function(exists) { this.validateUsername(exists) }).bind(this));
+    }
+
 
     render() {
         return (
@@ -345,11 +362,11 @@ class Register extends React.Component {
                 <form onSubmit={this.handleSubmit}>
                     <br></br>
                     <label>
-                        Username: <input type="text" name="new name" />
+                        Username: <input type="text" name="login" />
                     </label>
                     <br></br>
                     <label>
-                        Password: <input type="password" password="password" />
+                        Password: <input type="password" name="password" />
                     </label>
                     <br></br>
                     <br></br>

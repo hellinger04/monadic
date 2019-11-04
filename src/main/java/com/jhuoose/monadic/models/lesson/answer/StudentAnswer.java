@@ -1,4 +1,4 @@
-package com.jhuoose.monadic.models;
+package com.jhuoose.monadic.models.lesson.answer;
 
 public class StudentAnswer extends Answer {
 

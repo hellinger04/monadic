@@ -1,4 +1,8 @@
 package com.jhuoose.monadic.models;
+
+import com.jhuoose.monadic.models.lesson.answer.StudentAnswer;
+import com.jhuoose.monadic.models.lesson.Lesson;
+
 import java.util.HashMap;
 import java.util.Map;
 
