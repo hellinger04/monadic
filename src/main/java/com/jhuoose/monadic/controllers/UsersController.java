@@ -31,14 +31,18 @@ public class UsersController {
     }
 
     public void login(Context ctx) throws SQLException, UserNotFoundException {
-        var user = usersRepository.getOne(ctx.formParam("username", ""));
-        BCrypt.Result result = BCrypt.verifyer().verify(ctx.formParam("password", "").toCharArray(),
-                user.getPassword().toCharArray());
-        if (!result.verified) {
+        try {
+            var user = usersRepository.getOne(ctx.formParam("username", ""));
+            BCrypt.Result result = BCrypt.verifyer().verify(ctx.formParam("password", "").toCharArray(),
+                    user.getPassword().toCharArray());
+            if (!result.verified) {
+                ctx.status(401);
+            } else {
+                ctx.sessionAttribute("user", user);
+                ctx.status(200);
+            }
+        } catch (UserNotFoundException e) {
             ctx.status(401);
-        } else {
-            ctx.sessionAttribute("user", user);
-            ctx.status(200);
         }
     }
 
