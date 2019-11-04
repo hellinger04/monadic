@@ -1,19 +1,19 @@
 const Space = window.styled.div`
   background-image: url("/img/outrspc2.gif");
-  height: 100%;
-  position: absolute;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-`;
-
-const EarthBound = window.styled.div`
-  background-image: url("/img/325.png");
   height: auto;
   position: absolute;
   left: 0;
   width: auto;
   background-size: auto auto;
+`;
+
+const EarthBound = window.styled.div`
+  background-image: url("/img/325.png");
+  height: 100%;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
 `;
 
 const LessonBack = window.styled.div`
@@ -90,7 +90,8 @@ class Problem extends React.Component {
     componentDidMount() {
        this.mirror = CodeMirror.fromTextArea(document.getElementById('problem' + this.props.element.id), {
            mode: "javascript",
-           theme: "solarized"
+           theme: "solarized",
+           lineNumbers: true
        });
     }
 
@@ -316,7 +317,7 @@ class Login extends React.Component {
                     </label>
                     <br></br>
                     <label>
-                        Password: <input type="text" password="password" />
+                        Password: <input type="password" password="password" />
                     </label>
                     <br></br>
                     <br></br>
@@ -349,7 +350,7 @@ class Register extends React.Component {
                     </label>
                     <br></br>
                     <label>
-                        Password: <input type="text" password="password" />
+                        Password: <input type="password" password="password" />
                     </label>
                     <br></br>
                     <br></br>
@@ -383,7 +384,7 @@ class Monadic extends React.Component {
     render() {
         if (this.state.page === "register") {
             return (
-                <Space>
+                <EarthBound>
                     <Format>
                         <Title>Welcome to Monadic!</Title>
                         <h2>Register Now</h2>
@@ -391,49 +392,49 @@ class Monadic extends React.Component {
                         <Register changePage={this.changePage} courses={this.state.courses}
                                   currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
                     </Format>
-                </Space>
+                </EarthBound>
             );
         } else if (this.state.page === "login") {
             return (
-                <Space>
+                <EarthBound>
                     <Format>
                         <Title>Welcome to Monadic!</Title>
                         <h2>Login to View Courses</h2>
                         <Login changePage={this.changePage} courses={this.state.courses}
                                currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
                     </Format>
-                </Space>
+                </EarthBound>
             );
         } else if (this.state.page === "courselist") {
             return (
-                <Space>
+                <EarthBound>
                     <Format>
                         <Title>Welcome to Monadic!</Title>
                         <h2>Available Courses</h2>
                         <CourseList changePage={this.changePage} courses={this.state.courses}
                                     currCourse={this.state.currCourse}/>
                     </Format>
-                </Space>
+                </EarthBound>
             );
         } else if (this.state.page === "course") {
             return (
-                <Space>
+                <EarthBound>
                     <Format>
                         <Title>Course {this.state.currCourse}</Title>
                         <h2>Available Lessons</h2>
                         <Course changePage={this.changePage} courses={this.state.courses}
                                 currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
                     </Format>
-                </Space>
+                </EarthBound>
             );
         } else if (this.state.page === "lesson") {
             return (
-                <EarthBound>
+                <Space>
                     <LessonBack>
                         <Lesson changePage={this.changePage} courses={this.state.courses}
                                 currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
                     </LessonBack>
-                </EarthBound>
+                </Space>
             );
         }
     }
