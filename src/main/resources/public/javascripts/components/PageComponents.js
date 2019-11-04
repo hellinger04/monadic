@@ -302,8 +302,24 @@ class Login extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit() {
-        this.props.changePage("courselist", 0, 0)
+    validateLogin(response) {
+        console.log(response.status);
+        if (response.status === 401) {
+            alert("Invalid username or password. Please try again")
+        } else if (response.status === 200) {
+            this.props.changePage("courselist", 0, 0)
+        }
+    }
+
+    handleSubmit(event) {
+        // the form lets me submit when empty, this needs to be fixed
+        event.preventDefault();
+        const data = new FormData(event.target);
+
+        fetch('/users/login', {
+            method: 'POST',
+            body: data,
+        }).then((function(response) { this.validateLogin(response) }).bind(this));
     }
 
     render() {
@@ -313,7 +329,7 @@ class Login extends React.Component {
                 <form onSubmit={this.handleSubmit}>
                     <br></br>
                     <label>
-                        Username: <input type="text" name="name" />
+                        Username: <input type="text" name="username" />
                     </label>
                     <br></br>
                     <label>
@@ -336,6 +352,7 @@ class Register extends React.Component {
     }
 
     validateUsername(response) {
+        console.log(response.status);
         if (response.status === 401) {
             alert("That username already exists. Please try another username.")
         } else if (response.status === 201) {
@@ -362,7 +379,7 @@ class Register extends React.Component {
                 <form onSubmit={this.handleSubmit}>
                     <br></br>
                     <label>
-                        Username: <input type="text" name="login" />
+                        Username: <input type="text" name="username" />
                     </label>
                     <br></br>
                     <label>
