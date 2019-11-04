@@ -1,12 +1,9 @@
 package com.jhuoose.monadic;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jhuoose.monadic.models.Course;
 import com.jhuoose.monadic.models.Lesson;
-import com.jhuoose.monadic.models.LessonElement;
-import com.jhuoose.monadic.models.Text;
 import com.jhuoose.monadic.controllers.UsersController;
 import com.jhuoose.monadic.repositories.UsersRepository;
 import io.javalin.Javalin;
@@ -36,7 +33,7 @@ public class Server {
         }
 
         // construct course 1 lessons
-        for (int i = 0; i < 4; ++i) {
+        for (int i = 0; i < 7; ++i) {
             courseOneLessons.add(new Lesson(1, i));
         }
 
