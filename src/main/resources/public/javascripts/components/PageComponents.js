@@ -362,6 +362,11 @@ class Register extends React.Component {
 
     checkPassword(event) {
         console.log(event.target.value);
+        if (event.target.value.length < 8) {
+            document.getElementById("errorSpan").innerHTML = "Password must be 8 characters long.";
+        } else {
+            document.getElementById("errorSpan").innerHTML = "";
+        }
     }
 
     handleSubmit(event) {
@@ -389,6 +394,8 @@ class Register extends React.Component {
                     <label>
                         Password: <input type="password" name="password" />
                     </label>
+                    <br></br>
+                    <span id="errorSpan" style={{color:"red"}}/>
                     <br></br>
                     <br></br>
                     <input type="submit" value="Register" />
