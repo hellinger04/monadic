@@ -1,90 +1,62 @@
 package com.jhuoose.monadic.repositories;
 
+import com.jhuoose.monadic.models.User;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
-/* Class to manage User objects stored in the database. The skeleton code for this class was copied from the
-   ItemsRepository.java file from the TODOOSE application.
- */
 public class UsersRepository {
-
     private Connection connection;
 
     public UsersRepository(Connection connection) throws SQLException {
         this.connection = connection;
         var statement = connection.createStatement();
-        //needs to be made specific to Users (copied from the ItemsRepository class)
-        //statement.execute("CREATE TABLE IF NOT EXISTS items (identifier INTEGER PRIMARY KEY AUTOINCREMENT, description TEXT)");
+        statement.execute("CREATE TABLE IF NOT EXISTS users (username TEXT PRIMARY KEY, password TEXT)");
         statement.close();
     }
 
-/* below code is copied from ItemsRepository, needs to be adjusted to work for the User class instead of the Item
-   class from the TODOOSE application
- */
-//    public ArrayList<ItemView> getAll() throws SQLException {
-//        var items = new ArrayList<ItemView>();
-//        var statement = connection.createStatement();
-//        var result = statement.executeQuery("SELECT identifier, description FROM items");
-//        while (result.next()) {
-//            items.add(new ItemView(
-//                            new Item(result.getInt("identifier"),
-//                                    result.getString("description")
-//                            )
-//                    )
-//            );
-//        }
-//        result.close();
-//        statement.close();
-//        return items;
-//    }
-//
-//    public Item getOne(int identifier) throws SQLException, ItemNotFoundException {
-//        var statement = connection.prepareStatement("SELECT identifier, description FROM items WHERE identifier = ?");
-//        statement.setInt(1, identifier);
-//        var result = statement.executeQuery();
-//        try {
-//            if (result.next()) {
-//                return new Item(
-//                        result.getInt("identifier"),
-//                        result.getString("description")
-//                );
-//            } else {
-//                throw new ItemNotFoundException();
-//            }
-//        }
-//        finally {
-//            statement.close();
-//            result.close();
-//        }
-//    }
-//
-//    public void create() throws SQLException {
-//        var statement = connection.createStatement();
-//        statement.execute("INSERT INTO items (description) VALUES (\"\")");
-//        statement.close();
-//    }
-//
-//    public void update(Item item) throws SQLException, ItemNotFoundException {
-//        var statement = connection.prepareStatement("UPDATE items SET description = ? WHERE identifier = ?");
-//        statement.setString(1, item.getDescription());
-//        statement.setInt(2, item.getIdentifier());
-//        try {
-//            if (statement.executeUpdate() == 0) throw new ItemNotFoundException();
-//        }
-//        finally {
-//            statement.close();
-//        }
-//    }
-//
-//    public void delete(Item item) throws SQLException, ItemNotFoundException {
-//        var statement = connection.prepareStatement("DELETE FROM items WHERE identifier = ?");
-//        statement.setInt(1, item.getIdentifier());
-//        try {
-//            if (statement.executeUpdate() == 0) throw new ItemNotFoundException();
-//        }
-//        finally {
-//            statement.close();
-//        }
-//    }
+    public boolean userExists(String username) throws SQLException, UserNotFoundException {
+        var statement = connection.prepareStatement( "SELECT username FROM users WHERE username = ?");
+        statement.setString( 1, username);
+        var result = statement.executeQuery();
+        try {
+            if (result.next()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        finally {
+            statement.close();
+            result.close();
+        }
+    }
 
+    public User getOne(String username) throws SQLException, UserNotFoundException {
+        var statement = connection.prepareStatement("SELECT username, password FROM users WHERE username = ?");
+        statement.setString(1, username);
+        var result = statement.executeQuery();
+        try {
+            if (result.next()) {
+                return new User(
+                        result.getString("username"),
+                        result.getString("password")
+                );
+            } else {
+                throw new UserNotFoundException();
+            }
+        }
+        finally {
+            statement.close();
+            result.close();
+        }
+    }
+
+    public void create(User user) throws SQLException {
+        var statement = connection.prepareStatement("INSERT INTO users (username, password) VALUES (?, ?)");
+        statement.setString(1, user.getUsername());
+        statement.setString(2, user.getPassword());
+        statement.execute();
+        statement.close();
+    }
 }
