@@ -22,8 +22,19 @@ button.
 
 ## Selecting a Lesson
 After registering or logging in, you should see a page with a list of available courses, similar to the list below. 
+*NOTE:* The available courses that you see might be different depending on your course progression. More courses and 
+lessons will become visible as you progress through different lessons. 
 
 ![](docs/lessonselection1.png)
 
-NOTE: The available courses that you see might be different depending on your course progression. More courses and 
-lessons will become visible as you continue to make progress through different lessons. 
+Select the course you would like to take. You should then see a list of available lessons from the course, similar to 
+the list below. *NOTE:* as described above, the available lessons that you see might be different depending on your 
+lesson progression. More courses and lessons will become visible as you progress through different lessons. 
+
+![](docs/lessonselection2.png)
+
+Select the lesson that you would like to take. You should then find yourself on the lesson page, like below.
+
+![](docs/lessonselection3.png)
+
+
