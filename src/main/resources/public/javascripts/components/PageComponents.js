@@ -378,8 +378,10 @@ class Register extends React.Component {
             // document.getElementById("errorSpan").style.property = new style
             // add <br> to inner HTML and remove one <br> from below the <span>
             document.getElementById("errorSpan").innerHTML = "Password must be 8 characters long.";
+            document.getElementById("registerButton").disabled = true;
         } else if (event.target.getAttribute('name') === "password" && event.target.value.length >= 8) {
             document.getElementById("errorSpan").innerHTML = "";
+            document.getElementById("registerButton").disabled = false;
         }
     }
 
@@ -413,7 +415,7 @@ class Register extends React.Component {
                     <span id="errorSpan" style={{color:"red"}}/>
                     <br></br>
                     <br></br>
-                    <input type="submit" value="Register" />
+                    <input id="registerButton" type="submit" value="Register" disabled/>
                 </form>
             </div>
         );
