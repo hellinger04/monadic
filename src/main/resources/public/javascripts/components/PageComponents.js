@@ -111,7 +111,13 @@ class Problem extends React.Component {
 
     grade(studentAnswer, test) {
         // run student's code using the specified test value
-        let output = eval(studentAnswer + test.input).toString();
+        let output;
+        try {
+            output = eval(studentAnswer + test.input).toString();
+        }
+        catch (e) {
+            this.studentResults[test.id] = "";
+        }
 
         // update student results array with test output
         this.studentResults[test.id] = output;
