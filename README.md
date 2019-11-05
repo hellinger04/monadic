@@ -6,7 +6,8 @@ This application can be run in Google Chrome.
 
 ## Registering for a New Account
 On the home page, you should be given the option to enter a username and password. Complete this form and then click the 
-"Register" button.
+"Register" button. Your username must be at least one character long and your password must be at least eight characters
+long. You will be alerted if your desired username is already taken and will have to select another username.
 
 ![](docs/register.png)
 
@@ -22,13 +23,13 @@ button.
 
 ## Selecting a Lesson
 After registering or logging in, you should see a page with a list of available courses, similar to the list below. 
-*NOTE:* The available courses that you see might be different depending on your course progression. More courses and 
+**NOTE:** The available courses that you see might be different depending on your course progression. More courses and 
 lessons will become visible as you progress through different lessons. 
 
 ![](docs/lessonselection1.png)
 
 Select the course you would like to take. You should then see a list of available lessons from the course, similar to 
-the list below. *NOTE:* as described above, the available lessons that you see might be different depending on your 
+the list below. **NOTE:** as described above, the available lessons that you see might be different depending on your 
 lesson progression. More courses and lessons will become visible as you progress through different lessons. 
 
 ![](docs/lessonselection2.png)
@@ -36,5 +37,19 @@ lesson progression. More courses and lessons will become visible as you progress
 Select the lesson that you would like to take. You should then find yourself on the lesson page, like below.
 
 ![](docs/lessonselection3.png)
+
+## Saving and Submitting Coding Activities
+Some lessons include short coding activities to reinforce concepts taught during the lesson. These coding activities are
+crucial to your understanding of monads and how to apply them in functional programming languages. After you complete a
+coding activity, you can click the "Save and Submit" button to save and receive feedback on your work. There is no limit
+to the number of times you can save and submit your work, but you will see a counter indicating how many times you have
+submitted for each activity. 
+
+![](docs/activities1.png)
+
+![](docs/activities2.png)
+
+  
+
 
 
