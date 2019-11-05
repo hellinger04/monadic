@@ -14,12 +14,12 @@ public class Problem implements LessonElement {
 
     public Problem(int ID, String text) {
         this.id = ID;
-        String[] texts = text.split("//\\s?TESTS\n");
+        this.tests = new ArrayList<>();
+        String[] texts = text.split("//\\s*TESTS\\s*\n");
         this.starterCode = texts[0];
 
         if (texts.length > 1) {
             String[] testStrings = texts[1].split("\n");
-            this.tests = new ArrayList<>();
             int currTest = 0;
             for (String testString : testStrings) {
                 String[] inputOutput = testString.split("\\s*==>\\s*");
