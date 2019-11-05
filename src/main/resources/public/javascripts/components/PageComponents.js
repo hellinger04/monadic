@@ -91,7 +91,11 @@ class Problem extends React.Component {
        this.mirror = CodeMirror.fromTextArea(document.getElementById('problem' + this.props.element.id), {
            mode: "text/typescript",
            theme: "monokai",
-           lineNumbers: true
+           lineNumbers: true,
+           styleActiveLine: true,
+           autoCloseBrackets: true,
+           continueComments: true,
+           extraKeys: {"Ctrl-Space": "autocomplete"}
        });
     }
 
