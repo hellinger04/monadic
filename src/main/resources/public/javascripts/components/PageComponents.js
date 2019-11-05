@@ -89,8 +89,8 @@ class Problem extends React.Component {
 
     componentDidMount() {
        this.mirror = CodeMirror.fromTextArea(document.getElementById('problem' + this.props.element.id), {
-           mode: "javascript",
-           theme: "solarized",
+           mode: "text/typescript",
+           theme: "monokai",
            lineNumbers: true
        });
     }
