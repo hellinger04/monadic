@@ -24,7 +24,7 @@ public class UsersController {
                     BCrypt.withDefaults().hashToString(12, ctx.formParam("password", "").toCharArray()))
             );
         } catch (SQLException e) {
-            userExists = 401;
+            userExists = 409;
         }
 
         ctx.status(userExists);
