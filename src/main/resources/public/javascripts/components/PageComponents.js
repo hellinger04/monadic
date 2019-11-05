@@ -358,10 +358,15 @@ class Login extends React.Component {
 class Register extends React.Component {
     constructor(props) {
         super(props);
+        this.validateCredentials = this.validateCredentials.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.changedUsername = false;
+        this.changedPassword = false;
+        this.invalidUsername = true;
+        this.invalidPassword = true;
     }
 
-    validateUsername(response) {
+    usernameExists(response) {
         console.log(response.status);
         if (response.status === 401) {
             alert("That username already exists. Please try another username.")
@@ -370,19 +375,42 @@ class Register extends React.Component {
         }
     }
 
-    checkPassword(event) {
-        // console.log('Value: ' + event.target.value);
-        // console.log('ID: ' + event.target.getAttribute('name'));
+    validateCredentials(event) {
+        if (event.target.getAttribute('name') === "username" && event.target.value.length < 1) {
+            this.changedUsername = true;
+            this.invalidUsername = true;
+        } else if (event.target.getAttribute('name') === "username") {
+            this.changedUsername = true;
+            this.invalidUsername = false;
+        }
 
         if (event.target.getAttribute('name') === "password" && event.target.value.length < 8) {
-            // document.getElementById("errorSpan").style.property = new style
-            // add <br> to inner HTML and remove one <br> from below the <span>
-            document.getElementById("errorSpan").innerHTML = "Password must be 8 characters long.";
+            this.changedPassword = true;
+            this.invalidPassword = true;
+        } else if (event.target.getAttribute('name') === "password") {
+            this.changedPassword = true;
+            this.invalidPassword = false;
+        }
+
+        let message = "";
+
+        if (this.changedUsername && this.invalidUsername) {
             document.getElementById("registerButton").disabled = true;
-        } else if (event.target.getAttribute('name') === "password" && event.target.value.length >= 8) {
-            document.getElementById("errorSpan").innerHTML = "";
+            message = message + "Username cannot be empty. ";
+        }
+
+        if (this.changedPassword && this.invalidPassword) {
+            document.getElementById("registerButton").disabled = true;
+            message = message + "Password must be 8 characters long.";
+        }
+
+        if (!(this.invalidUsername || this.invalidPassword)) {
             document.getElementById("registerButton").disabled = false;
         }
+
+        // document.getElementById("errorSpan").style.property = new style
+        // add <br> to inner HTML and remove one <br> from below the <span>
+        document.getElementById("errorSpan").innerHTML = message;
     }
 
     handleSubmit(event) {
@@ -394,7 +422,7 @@ class Register extends React.Component {
         fetch('/users', {
             method: 'POST',
             body: data,
-        }).then((function(exists) { this.validateUsername(exists) }).bind(this));
+        }).then((function(exists) { this.usernameExists(exists) }).bind(this));
     }
 
 
@@ -402,7 +430,8 @@ class Register extends React.Component {
         return (
             <div>
                 <button onClick={() => {this.props.changePage("login", 0, 0)} }>Already registered? Login!</button>
-                <form onChange={this.checkPassword} onSubmit={this.handleSubmit}>
+                <form onChange={this.validateCredentials} onSubmit={this.handleSubmit}>
+                    <br></br>
                     <br></br>
                     <label>
                         Username: <input type="text" name="username" />
