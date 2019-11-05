@@ -89,9 +89,13 @@ class Problem extends React.Component {
 
     componentDidMount() {
        this.mirror = CodeMirror.fromTextArea(document.getElementById('problem' + this.props.element.id), {
-           mode: "javascript",
-           theme: "solarized",
-           lineNumbers: true
+           mode: "text/typescript",
+           theme: "monokai",
+           lineNumbers: true,
+           styleActiveLine: true,
+           autoCloseBrackets: true,
+           continueComments: true,
+           extraKeys: {"Ctrl-Space": "autocomplete"}
        });
     }
 
@@ -111,7 +115,13 @@ class Problem extends React.Component {
 
     grade(studentAnswer, test) {
         // run student's code using the specified test value
-        let output = eval(studentAnswer + test.input).toString();
+        let output;
+        try {
+            output = eval(studentAnswer + test.input).toString();
+        }
+        catch (e) {
+            this.studentResults[test.id] = "";
+        }
 
         // update student results array with test output
         this.studentResults[test.id] = output;
