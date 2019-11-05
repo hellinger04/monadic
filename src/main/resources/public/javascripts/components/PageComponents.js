@@ -361,16 +361,21 @@ class Register extends React.Component {
     }
 
     checkPassword(event) {
-        console.log(event.target.value);
-        if (event.target.value.length < 8) {
+        // console.log('Value: ' + event.target.value);
+        // console.log('ID: ' + event.target.getAttribute('name'));
+
+        if (event.target.getAttribute('name') === "password" && event.target.value.length < 8) {
+            // document.getElementById("errorSpan").style.property = new style
+            // add <br> to inner HTML and remove one <br> from below the <span>
             document.getElementById("errorSpan").innerHTML = "Password must be 8 characters long.";
-        } else {
+        } else if (event.target.getAttribute('name') === "password" && event.target.value.length >= 8) {
             document.getElementById("errorSpan").innerHTML = "";
         }
     }
 
     handleSubmit(event) {
-        // the form lets me submit when empty, this needs to be fixed
+        // TODO the form lets me submit when empty, this needs to be fixed
+        // get target's username value and then check to ensure length > 0
         event.preventDefault();
         const data = new FormData(event.target);
 
