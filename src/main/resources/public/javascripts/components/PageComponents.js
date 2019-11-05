@@ -295,12 +295,12 @@ class CourseList extends React.Component {
 
     render() {
         return (
-            <div>
-                <ul>{this.props.courses.map(course =>
+            <NoBullet>
+                <li>{this.props.courses.map(course =>
                         <CourseButton key={course.id} course={course} changePage={this.props.changePage}/>
                     )}
-                </ul>
-            </div>
+                </li>
+            </NoBullet>
         );
     }
 }
