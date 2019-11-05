@@ -130,6 +130,7 @@ class Problem extends React.Component {
     render()  {
         // store expected output values in array to pass to TestResults
         let expectedOutputs = [];
+        console.log(this.props.element);
         for (let i = 0; i < this.props.element.tests.length; i++) {
             expectedOutputs[i] = this.props.element.tests[i].output;
         }
