@@ -69,8 +69,6 @@ class TestResults extends React.Component {
             }
         }
 
-        console.log(this.props.showError);
-
         if (error === "No errors!") {
             return (
                 <div>
@@ -83,7 +81,7 @@ class TestResults extends React.Component {
             return (
                 <div>
                     Number of submissions: {this.props.numSubmissions}
-                    <p style={{color: 'red'}}> {error} </p>
+                    <p style={{color: 'red'}}> {this.props.showError ? error : null } </p>
                 </div>
             );
         }
@@ -135,15 +133,14 @@ class Problem extends React.Component {
         let output;
         try {
             output = eval(studentAnswer + test.input).toString();
+            this.err = "No errors!"
         }
         catch (e) {
-            console.log(e);
             if (e.message === "Cannot read property 'toString' of undefined") {
                 this.err = "Your function needs to return a value!"
             } else {
                 this.err = e.message;
             }
-            console.log(this.err);
             this.studentResults[test.id] = "";
         }
 
@@ -157,8 +154,6 @@ class Problem extends React.Component {
         for (let i = 0; i < this.props.element.tests.length; i++) {
             expectedOutputs[i] = this.props.element.tests[i].output;
         }
-
-        console.log(this.err);
 
         return (
             <div>
