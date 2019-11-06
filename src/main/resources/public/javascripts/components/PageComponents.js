@@ -130,7 +130,6 @@ class Problem extends React.Component {
     render()  {
         // store expected output values in array to pass to TestResults
         let expectedOutputs = [];
-        console.log(this.props.element);
         for (let i = 0; i < this.props.element.tests.length; i++) {
             expectedOutputs[i] = this.props.element.tests[i].output;
         }
@@ -314,7 +313,6 @@ class Login extends React.Component {
     }
 
     validateLogin(response) {
-        console.log(response.status);
         if (response.status === 401) {
             alert("Invalid username or password. Please try again")
         } else if (response.status === 200) {
@@ -368,8 +366,7 @@ class Register extends React.Component {
     }
 
     usernameExists(response) {
-        console.log(response.status);
-        if (response.status === 401) {
+        if (response.status === 409) {
             alert("That username already exists. Please try another username.")
         } else if (response.status === 201) {
             this.props.changePage("courselist", 0, 0)
