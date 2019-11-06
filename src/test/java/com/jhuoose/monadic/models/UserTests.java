@@ -1,12 +1,9 @@
 package com.jhuoose.monadic.models;
 
-import com.jhuoose.monadic.models.User;
-
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class UserTests {
+class UserTests {
 
     @Test
     void testUserConstructor() {
