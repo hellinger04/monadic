@@ -52,11 +52,13 @@ class TestResults extends React.Component {
         // store student results and expected results from props in variables for easier access
         let student = this.props.student;
         let expected = this.props.expected;
+        let error = this.props.error;
+        let showError = this.props.showError;
         // create array to store test results
         let results = [];
 
         for (let i = 0; i < student.length; i++) {
-            if(expected[i] === student[i]) {
+            if (expected[i] === student[i]) {
                 // if student result matches expected result, save 'correct' statement to results array
                 results.push(<p style={{color: 'white'}} className='result' key={i}>
                     Correct! Expected output was {expected[i]} and actual output was {student[i]}</p>);
@@ -67,12 +69,24 @@ class TestResults extends React.Component {
             }
         }
 
-        return (
-            <div>
-                Number of submissions: {this.props.numSubmissions}
-                {results.map(result => <li>{result}</li>)}
-            </div>
-        );
+        console.log(this.props.showError);
+
+        if (error === "No errors!") {
+            return (
+                <div>
+                    Number of submissions: {this.props.numSubmissions}
+                    <p style={{color: 'green'}}> {this.props.showError ? error : null } </p>
+                    {results.map(result => <li>{result}</li>)}
+                </div>
+            );
+        } else {
+            return (
+                <div>
+                    Number of submissions: {this.props.numSubmissions}
+                    <p style={{color: 'red'}}> {error} </p>
+                </div>
+            );
+        }
     }
 
 }
@@ -84,19 +98,21 @@ class Problem extends React.Component {
         this.grade = this.grade.bind(this);
         this.count = 0;
         this.studentResults = [];
+        this.err = "No errors!";
+        this.showErr = false;
         this.state = {results: false};
     }
 
     componentDidMount() {
-       this.mirror = CodeMirror.fromTextArea(document.getElementById('problem' + this.props.element.id), {
-           mode: "text/typescript",
-           theme: "monokai",
-           lineNumbers: true,
-           styleActiveLine: true,
-           autoCloseBrackets: true,
-           continueComments: true,
-           extraKeys: {"Ctrl-Space": "autocomplete"}
-       });
+        this.mirror = CodeMirror.fromTextArea(document.getElementById('problem' + this.props.element.id), {
+            mode: "text/typescript",
+            theme: "monokai",
+            lineNumbers: true,
+            styleActiveLine: true,
+            autoCloseBrackets: true,
+            continueComments: true,
+            extraKeys: {"Ctrl-Space": "autocomplete", "Cmd-Space": "autocomplete"}
+        });
     }
 
     showResults() {
@@ -110,6 +126,7 @@ class Problem extends React.Component {
 
         // increment submission count and call method to update TestResults component
         this.count++;
+        this.showErr = true;
         this.showResults();
     }
 
@@ -120,6 +137,13 @@ class Problem extends React.Component {
             output = eval(studentAnswer + test.input).toString();
         }
         catch (e) {
+            console.log(e);
+            if (e.message === "Cannot read property 'toString' of undefined") {
+                this.err = "Your function needs to return a value!"
+            } else {
+                this.err = e.message;
+            }
+            console.log(this.err);
             this.studentResults[test.id] = "";
         }
 
@@ -134,11 +158,14 @@ class Problem extends React.Component {
             expectedOutputs[i] = this.props.element.tests[i].output;
         }
 
+        console.log(this.err);
+
         return (
             <div>
                 <textarea id = {'problem' + this.props.element.id}>{this.props.element.starterCode}</textarea>
                 <button onClick={() => this.handleClick()}>Save and Submit</button>
-                <TestResults numSubmissions={this.count} student={this.studentResults} expected={expectedOutputs}/>
+                <TestResults numSubmissions={this.count} student={this.studentResults} expected={expectedOutputs}
+                             error={this.err} showError={this.showErr}/>
             </div>
         );
     }
