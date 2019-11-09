@@ -8,12 +8,11 @@ const Space = window.styled.div`
 `;
 
 const EarthBound = window.styled.div`
-  background-image: url("/img/325.png");
+  background-image: url("/img/back2.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   height: 100%;
-  position: absolute;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
 `;
 
 const LessonBack = window.styled.div`
@@ -448,7 +447,12 @@ class Register extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="regMain">
+
+                <h1 className="rh1">【﻿ｍｏｎａｄｉｃ】</h1>
+                <h2 className="rh2">Register Now</h2>
+                <h3 className="rh3">It's quick and easy</h3>
+
                 <button onClick={() => {this.props.changePage("login", 0, 0)} }>Already registered? Login!</button>
                 <form onChange={this.validateCredentials} onSubmit={this.handleSubmit}>
                     <br></br>
@@ -481,6 +485,8 @@ class Monadic extends React.Component {
 
     async componentDidMount() {
         this.setState({ courses: await (await fetch("/courses")).json() });
+        // document.body.style.height = '100%';
+        // document.body.style.backgroundColor = "red";
     }
 
     changePage(newpage, course, lesson) {
@@ -494,15 +500,19 @@ class Monadic extends React.Component {
     render() {
         if (this.state.page === "register") {
             return (
-                <EarthBound>
-                    <Format>
-                        <Title>Welcome to Monadic!</Title>
-                        <h2>Register Now</h2>
-                        <h3>It's quick and easy</h3>
-                        <Register changePage={this.changePage} courses={this.state.courses}
-                                  currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
-                    </Format>
-                </EarthBound>
+
+                <Register changePage={this.changePage} courses={this.state.courses}
+                          currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
+
+                // <EarthBound>
+                //     <Format>
+                //         <Title>Welcome to Monadic!</Title>
+                //         <h2>Register Now</h2>
+                //         <h3>It's quick and easy</h3>
+                //         <Register changePage={this.changePage} courses={this.state.courses}
+                //                   currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
+                //     </Format>
+                // </EarthBound>
             );
         } else if (this.state.page === "login") {
             return (
