@@ -25,12 +25,25 @@ body {
     text-align: center;
 }
 
-.rh1 .rh2 .rh3 {
+.logo {
+    padding-top: 4em;
+    width: 50%;
+    padding-bottom: 3em;
+}
+
+.rNow {
+    padding-top: 2em;
+    width: 80%;
+    padding-bottom: 2em;
+}
+
+.rh2 .rh3 {
     text-align: center;
 }
 
-.rh1 {
+.rh2 {
     padding-top: 2em;
+    padding-bottom: 2em;
     color: white;
     font-size: 4em;
 }

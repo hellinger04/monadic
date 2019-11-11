@@ -449,7 +449,10 @@ class Register extends React.Component {
         return (
             <div className="regMain">
 
-                <h1 className="rh1">【﻿ｍｏｎａｄｉｃ】</h1>
+                <img src={"../img/monadic.png"} alt={"【﻿ｍｏｎａｄｉｃ】"} className={"logo"}/>
+                <br></br>
+                <img src={"../img/rnow.png"} alt={"【﻿ｍｏｎａｄｉｃ】"} className={"rNow"}/>
+                {/*<h1 className="rh1">【﻿ｍｏｎａｄｉｃ】</h1>*/}
                 <h2 className="rh2">Register Now</h2>
                 <h3 className="rh3">It's quick and easy</h3>
 
