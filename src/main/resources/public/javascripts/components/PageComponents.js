@@ -132,18 +132,8 @@ class Problem extends React.Component {
         // run student's code using the specified test value
         this.err = "No errors!";
 
-        // eliminates the '//' comments
-        let index = studentAnswer.indexOf("//");
-        while(index > 0) {
-            let index2 = studentAnswer.indexOf("\n", index);
-            let pt1 = studentAnswer.substring(0, index);
-            let pt2 = studentAnswer.substring(index2 + 1, studentAnswer.length);
-            studentAnswer = pt1 + pt2;
-            console.log(pt1);
-            console.log(pt2);
-            console.log(studentAnswer);
-            index = studentAnswer.indexOf("//");
-        }
+        studentAnswer = this.eliminateComments("//","\n",1, studentAnswer);
+        studentAnswer = this.eliminateComments("/*","*/",2, studentAnswer);
 
         // checks for instances of for and while
         var keyWords = ["for", "while"];
@@ -158,7 +148,6 @@ class Problem extends React.Component {
         if(this.err === "No errors!") {
             try {
                 output = eval(studentAnswer + test.input).toString();
-                this.err = "No errors!"
             } catch (e) {
                 if (e.message === "Cannot read property 'toString' of undefined") {
                     this.err = "Your function needs to return a value!"
@@ -171,6 +160,19 @@ class Problem extends React.Component {
             // update student results array with test output
             this.studentResults[test.id] = output;
         }
+    }
+
+    eliminateComments(begin, end, ind, answer) {
+        // takes out line and block comments
+        let index = answer.indexOf(begin);
+        while(index > 0) {
+            let index2 = answer.indexOf(end, index);
+            let pt1 = answer.substring(0, index);
+            let pt2 = answer.substring(index2 + ind, answer.length);
+            answer = pt1 + pt2;
+            index = answer.indexOf(begin);
+        }
+        return answer;
     }
 
     render()  {
