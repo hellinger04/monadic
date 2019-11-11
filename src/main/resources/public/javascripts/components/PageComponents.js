@@ -132,6 +132,19 @@ class Problem extends React.Component {
         // run student's code using the specified test value
         this.err = "No errors!";
 
+        // eliminates the '//' comments
+        let index = studentAnswer.indexOf("//");
+        while(index > 0) {
+            let index2 = studentAnswer.indexOf("\n", index);
+            let pt1 = studentAnswer.substring(0, index);
+            let pt2 = studentAnswer.substring(index2 + 1, studentAnswer.length);
+            studentAnswer = pt1 + pt2;
+            console.log(pt1);
+            console.log(pt2);
+            console.log(studentAnswer);
+            index = studentAnswer.indexOf("//");
+        }
+
         // checks for instances of for and while
         var keyWords = ["for", "while"];
         for (let i = 0; i < keyWords.length; i++) {
