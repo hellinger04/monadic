@@ -94,6 +94,7 @@ class Problem extends React.Component {
     constructor(props) {
         super(props);
         this.grade = this.grade.bind(this);
+        this.eliminateComments = this.eliminateComments.bind(this);
         this.count = 0;
         this.studentResults = [];
         this.err = "No errors!";
