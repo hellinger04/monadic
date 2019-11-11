@@ -130,22 +130,34 @@ class Problem extends React.Component {
 
     grade(studentAnswer, test) {
         // run student's code using the specified test value
-        let output;
-        try {
-            output = eval(studentAnswer + test.input).toString();
-            this.err = "No errors!"
-        }
-        catch (e) {
-            if (e.message === "Cannot read property 'toString' of undefined") {
-                this.err = "Your function needs to return a value!"
-            } else {
-                this.err = e.message;
+        this.err = "No errors!";
+
+        // checks for instances of for and while
+        var keyWords = ["for", "while"];
+        for (let i = 0; i < keyWords.length; i++) {
+            keyWords[i] = "\\b" + keyWords[i].replace(" ", "\\b \\b") + "\\b";
+            if(studentAnswer.toLowerCase().match(keyWords[i].toLowerCase())!=null){
+                this.err = "You are not allowed to use loops!";
             }
-            this.studentResults[test.id] = "";
         }
 
-        // update student results array with test output
-        this.studentResults[test.id] = output;
+        let output;
+        if(this.err === "No errors!") {
+            try {
+                output = eval(studentAnswer + test.input).toString();
+                this.err = "No errors!"
+            } catch (e) {
+                if (e.message === "Cannot read property 'toString' of undefined") {
+                    this.err = "Your function needs to return a value!"
+                } else {
+                    this.err = e.message;
+                }
+                this.studentResults[test.id] = "";
+            }
+
+            // update student results array with test output
+            this.studentResults[test.id] = output;
+        }
     }
 
     render()  {
