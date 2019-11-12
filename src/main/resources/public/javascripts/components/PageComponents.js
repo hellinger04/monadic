@@ -183,10 +183,15 @@ class Problem extends React.Component {
     eliminateComments(begin, end, ind, answer) {
         // takes out line and block comments
         let index = answer.indexOf(begin);
+        let pt2;
         while(index >= 0) {
             let index2 = answer.indexOf(end, index);
             let pt1 = answer.substring(0, index);
-            let pt2 = answer.substring(index2 + ind, answer.length);
+            if (index2 !== -1) {
+                pt2 = answer.substring(index2 + ind, answer.length);
+            } else {
+                pt2 = "";
+            }
             answer = pt1 + pt2;
             index = answer.indexOf(begin);
         }
