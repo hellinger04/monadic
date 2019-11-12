@@ -170,7 +170,8 @@ class Problem extends React.Component {
         if(this.props.element.keyWords[0] !== undefined) {
             for (let i = 0; i < this.props.element.keyWords.length; i++) {
                 if (studentAnswer.toLowerCase().match(this.props.element.keyWords[i].toLowerCase()) == null) {
-                    this.err = "You are not using a monadic type!";
+                    this.err = "You are not using " + this.props.element.keyWords[i].substring(2,
+                        this.props.element.keyWords[i].length-2) + "!";
                 }
             }
         }
