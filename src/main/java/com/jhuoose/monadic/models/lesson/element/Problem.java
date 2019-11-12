@@ -16,7 +16,7 @@ public class Problem implements LessonElement {
     // private CanonicalAnswer canonicalAnswer;
 
     public Problem(int ID, String text) {
-        String[] words = new String[] {"run", "bind", "raise", "ret"};
+        String[] words = new String[] {"run", "bind", "raise", "ret", "tryWith"};
 
         this.id = ID;
         this.tests = new ArrayList<>();
