@@ -95,6 +95,7 @@ class Problem extends React.Component {
         super(props);
         this.grade = this.grade.bind(this);
         this.eliminateComments = this.eliminateComments.bind(this);
+        this.parse = this.parse.bind(this);
         this.count = 0;
         this.studentResults = [];
         this.err = "No errors!";
@@ -133,17 +134,7 @@ class Problem extends React.Component {
         // run student's code using the specified test value
         this.err = "No errors!";
 
-        studentAnswer = this.eliminateComments("//","\n",1, studentAnswer);
-        studentAnswer = this.eliminateComments("/*","*/",2, studentAnswer);
-
-        // checks for instances of for and while
-        var keyWords = ["for", "while"];
-        for (let i = 0; i < keyWords.length; i++) {
-            keyWords[i] = "\\b" + keyWords[i].replace(" ", "\\b \\b") + "\\b";
-            if(studentAnswer.toLowerCase().match(keyWords[i].toLowerCase())!=null){
-                this.err = "You are not allowed to use loops!";
-            }
-        }
+        studentAnswer = this.parse(studentAnswer);
 
         let output;
         if(this.err === "No errors!") {
@@ -161,6 +152,29 @@ class Problem extends React.Component {
             // update student results array with test output
             this.studentResults[test.id] = output;
         }
+    }
+
+    parse(studentAnswer) {
+        studentAnswer = this.eliminateComments("//","\n",1, studentAnswer);
+        studentAnswer = this.eliminateComments("/*","*/",2, studentAnswer);
+
+        // checks for instances of for and while
+        let disallowed = ["for", "while"];
+        for (let i = 0; i < disallowed.length; i++) {
+            disallowed[i] = "\\b" + disallowed[i].replace(" ", "\\b \\b") + "\\b";
+            if(studentAnswer.toLowerCase().match(disallowed[i].toLowerCase())!=null){
+                this.err = "You are not allowed to use loops!";
+            }
+        }
+
+        if(this.props.element.keyWords[0] !== undefined) {
+            for (let i = 0; i < this.props.element.keyWords.length; i++) {
+                if (studentAnswer.toLowerCase().match(this.props.element.keyWords[i].toLowerCase()) == null) {
+                    this.err = "You are not using a monadic type!";
+                }
+            }
+        }
+        return studentAnswer;
     }
 
     eliminateComments(begin, end, ind, answer) {
