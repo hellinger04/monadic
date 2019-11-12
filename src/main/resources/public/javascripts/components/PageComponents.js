@@ -163,7 +163,8 @@ class Problem extends React.Component {
         for (let i = 0; i < disallowed.length; i++) {
             disallowed[i] = "\\b" + disallowed[i].replace(" ", "\\b \\b") + "\\b";
             if(studentAnswer.toLowerCase().match(disallowed[i].toLowerCase())!=null){
-                this.err = "You are not allowed to use loops!";
+                this.err = "You are not allowed to use " + disallowed[i].substring(2,
+                    disallowed[i].length-2) +  " loops!";
             }
         }
 
