@@ -94,6 +94,8 @@ class Problem extends React.Component {
     constructor(props) {
         super(props);
         this.grade = this.grade.bind(this);
+        this.eliminateComments = this.eliminateComments.bind(this);
+        this.parse = this.parse.bind(this);
         this.count = 0;
         this.studentResults = [];
         this.err = "No errors!";
@@ -130,22 +132,70 @@ class Problem extends React.Component {
 
     grade(studentAnswer, test) {
         // run student's code using the specified test value
+        this.err = "No errors!";
+
+        studentAnswer = this.parse(studentAnswer);
+
         let output;
-        try {
-            output = eval(studentAnswer + test.input).toString();
-            this.err = "No errors!"
-        }
-        catch (e) {
-            if (e.message === "Cannot read property 'toString' of undefined") {
-                this.err = "Your function needs to return a value!"
-            } else {
-                this.err = e.message;
+        if(this.err === "No errors!") {
+            try {
+                output = eval(studentAnswer + test.input).toString();
+            } catch (e) {
+                if (e.message === "Cannot read property 'toString' of undefined") {
+                    this.err = "Your function needs to return a value!"
+                } else {
+                    this.err = e.message;
+                }
+                this.studentResults[test.id] = "";
             }
-            this.studentResults[test.id] = "";
+
+            // update student results array with test output
+            this.studentResults[test.id] = output;
+        }
+    }
+
+    parse(studentAnswer) {
+        studentAnswer = this.eliminateComments("//","\n",1, studentAnswer);
+        studentAnswer = this.eliminateComments("/*","*/",2, studentAnswer);
+
+        // checks for instances of for and while
+        let disallowed = ["for", "while"];
+        for (let i = 0; i < disallowed.length; i++) {
+            disallowed[i] = "\\b" + disallowed[i].replace(" ", "\\b \\b") + "\\b";
+            if(studentAnswer.toLowerCase().match(disallowed[i].toLowerCase())!=null){
+                this.err = "You are not allowed to use " + disallowed[i].substring(2,
+                    disallowed[i].length-2) +  " loops!";
+            }
         }
 
-        // update student results array with test output
-        this.studentResults[test.id] = output;
+        // checks if key monadic words exist
+        if(this.props.element.keyWords[0] !== undefined) {
+            for (let i = 0; i < this.props.element.keyWords.length; i++) {
+                if (studentAnswer.toLowerCase().match(this.props.element.keyWords[i].toLowerCase()) == null) {
+                    this.err = "You are not using " + this.props.element.keyWords[i].substring(2,
+                        this.props.element.keyWords[i].length-2) + "!";
+                }
+            }
+        }
+        return studentAnswer;
+    }
+
+    eliminateComments(begin, end, ind, answer) {
+        // takes out line and block comments
+        let index = answer.indexOf(begin);
+        let pt2;
+        while(index >= 0) {
+            let index2 = answer.indexOf(end, index);
+            let pt1 = answer.substring(0, index);
+            if (index2 !== -1) {
+                pt2 = answer.substring(index2 + ind, answer.length);
+            } else {
+                pt2 = "";
+            }
+            answer = pt1 + pt2;
+            index = answer.indexOf(begin);
+        }
+        return answer;
     }
 
     render()  {
