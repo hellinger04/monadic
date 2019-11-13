@@ -39,12 +39,10 @@ public class Problem implements LessonElement {
             int currTest = 0;
             for (String testString : testStrings) {
                 String[] inputOutput = testString.split("\\s*==>\\s*");
-                tests.add(new TestCase(currTest, inputOutput[0].substring(3), inputOutput[1]));
+                tests.add(new TestCase(currTest, inputOutput[0], inputOutput[1]));
                 currTest++;
             }
         }
-
-
     }
 
     public Problem(int ID, String starterCode, String tests, List<String> keyWords) {

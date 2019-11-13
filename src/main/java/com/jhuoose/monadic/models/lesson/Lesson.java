@@ -27,13 +27,17 @@ public class Lesson {
             System.err.println("Bad filepath: " + filePath);
         }
 
-        String[] elements = text.split("''''"); // FIXME Placeholder for the placeholder
+        String[] elements = text.split("```");
         for (int i = 0; i < elements.length; ++i) {
             String elementText = elements[i];
-            if (elementText.startsWith("problem\n")) {
+            if (elementText.startsWith("problem\n")) { // Start of problem
                 this.lessonElements.add(new Problem(i, elementText.substring(8)));
-            } else {
+            } else if (elementText.startsWith("\n")) { // Start of regular text
                 this.lessonElements.add(new Text(i, elementText));
+            } else if (elementText.startsWith("#")) { // Start of heading
+                this.lessonElements.add(new Text(i, elementText));
+            } else { // Start of regular JS/TS/etc. code
+                this.lessonElements.add(new Text(i, "```" + elementText + "```"));
             }
         }
     }
