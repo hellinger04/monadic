@@ -525,14 +525,6 @@ class Monadic extends React.Component {
             return (
                 <Login changePage={this.changePage} courses={this.state.courses}
                        currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
-                // <EarthBound>
-                //     <Format>
-                //         <Title>Welcome to Monadic!</Title>
-                //         <h2>Login to View Courses</h2>
-                //         <Login changePage={this.changePage} courses={this.state.courses}
-                //                currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
-                //     </Format>
-                // </EarthBound>
             );
         } else if (this.state.page === "courselist") {
             return (

@@ -53,8 +53,7 @@ body {
     padding:  .3em;
 }
 
-/*this is the registration section*/
-
+/*this is the registration/login section*/
 .regMain {
     background-image: url("../img/lofi.gif");
     background-repeat: no-repeat;
@@ -68,6 +67,13 @@ body {
 .rForm {
     font-family: IBM Bios, Arial;
 }
+
+/*splash page styling*/
+.spMain {
+    background-color: #ffa3e2;
+}
+
+
 
 /*const Space = window.styled.div`*/
 /*              background-image: url("/img/outrspc2.gif");*/
