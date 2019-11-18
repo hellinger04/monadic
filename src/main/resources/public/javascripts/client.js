@@ -1,15 +1,15 @@
-class Application extends React.Component {
-    render() {
-        return (
-            <div>
-                <Monadic/>
-            </div>
-        )
-    }
-}
+// class Application extends React.Component {
+//     render() {
+//         return (
+//             <React.Fragment>
+//                 <Monadic/>
+//             </React.Fragment>
+//         )
+//     }
+// }
 
 ReactDOM.render(
-    <Application/>,
+    <Monadic/>,
     document.querySelector("#application")
 )
 

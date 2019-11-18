@@ -8,12 +8,11 @@ const Space = window.styled.div`
 `;
 
 const EarthBound = window.styled.div`
-  background-image: url("/img/325.png");
+  background-image: url("/img/back2.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   height: 100%;
-  position: absolute;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
 `;
 
 const LessonBack = window.styled.div`
@@ -405,20 +404,34 @@ class Login extends React.Component {
 
     render() {
         return (
-            <div>
-                <button onClick={() => {this.props.changePage("register", 0, 0)} }>No account? Register now!</button>
-                <form onSubmit={this.handleSubmit}>
+            <div className={"regMain"}>
+                <p><br></br></p>
+                <span className={"logo"}>M O N A D I C</span>
+                <p><br></br></p>
+                <span className={"asciiLite"}>Welcome back! Please login below.</span>
+                <p></p>
+
+                <form onSubmit={this.handleSubmit} className={"rForm"}>
+                    <p></p>
+                    <span className={"asciiLite"}>Username</span>
                     <br></br>
                     <label>
-                        Username: <input type="text" name="username" />
+                        <input type="text" name="username" placeholder={"Username"}/>
                     </label>
+                    <p><br></br></p>
+
+                    <span className={"asciiLite"}>Password</span>
                     <br></br>
                     <label>
-                        Password: <input type="password" name="password" />
+                        <input type="password" name="password" placeholder={"Password"}/>
                     </label>
-                    <br></br>
-                    <br></br>
+
+                    <p></p>
+                    <span id="errorSpan" style={{color:"red"}}/>
+                    <p></p>
                     <input type="submit" value="Login" />
+                    <p></p>
+                    <button onClick={() => {this.props.changePage("register", 0, 0)} }>No account? Register now!</button>
                 </form>
             </div>
         );
@@ -429,12 +442,14 @@ class Login extends React.Component {
 class Register extends React.Component {
     constructor(props) {
         super(props);
-        this.validateCredentials = this.validateCredentials.bind(this);
+        this.state = {changes: 0};
+        this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.changedUsername = false;
         this.changedPassword = false;
         this.invalidUsername = true;
         this.invalidPassword = true;
+        this.isMessage = false;
     }
 
     usernameExists(response) {
@@ -445,7 +460,7 @@ class Register extends React.Component {
         }
     }
 
-    validateCredentials(event) {
+    handleChange(event) {
         if (event.target.getAttribute('name') === "username" && event.target.value.length < 1) {
             this.changedUsername = true;
             this.invalidUsername = true;
@@ -466,14 +481,22 @@ class Register extends React.Component {
 
         if (this.changedUsername && this.invalidUsername) {
             document.getElementById("registerButton").disabled = true;
+            this.isMessage = true;
             message = message + "Username cannot be empty. ";
         }
 
         if (this.changedPassword && this.invalidPassword) {
             document.getElementById("registerButton").disabled = true;
+            this.isMessage = true;
             message = message + "Password must be 8 characters long.";
         }
 
+        //if message length is zero, don't display anything
+        if (message.length === 0) {
+            this.isMessage = false;
+        }
+
+        //if username and password are valid, enable 'register' button
         if (!(this.invalidUsername || this.invalidPassword)) {
             document.getElementById("registerButton").disabled = false;
         }
@@ -481,6 +504,8 @@ class Register extends React.Component {
         // document.getElementById("errorSpan").style.property = new style
         // add <br> to inner HTML and remove one <br> from below the <span>
         document.getElementById("errorSpan").innerHTML = message;
+
+        this.setState({changes: 1});
     }
 
     handleSubmit(event) {
@@ -495,26 +520,36 @@ class Register extends React.Component {
         }).then((function(exists) { this.usernameExists(exists) }).bind(this));
     }
 
-
     render() {
         return (
-            <div>
-                <button onClick={() => {this.props.changePage("login", 0, 0)} }>Already registered? Login!</button>
-                <form onChange={this.validateCredentials} onSubmit={this.handleSubmit}>
-                    <br></br>
+            <div className="regMain">
+                <p><br></br></p>
+                <span className={"logo"}>M O N A D I C</span>
+                <p><br></br></p>
+                <span className={"asciiLite"}>Register now! It's quick and easy.</span>
+                <p></p>
+
+                <form onChange={this.handleChange} onSubmit={this.handleSubmit} className={"rForm"}>
+                    <p></p>
+                    <span className={"asciiLite"}>Username</span>
                     <br></br>
                     <label>
-                        Username: <input type="text" name="username" />
+                        <input type="text" name="username" placeholder={"Username"}/>
                     </label>
+
+                    <p><br></br></p>
+                    <span className={"asciiLite"}>Password</span>
                     <br></br>
                     <label>
-                        Password: <input type="password" name="password" />
+                        <input type="password" name="password" placeholder={"Password"}/>
                     </label>
-                    <br></br>
-                    <span id="errorSpan" style={{color:"red"}}/>
-                    <br></br>
-                    <br></br>
+
+                    <p></p>
+                    <span id="errorSpan" className={this.isMessage ? 'asciiLite' : 'asciiLiteNoBackground'} style={{color:"red"}}/>
+                    <p></p>
                     <input id="registerButton" type="submit" value="Register" disabled/>
+                    <p></p>
+                    <button onClick={() => {this.props.changePage("login", 0, 0)} }>Already registered? Login!</button>
                 </form>
             </div>
         );
@@ -531,6 +566,8 @@ class Monadic extends React.Component {
 
     async componentDidMount() {
         this.setState({ courses: await (await fetch("/courses")).json() });
+        // document.body.style.height = '100%';
+        // document.body.style.backgroundColor = "red";
     }
 
     changePage(newpage, course, lesson) {
@@ -544,26 +581,13 @@ class Monadic extends React.Component {
     render() {
         if (this.state.page === "register") {
             return (
-                <EarthBound>
-                    <Format>
-                        <Title>Welcome to Monadic!</Title>
-                        <h2>Register Now</h2>
-                        <h3>It's quick and easy</h3>
-                        <Register changePage={this.changePage} courses={this.state.courses}
-                                  currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
-                    </Format>
-                </EarthBound>
+                <Register changePage={this.changePage} courses={this.state.courses}
+                          currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
             );
         } else if (this.state.page === "login") {
             return (
-                <EarthBound>
-                    <Format>
-                        <Title>Welcome to Monadic!</Title>
-                        <h2>Login to View Courses</h2>
-                        <Login changePage={this.changePage} courses={this.state.courses}
-                               currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
-                    </Format>
-                </EarthBound>
+                <Login changePage={this.changePage} courses={this.state.courses}
+                       currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
             );
         } else if (this.state.page === "courselist") {
             return (
