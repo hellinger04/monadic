@@ -358,28 +358,29 @@ class Login extends React.Component {
                 <p><br></br></p>
                 <span className={"logo"}>M O N A D I C</span>
                 <p><br></br></p>
-                <span className={"asciiLite"}>Welcome back.</span>
-                <p>    </p>
-                <span className={"asciiLite"}>Please login below.</span>
-                <p>    </p>
+                <span className={"asciiLite"}>Welcome back! Please login below.</span>
+                <p></p>
+
                 <form onSubmit={this.handleSubmit} className={"rForm"}>
-                    <p>    </p>
+                    <p></p>
                     <span className={"asciiLite"}>Username</span>
                     <br></br>
                     <label>
                         <input type="text" name="username" placeholder={"Username"}/>
                     </label>
                     <p><br></br></p>
+
                     <span className={"asciiLite"}>Password</span>
                     <br></br>
                     <label>
                         <input type="password" name="password" placeholder={"Password"}/>
                     </label>
-                    <p>    </p>
+
+                    <p></p>
                     <span id="errorSpan" style={{color:"red"}}/>
-                    <p>    </p>
+                    <p></p>
                     <input type="submit" value="Login" />
-                    <p>    </p>
+                    <p></p>
                     <button onClick={() => {this.props.changePage("register", 0, 0)} }>No account? Register now!</button>
                 </form>
             </div>
@@ -391,12 +392,14 @@ class Login extends React.Component {
 class Register extends React.Component {
     constructor(props) {
         super(props);
-        this.validateCredentials = this.validateCredentials.bind(this);
+        this.state = {changes: 0};
+        this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.changedUsername = false;
         this.changedPassword = false;
         this.invalidUsername = true;
         this.invalidPassword = true;
+        this.isMessage = false;
     }
 
     usernameExists(response) {
@@ -407,7 +410,7 @@ class Register extends React.Component {
         }
     }
 
-    validateCredentials(event) {
+    handleChange(event) {
         if (event.target.getAttribute('name') === "username" && event.target.value.length < 1) {
             this.changedUsername = true;
             this.invalidUsername = true;
@@ -428,14 +431,22 @@ class Register extends React.Component {
 
         if (this.changedUsername && this.invalidUsername) {
             document.getElementById("registerButton").disabled = true;
+            this.isMessage = true;
             message = message + "Username cannot be empty. ";
         }
 
         if (this.changedPassword && this.invalidPassword) {
             document.getElementById("registerButton").disabled = true;
+            this.isMessage = true;
             message = message + "Password must be 8 characters long.";
         }
 
+        //if message length is zero, don't display anything
+        if (message.length === 0) {
+            this.isMessage = false;
+        }
+
+        //if username and password are valid, enable 'register' button
         if (!(this.invalidUsername || this.invalidPassword)) {
             document.getElementById("registerButton").disabled = false;
         }
@@ -443,6 +454,8 @@ class Register extends React.Component {
         // document.getElementById("errorSpan").style.property = new style
         // add <br> to inner HTML and remove one <br> from below the <span>
         document.getElementById("errorSpan").innerHTML = message;
+
+        this.setState({changes: 1});
     }
 
     handleSubmit(event) {
@@ -457,35 +470,35 @@ class Register extends React.Component {
         }).then((function(exists) { this.usernameExists(exists) }).bind(this));
     }
 
-
     render() {
         return (
             <div className="regMain">
                 <p><br></br></p>
                 <span className={"logo"}>M O N A D I C</span>
                 <p><br></br></p>
-                <span className={"asciiLite"}>Register now!</span>
-                <p>    </p>
-                <span className={"asciiLite"}>It's quick and easy.</span>
-                <p>    </p>
-                <form onChange={this.validateCredentials} onSubmit={this.handleSubmit} className={"rForm"}>
-                    <p>    </p>
+                <span className={"asciiLite"}>Register now! It's quick and easy.</span>
+                <p></p>
+
+                <form onChange={this.handleChange} onSubmit={this.handleSubmit} className={"rForm"}>
+                    <p></p>
                     <span className={"asciiLite"}>Username</span>
                     <br></br>
                     <label>
                         <input type="text" name="username" placeholder={"Username"}/>
                     </label>
+
                     <p><br></br></p>
                     <span className={"asciiLite"}>Password</span>
                     <br></br>
                     <label>
                         <input type="password" name="password" placeholder={"Password"}/>
                     </label>
-                    <p>    </p>
-                    <span id="errorSpan" style={{color:"red"}}/>
-                    <p>    </p>
+
+                    <p></p>
+                    <span id="errorSpan" className={this.isMessage ? 'asciiLite' : 'asciiLiteNoBackground'} style={{color:"red"}}/>
+                    <p></p>
                     <input id="registerButton" type="submit" value="Register" disabled/>
-                    <p>    </p>
+                    <p></p>
                     <button onClick={() => {this.props.changePage("login", 0, 0)} }>Already registered? Login!</button>
                 </form>
             </div>
