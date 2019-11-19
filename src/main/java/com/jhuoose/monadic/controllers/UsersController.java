@@ -51,4 +51,22 @@ public class UsersController {
         if (user == null) throw new ForbiddenResponse();
         return user;
     }
+
+    public void changePassword(Context ctx) throws SQLException, UserNotFoundException {
+        try {
+            var user = usersRepository.getOne(ctx.formParam("username", ""));
+            // first make sure the user has valid authentication
+            BCrypt.Result result = BCrypt.verifyer().verify(ctx.formParam("password", "").toCharArray(),
+                    user.getPassword().toCharArray());
+            if (!result.verified) {
+                ctx.status(401);
+            } else {
+                ctx.sessionAttribute("user", user);
+                user.setPassword(BCrypt.withDefaults().hashToString(12, ctx.formParam("password", "").toCharArray()));
+                ctx.status(200);
+            }
+        } catch (UserNotFoundException e) {
+            ctx.status(401);
+        }
+    }
 }
