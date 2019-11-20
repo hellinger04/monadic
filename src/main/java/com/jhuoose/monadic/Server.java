@@ -26,6 +26,7 @@ public class Server {
         var courseZeroLessons = new ArrayList<Lesson>();
         var courseOneLessons = new ArrayList<Lesson>();
         var courseTwoLessons = new ArrayList<Lesson>();
+        var courseThreeLessons = new ArrayList<Lesson>();
         var courseList = new ArrayList<Course>();
 
         // construct course 0 lessons
@@ -42,17 +43,20 @@ public class Server {
             courseTwoLessons.add(new Lesson(2, i));
         }
 
+        for (int i = 0; i < 3; ++i) {
+            courseThreeLessons.add(new Lesson(3, i));
+        }
+
         // construct Courses and add them to list of courses
         Course firstCourse = new Course(0, courseZeroLessons);
         Course secondCourse = new Course(1, courseOneLessons);
         Course thirdCourse = new Course(2, courseTwoLessons);
+        Course fourthCourse = new Course(3, courseThreeLessons);
 
         courseList.add(firstCourse);
         courseList.add(secondCourse);
         courseList.add(thirdCourse);
-
-        String firstCourseJSON = mapper.writeValueAsString(firstCourse);
-        String secondCourseJSON = mapper.writeValueAsString(secondCourse);
+        courseList.add(fourthCourse);
 
         Javalin app = Javalin.create(config -> {
             config.addStaticFiles("/public");
