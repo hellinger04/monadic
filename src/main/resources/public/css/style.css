@@ -77,6 +77,20 @@ body {
     background-color: #ffa3e2;
 }
 
+/*lesson page*/
+.lessonBody {
+    padding: 3em;
+}
+
+div.lessTxt p {
+    text-align: left;
+    font-size: 1.5em;
+}
+
+div.CodeMirror.cm-s-monokai {
+    text-align: left!important;
+    font-size: 1.2em;
+}
 
 
 /*const Space = window.styled.div`*/

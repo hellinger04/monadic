@@ -222,7 +222,7 @@ class TextElement extends React.Component {
        let html = conv.makeHtml(this.props.element.contents);
        return (
            <div>
-               <div dangerouslySetInnerHTML={{__html: html}}/>
+               <div dangerouslySetInnerHTML={{__html: html}} className={"lessTxt"}/>
            </div>
        );
    }
@@ -270,12 +270,14 @@ class Lesson extends React.Component {
                 <LessonNavigation numLessons={numLessons} currLesson={lessonID} currCourse={courseID}
                                   changePage={this.props.changePage}/>
 
-                {lessonElements.map(element => {
-                    return element.problem ?
-                        <Problem key={lessonID + " " + element.id} element={element}/> :
-                        <TextElement key={lessonID + " " + element.id} element={element}/>
-                    })
-                }
+                    <div className={"lessonBody"}>
+                        {lessonElements.map(element => {
+                            return element.problem ?
+                                <Problem key={lessonID + " " + element.id} element={element}/> :
+                                <TextElement key={lessonID + " " + element.id} element={element}/>
+                            })
+                        }
+                    </div>
 
                 <LessonNavigation numLessons={numLessons} currLesson={lessonID} currCourse={courseID}
                                   changePage={this.props.changePage}/>
