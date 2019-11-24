@@ -25,6 +25,7 @@ public class Server {
         // construct ArrayLists to hold Course lessons and to hold Courses
         var courseZeroLessons = new ArrayList<Lesson>();
         var courseOneLessons = new ArrayList<Lesson>();
+        var courseTwoLessons = new ArrayList<Lesson>();
         var courseList = new ArrayList<Course>();
 
         // construct course 0 lessons
@@ -37,12 +38,19 @@ public class Server {
             courseOneLessons.add(new Lesson(1, i));
         }
 
+        // construct course 1 lessons
+        for (int i = 0; i < 6; ++i) {
+            courseTwoLessons.add(new Lesson(2, i));
+        }
+
         // construct Courses and add them to list of courses
         Course firstCourse = new Course(0, courseZeroLessons);
         Course secondCourse = new Course(1, courseOneLessons);
+        Course thirdCourse = new Course(2, courseTwoLessons);
 
         courseList.add(firstCourse);
         courseList.add(secondCourse);
+        courseList.add(thirdCourse);
 
 
 
