@@ -217,15 +217,15 @@ class Problem extends React.Component {
 
 
 class TextElement extends React.Component {
-   render() {
-       let conv = new showdown.Converter();
-       let html = conv.makeHtml(this.props.element.contents);
-       return (
-           <div>
-               <div dangerouslySetInnerHTML={{__html: html}} className={"lessTxt"}/>
-           </div>
-       );
-   }
+    render() {
+        let conv = new showdown.Converter();
+        let html = conv.makeHtml(this.props.element.contents);
+        return (
+            <div>
+                <div dangerouslySetInnerHTML={{__html: html}} className={"lessTxt"}/>
+            </div>
+        );
+    }
 }
 
 
@@ -270,14 +270,14 @@ class Lesson extends React.Component {
                 <LessonNavigation numLessons={numLessons} currLesson={lessonID} currCourse={courseID}
                                   changePage={this.props.changePage}/>
 
-                    <div className={"lessonBody"}>
-                        {lessonElements.map(element => {
-                            return element.problem ?
-                                <Problem key={lessonID + " " + element.id} element={element}/> :
-                                <TextElement key={lessonID + " " + element.id} element={element}/>
-                            })
-                        }
-                    </div>
+                <div className={"lessonBody"}>
+                    {lessonElements.map(element => {
+                        return element.problem ?
+                            <Problem key={lessonID + " " + element.id} element={element}/> :
+                            <TextElement key={lessonID + " " + element.id} element={element}/>
+                    })
+                    }
+                </div>
 
                 <LessonNavigation numLessons={numLessons} currLesson={lessonID} currCourse={courseID}
                                   changePage={this.props.changePage}/>
@@ -334,9 +334,9 @@ class Course extends React.Component {
                 </button>
 
                 <ul>{this.props.courses[course].lessonList.map(lesson =>
-                        <LessonButton key={lesson.id} lesson={lesson} currCourse={this.props.currCourse}
+                    <LessonButton key={lesson.id} lesson={lesson} currCourse={this.props.currCourse}
                                   changePage={this.props.changePage}/>
-                    )}
+                )}
                 </ul>
             </div>
         );
@@ -370,8 +370,8 @@ class CourseList extends React.Component {
         return (
             <NoBullet>
                 <li>{this.props.courses.map(course =>
-                        <CourseButton key={course.id} course={course} changePage={this.props.changePage}/>
-                    )}
+                    <CourseButton key={course.id} course={course} changePage={this.props.changePage}/>
+                )}
                 </li>
             </NoBullet>
         );
@@ -558,10 +558,6 @@ class Register extends React.Component {
     }
 }
 
-class User extends React.Component {
-
-}
-
 class Content extends React.Component {
     constructor(props) {
         super(props);
@@ -613,35 +609,6 @@ class Content extends React.Component {
                     </LessonBack>
                 </Space>
             );
-        }
-    }
-}
-
-class Monadic extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {page: "register"};
-        this.changePage = this.changePage.bind(this);
-    }
-
-    changePage(newpage) {
-        // update current page string and current course/lesson indices
-        this.setState({page: newpage});
-    }
-
-    render() {
-        if (this.state.page === "register") {
-            return (
-                <Register changePage={this.changePage}/>
-            );
-        } else if (this.state.page === "login") {
-            return (
-                <Login changePage={this.changePage}/>
-            );
-        } else if (this.state.page === "user") {
-            return (<User/>);
-        } else if (this.state.page === "content") {
-            return (<Content/>);
         }
     }
 }
