@@ -27,6 +27,7 @@ public class Server {
         var courseOneLessons = new ArrayList<Lesson>();
         var courseTwoLessons = new ArrayList<Lesson>();
         var courseThreeLessons = new ArrayList<Lesson>();
+      
         var courseList = new ArrayList<Course>();
 
         // construct course 0 lessons
@@ -39,10 +40,12 @@ public class Server {
             courseOneLessons.add(new Lesson(1, i));
         }
 
+        // construct course 2 lessons
         for (int i = 0; i < 5; ++i) {
             courseTwoLessons.add(new Lesson(2, i));
         }
 
+        // construct course 3 lessons 
         for (int i = 0; i < 3; ++i) {
             courseThreeLessons.add(new Lesson(3, i));
         }
