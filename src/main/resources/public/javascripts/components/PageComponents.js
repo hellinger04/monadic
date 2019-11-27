@@ -389,7 +389,7 @@ class Login extends React.Component {
         if (response.status === 401) {
             alert("Invalid username or password. Please try again")
         } else if (response.status === 200) {
-            this.props.changePage("courselist", 0, 0)
+            this.props.changePage("content", 0, 0)
         }
     }
 
@@ -458,7 +458,7 @@ class Register extends React.Component {
         if (response.status === 409) {
             alert("That username already exists. Please try another username.")
         } else if (response.status === 201) {
-            this.props.changePage("courselist", 0, 0)
+            this.props.changePage("content", 0, 0)
         }
     }
 
@@ -558,18 +558,19 @@ class Register extends React.Component {
     }
 }
 
+class User extends React.Component {
 
-class Monadic extends React.Component {
+}
+
+class Content extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {page: "register", currCourse: 0, currLesson: 0, courses: []};
+        this.state = {page: "courselist", currCourse: 0, currLesson: 0, courses: []};
         this.changePage = this.changePage.bind(this);
     }
 
     async componentDidMount() {
         this.setState({ courses: await (await fetch("/courses")).json() });
-        // document.body.style.height = '100%';
-        // document.body.style.backgroundColor = "red";
     }
 
     changePage(newpage, course, lesson) {
@@ -581,17 +582,7 @@ class Monadic extends React.Component {
 
 
     render() {
-        if (this.state.page === "register") {
-            return (
-                <Register changePage={this.changePage} courses={this.state.courses}
-                          currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
-            );
-        } else if (this.state.page === "login") {
-            return (
-                <Login changePage={this.changePage} courses={this.state.courses}
-                       currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
-            );
-        } else if (this.state.page === "courselist") {
+        if (this.state.page === "courselist") {
             return (
                 <EarthBound>
                     <Format>
@@ -624,5 +615,33 @@ class Monadic extends React.Component {
             );
         }
     }
+}
 
+class Monadic extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {page: "register"};
+        this.changePage = this.changePage.bind(this);
+    }
+
+    changePage(newpage) {
+        // update current page string and current course/lesson indices
+        this.setState({page: newpage});
+    }
+
+    render() {
+        if (this.state.page === "register") {
+            return (
+                <Register changePage={this.changePage}/>
+            );
+        } else if (this.state.page === "login") {
+            return (
+                <Login changePage={this.changePage}/>
+            );
+        } else if (this.state.page === "user") {
+            return (<User/>);
+        } else if (this.state.page === "content") {
+            return (<Content/>);
+        }
+    }
 }

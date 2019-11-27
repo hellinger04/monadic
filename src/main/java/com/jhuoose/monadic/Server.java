@@ -21,7 +21,6 @@ public class Server {
         var usersRepository = new UsersRepository(connection);
         var usersController = new UsersController(usersRepository);
 
-
         // construct ArrayLists to hold Course lessons and to hold Courses
         var courseZeroLessons = new ArrayList<Lesson>();
         var courseOneLessons = new ArrayList<Lesson>();
