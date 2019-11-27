@@ -51,15 +51,15 @@ public class Server {
         }
 
         // construct Courses and add them to list of courses
-        Course firstCourse = new Course(0, courseZeroLessons);
-        Course secondCourse = new Course(1, courseOneLessons);
-        Course thirdCourse = new Course(2, courseTwoLessons);
-        Course fourthCourse = new Course(3, courseThreeLessons);
+        Course courseZero = new Course(0, courseZeroLessons);
+        Course courseOne = new Course(1, courseOneLessons);
+        Course courseTwo = new Course(2, courseTwoLessons);
+        Course courseThree = new Course(3, courseThreeLessons);
 
-        courseList.add(firstCourse);
-        courseList.add(secondCourse);
-        courseList.add(thirdCourse);
-        courseList.add(fourthCourse);
+        courseList.add(courseZero);
+        courseList.add(courseOne);
+        courseList.add(courseTwo);
+        courseList.add(courseThree);
 
         Javalin app = Javalin.create(config -> {
             config.addStaticFiles("/public");
