@@ -1,0 +1,136 @@
+/*initializing emelments not in components*/
+html {
+    height: 100%;
+    min-height: 100%;
+    margin: 0;
+}
+
+body {
+    height: 100%;
+    min-height: 100%;
+    padding: 0;
+    margin: 0;
+    background-color: lightblue;
+}
+
+#application {
+    height: 100%;
+    min-height: 100%;
+    margin: 0;
+}
+
+/*custom fonts*/
+@font-face {
+    font-family: "IBM Bios";
+    src: url("fonts/Px437_IBM_BIOS.ttf");
+}
+
+/*default styling*/
+.asciiLite {
+    font-family: IBM Bios, Arial;
+    color: #90cbe6;
+    /*display: inline;*/
+    box-shadow: 0 0 0 .3em #004a7b;
+    background-color: #004a7b;
+}
+
+.asciiLiteNoBackground {
+    opacity: 0;
+}
+
+/*apply this to everything or everything gets funky*/
+* {
+    /*margin: 0;*/
+    /*padding: 0;*/
+    overflow: auto;
+    text-align: center;
+}
+
+/*your logo*/
+.logo {
+    font-family: IBM Bios, Arial;
+    font-size: 4em;
+    color: #90cbe6;
+    display: inline;
+    background: #004a7b;
+    /*box-shadow:.5em 0 0 #004a7b, .5em 0 0 #004a7b;*/
+    padding:  .3em;
+}
+
+/*this is the registration/login section*/
+.regMain {
+    background-image: url("../img/lofi.gif");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: center;
+    top: 0;
+    height: 100%;
+}
+
+.rForm {
+    font-family: IBM Bios, Arial;
+}
+
+/*splash page styling*/
+.spMain {
+    background-color: #ffa3e2;
+}
+
+/*lesson page*/
+.lessonBody {
+    padding: 3em;
+}
+
+div.lessTxt p {
+    text-align: left;
+    font-size: 1.5em;
+}
+
+div.CodeMirror.cm-s-monokai {
+    text-align: left!important;
+    font-size: 1.2em;
+}
+
+
+/*const Space = window.styled.div`*/
+/*              background-image: url("/img/outrspc2.gif");*/
+/*height: auto;*/
+/*position: absolute;*/
+/*left: 0;*/
+/*width: auto;*/
+/*background-size: auto auto;*/
+/*`;*/
+
+/*const EarthBound = window.styled.div`*/
+/*                   background-image: url("/img/back2.jpg");*/
+/*background-repeat: no-repeat;*/
+/*background-position: center;*/
+/*background-size: cover;*/
+/*height: 100%;*/
+/*`;*/
+
+/*const LessonBack = window.styled.div`*/
+/*                   font-family: "Times New Roman", Times, serif;*/
+/*color: white;*/
+/*text-align: left;*/
+/*font-size: 1em;*/
+/*`;*/
+
+/*const NoBullet = window.styled.div`*/
+/*                 list-style: none;*/
+/*`;*/
+
+/*const Format = window.styled.div`*/
+/*               font-family: "Comic Sans MS", "Comic Sans", cursive;*/
+/*color: white;*/
+/*text-align: center;*/
+/*font-size: 1em;*/
+/*list-style: none;*/
+/*`;*/
+
+/*const Title = window.styled.h1`*/
+/*              font-size: 5em;*/
+/*text-align: center;*/
+/*color: white;*/
+/*`;*/

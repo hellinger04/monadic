@@ -8,12 +8,11 @@ const Space = window.styled.div`
 `;
 
 const EarthBound = window.styled.div`
-  background-image: url("/img/325.png");
+  background-image: url("/img/back2.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   height: 100%;
-  position: absolute;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
 `;
 
 const LessonBack = window.styled.div`
@@ -94,6 +93,8 @@ class Problem extends React.Component {
     constructor(props) {
         super(props);
         this.grade = this.grade.bind(this);
+        this.eliminateComments = this.eliminateComments.bind(this);
+        this.parse = this.parse.bind(this);
         this.count = 0;
         this.studentResults = [];
         this.err = "No errors!";
@@ -130,22 +131,70 @@ class Problem extends React.Component {
 
     grade(studentAnswer, test) {
         // run student's code using the specified test value
+        this.err = "No errors!";
+
+        studentAnswer = this.parse(studentAnswer);
+
         let output;
-        try {
-            output = eval(studentAnswer + test.input).toString();
-            this.err = "No errors!"
-        }
-        catch (e) {
-            if (e.message === "Cannot read property 'toString' of undefined") {
-                this.err = "Your function needs to return a value!"
-            } else {
-                this.err = e.message;
+        if(this.err === "No errors!") {
+            try {
+                output = eval(studentAnswer + test.input).toString();
+            } catch (e) {
+                if (e.message === "Cannot read property 'toString' of undefined") {
+                    this.err = "Your function needs to return a value!"
+                } else {
+                    this.err = e.message;
+                }
+                this.studentResults[test.id] = "";
             }
-            this.studentResults[test.id] = "";
+
+            // update student results array with test output
+            this.studentResults[test.id] = output;
+        }
+    }
+
+    parse(studentAnswer) {
+        studentAnswer = this.eliminateComments("//","\n",1, studentAnswer);
+        studentAnswer = this.eliminateComments("/*","*/",2, studentAnswer);
+
+        // checks for instances of for and while
+        let disallowed = ["for", "while"];
+        for (let i = 0; i < disallowed.length; i++) {
+            disallowed[i] = "\\b" + disallowed[i].replace(" ", "\\b \\b") + "\\b";
+            if(studentAnswer.toLowerCase().match(disallowed[i].toLowerCase())!=null){
+                this.err = "You are not allowed to use " + disallowed[i].substring(2,
+                    disallowed[i].length-2) +  " loops!";
+            }
         }
 
-        // update student results array with test output
-        this.studentResults[test.id] = output;
+        // checks if key monadic words exist
+        if(this.props.element.keyWords[0] !== undefined) {
+            for (let i = 0; i < this.props.element.keyWords.length; i++) {
+                if (studentAnswer.toLowerCase().match(this.props.element.keyWords[i].toLowerCase()) == null) {
+                    this.err = "You are not using " + this.props.element.keyWords[i].substring(2,
+                        this.props.element.keyWords[i].length-2) + "!";
+                }
+            }
+        }
+        return studentAnswer;
+    }
+
+    eliminateComments(begin, end, ind, answer) {
+        // takes out line and block comments
+        let index = answer.indexOf(begin);
+        let pt2;
+        while(index >= 0) {
+            let index2 = answer.indexOf(end, index);
+            let pt1 = answer.substring(0, index);
+            if (index2 !== -1) {
+                pt2 = answer.substring(index2 + ind, answer.length);
+            } else {
+                pt2 = "";
+            }
+            answer = pt1 + pt2;
+            index = answer.indexOf(begin);
+        }
+        return answer;
     }
 
     render()  {
@@ -173,7 +222,7 @@ class TextElement extends React.Component {
        let html = conv.makeHtml(this.props.element.contents);
        return (
            <div>
-               <div dangerouslySetInnerHTML={{__html: html}}/>
+               <div dangerouslySetInnerHTML={{__html: html}} className={"lessTxt"}/>
            </div>
        );
    }
@@ -221,12 +270,14 @@ class Lesson extends React.Component {
                 <LessonNavigation numLessons={numLessons} currLesson={lessonID} currCourse={courseID}
                                   changePage={this.props.changePage}/>
 
-                {lessonElements.map(element => {
-                    return element.problem ?
-                        <Problem key={lessonID + " " + element.id} element={element}/> :
-                        <TextElement key={lessonID + " " + element.id} element={element}/>
-                    })
-                }
+                    <div className={"lessonBody"}>
+                        {lessonElements.map(element => {
+                            return element.problem ?
+                                <Problem key={lessonID + " " + element.id} element={element}/> :
+                                <TextElement key={lessonID + " " + element.id} element={element}/>
+                            })
+                        }
+                    </div>
 
                 <LessonNavigation numLessons={numLessons} currLesson={lessonID} currCourse={courseID}
                                   changePage={this.props.changePage}/>
@@ -355,20 +406,34 @@ class Login extends React.Component {
 
     render() {
         return (
-            <div>
-                <button onClick={() => {this.props.changePage("register", 0, 0)} }>No account? Register now!</button>
-                <form onSubmit={this.handleSubmit}>
+            <div className={"regMain"}>
+                <p><br></br></p>
+                <span className={"logo"}>M O N A D I C</span>
+                <p><br></br></p>
+                <span className={"asciiLite"}>Welcome back! Please login below.</span>
+                <p></p>
+
+                <form onSubmit={this.handleSubmit} className={"rForm"}>
+                    <p></p>
+                    <span className={"asciiLite"}>Username</span>
                     <br></br>
                     <label>
-                        Username: <input type="text" name="username" />
+                        <input type="text" name="username" placeholder={"Username"}/>
                     </label>
+                    <p><br></br></p>
+
+                    <span className={"asciiLite"}>Password</span>
                     <br></br>
                     <label>
-                        Password: <input type="password" name="password" />
+                        <input type="password" name="password" placeholder={"Password"}/>
                     </label>
-                    <br></br>
-                    <br></br>
+
+                    <p></p>
+                    <span id="errorSpan" style={{color:"red"}}/>
+                    <p></p>
                     <input type="submit" value="Login" />
+                    <p></p>
+                    <button onClick={() => {this.props.changePage("register", 0, 0)} }>No account? Register now!</button>
                 </form>
             </div>
         );
@@ -379,12 +444,14 @@ class Login extends React.Component {
 class Register extends React.Component {
     constructor(props) {
         super(props);
-        this.validateCredentials = this.validateCredentials.bind(this);
+        this.state = {changes: 0};
+        this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.changedUsername = false;
         this.changedPassword = false;
         this.invalidUsername = true;
         this.invalidPassword = true;
+        this.isMessage = false;
     }
 
     usernameExists(response) {
@@ -395,7 +462,7 @@ class Register extends React.Component {
         }
     }
 
-    validateCredentials(event) {
+    handleChange(event) {
         if (event.target.getAttribute('name') === "username" && event.target.value.length < 1) {
             this.changedUsername = true;
             this.invalidUsername = true;
@@ -416,14 +483,22 @@ class Register extends React.Component {
 
         if (this.changedUsername && this.invalidUsername) {
             document.getElementById("registerButton").disabled = true;
+            this.isMessage = true;
             message = message + "Username cannot be empty. ";
         }
 
         if (this.changedPassword && this.invalidPassword) {
             document.getElementById("registerButton").disabled = true;
+            this.isMessage = true;
             message = message + "Password must be 8 characters long.";
         }
 
+        //if message length is zero, don't display anything
+        if (message.length === 0) {
+            this.isMessage = false;
+        }
+
+        //if username and password are valid, enable 'register' button
         if (!(this.invalidUsername || this.invalidPassword)) {
             document.getElementById("registerButton").disabled = false;
         }
@@ -431,6 +506,8 @@ class Register extends React.Component {
         // document.getElementById("errorSpan").style.property = new style
         // add <br> to inner HTML and remove one <br> from below the <span>
         document.getElementById("errorSpan").innerHTML = message;
+
+        this.setState({changes: 1});
     }
 
     handleSubmit(event) {
@@ -445,26 +522,36 @@ class Register extends React.Component {
         }).then((function(exists) { this.usernameExists(exists) }).bind(this));
     }
 
-
     render() {
         return (
-            <div>
-                <button onClick={() => {this.props.changePage("login", 0, 0)} }>Already registered? Login!</button>
-                <form onChange={this.validateCredentials} onSubmit={this.handleSubmit}>
-                    <br></br>
+            <div className="regMain">
+                <p><br></br></p>
+                <span className={"logo"}>M O N A D I C</span>
+                <p><br></br></p>
+                <span className={"asciiLite"}>Register now! It's quick and easy.</span>
+                <p></p>
+
+                <form onChange={this.handleChange} onSubmit={this.handleSubmit} className={"rForm"}>
+                    <p></p>
+                    <span className={"asciiLite"}>Username</span>
                     <br></br>
                     <label>
-                        Username: <input type="text" name="username" />
+                        <input type="text" name="username" placeholder={"Username"}/>
                     </label>
+
+                    <p><br></br></p>
+                    <span className={"asciiLite"}>Password</span>
                     <br></br>
                     <label>
-                        Password: <input type="password" name="password" />
+                        <input type="password" name="password" placeholder={"Password"}/>
                     </label>
-                    <br></br>
-                    <span id="errorSpan" style={{color:"red"}}/>
-                    <br></br>
-                    <br></br>
+
+                    <p></p>
+                    <span id="errorSpan" className={this.isMessage ? 'asciiLite' : 'asciiLiteNoBackground'} style={{color:"red"}}/>
+                    <p></p>
                     <input id="registerButton" type="submit" value="Register" disabled/>
+                    <p></p>
+                    <button onClick={() => {this.props.changePage("login", 0, 0)} }>Already registered? Login!</button>
                 </form>
             </div>
         );
@@ -481,6 +568,8 @@ class Monadic extends React.Component {
 
     async componentDidMount() {
         this.setState({ courses: await (await fetch("/courses")).json() });
+        // document.body.style.height = '100%';
+        // document.body.style.backgroundColor = "red";
     }
 
     changePage(newpage, course, lesson) {
@@ -494,26 +583,13 @@ class Monadic extends React.Component {
     render() {
         if (this.state.page === "register") {
             return (
-                <EarthBound>
-                    <Format>
-                        <Title>Welcome to Monadic!</Title>
-                        <h2>Register Now</h2>
-                        <h3>It's quick and easy</h3>
-                        <Register changePage={this.changePage} courses={this.state.courses}
-                                  currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
-                    </Format>
-                </EarthBound>
+                <Register changePage={this.changePage} courses={this.state.courses}
+                          currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
             );
         } else if (this.state.page === "login") {
             return (
-                <EarthBound>
-                    <Format>
-                        <Title>Welcome to Monadic!</Title>
-                        <h2>Login to View Courses</h2>
-                        <Login changePage={this.changePage} courses={this.state.courses}
-                               currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
-                    </Format>
-                </EarthBound>
+                <Login changePage={this.changePage} courses={this.state.courses}
+                       currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
             );
         } else if (this.state.page === "courselist") {
             return (
