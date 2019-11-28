@@ -23,6 +23,10 @@ body {
     height: auto;
 }
 
+.lessonNavigation {
+    text-align: center;
+}
+
 /*custom fonts*/
 @font-face {
     font-family: "IBM Bios";

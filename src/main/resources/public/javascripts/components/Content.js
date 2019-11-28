@@ -272,7 +272,7 @@ class TextElement extends React.Component {
 class LessonNavigation extends React.Component {
     render() {
         return (
-            <div>
+            <div className={"lessonNavigation"}>
                 <button onClick={() => {
                     this.props.changePage("course", this.props.currCourse, 0)}}>Back to Course {this.props.currCourse}
                 </button>
