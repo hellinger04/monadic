@@ -251,7 +251,7 @@ class Problem extends React.Component {
         }
 
         return (
-            <div>
+            <div className={"lessonContainer"}>
                 <textarea id = {'problem' + this.props.element.id}>{this.props.element.starterCode}</textarea>
                 <button onClick={() => this.handleClick()}>Save and Submit</button>
                 <TestResults numSubmissions={this.count} student={this.studentResults} expected={expectedOutputs}
