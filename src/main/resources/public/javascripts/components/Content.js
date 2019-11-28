@@ -222,6 +222,13 @@ class TextElement extends React.Component {
         if (this.props.element.contents.substring(0,3) === "```") {
             let endIndex = this.props.element.contents.length - 3;
             let editedContents = this.props.element.contents.substring(13, endIndex);
+
+            //while there is a newline char in the editedContents
+            while (editedContents.indexOf("\n") > 0) {
+                editedContents = editedContents.substring(0, editedContents.indexOf("\n")) + "<br>"
+                    + editedContents.substring(editedContents.indexOf("\n") + 2);
+            }
+
             let html = conv.makeHtml(editedContents);
 
             return (
