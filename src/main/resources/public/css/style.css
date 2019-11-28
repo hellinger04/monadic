@@ -47,7 +47,7 @@ body {
     overflow: auto;
 }
 
-/*your logo*/
+/*Monadic logo*/
 .logo {
     font-family: IBM Bios, Arial;
     font-size: 4em;
@@ -109,6 +109,17 @@ div.CodeMirror.cm-s-monokai {
     font-size: 1.2em;
 }
 
+@media (max-width: 1000px) {
+    .logo {font-size: 3em;}
+}
+
+@media (max-width: 700px) {
+    .logo {font-size: 2em;}
+}
+
+@media (max-width: 500px) {
+    .logo {font-size: 1.5em;}
+}
 
 /*const Space = window.styled.div`*/
 /*              background-image: url("/img/outrspc2.gif");*/
