@@ -48,20 +48,29 @@ class CodeBlock extends React.Component {
     constructor(props) {
         super(props);
         this.count = 0;
+        this.language = this.props.element.contents.substring(3, this.props.element.contents.indexOf("\n"))
     }
 
     componentDidMount() {
-        this.mirror = CodeMirror.fromTextArea(document.getElementById('codeblock' + this.props.element.id), {
-            mode: "text/typescript",
-            theme: "monokai",
-            readOnly: "nocursor"
-        });
+        if (this.language.match("javascript") === null && this.language.match("typescript") === null) {
+            console.log(this.language);
+            this.mirror = CodeMirror.fromTextArea(document.getElementById('codeblock' + this.props.element.id), {
+                mode: this.language,
+                theme: "monokai",
+                readOnly: "nocursor"
+            });
+        } else {
+            this.mirror = CodeMirror.fromTextArea(document.getElementById('codeblock' + this.props.element.id), {
+                mode: "text/typescript",
+                theme: "monokai",
+                readOnly: "nocursor"
+            });
+        }
     }
 
     render()  {
         let endIndex = this.props.element.contents.length - 4;
-        let editedContents = this.props.element.contents.substring(14, endIndex);
-
+        let editedContents = this.props.element.contents.substring((this.props.element.contents.indexOf("\n") + 1), endIndex);
         return (
             <div>
                 <textarea id={'codeblock' + this.props.element.id}>{editedContents}</textarea>
@@ -69,7 +78,6 @@ class CodeBlock extends React.Component {
         );
     }
 }
-
 
 /* This component takes the student test results and the expected results and displays information regarding the
    student's performance on the tests. The component will also display any errors that occurred when running the
