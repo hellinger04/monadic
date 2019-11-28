@@ -54,11 +54,6 @@ class CodeBlock extends React.Component {
         this.mirror = CodeMirror.fromTextArea(document.getElementById('codeblock' + this.props.element.id), {
             mode: "text/typescript",
             theme: "monokai",
-            lineNumbers: false,
-            styleActiveLine: false,
-            autoCloseBrackets: true,
-            continueComments: true,
-            extraKeys: {"Ctrl-Space": "autocomplete", "Cmd-Space": "autocomplete"},
             readOnly: "nocursor"
         });
     }
@@ -346,22 +341,9 @@ class Lesson extends React.Component {
 }
 
 
-class LessonButton extends React.Component {
-    render() {
-        return (
-            <NoBullet>
-                <li>
-                    <button onClick={() => {
-                        this.props.changePage("lesson", this.props.currCourse, this.props.lesson.id)}}>
-                        Lesson {this.props.lesson.id}
-                    </button>
-                </li>
-            </NoBullet>
-        );
-    }
-}
-
-
+/* This component uses the currCourse and courses props to render buttons for available course lessons. It also renders
+   buttons which the user can use to navigate to the next or previous course, and also to return to the list of courses.
+ */
 class Course extends React.Component {
     constructor(props) {
         super(props);
@@ -393,8 +375,14 @@ class Course extends React.Component {
                 </button>
 
                 <ul>{this.props.courses[course].lessonList.map(lesson =>
-                    <LessonButton key={lesson.id} lesson={lesson} currCourse={this.props.currCourse}
-                                  changePage={this.props.changePage}/>
+                    <NoBullet>
+                        <li>
+                            <button onClick={() => {
+                                this.props.changePage("lesson", this.props.currCourse, lesson.id)}}>
+                                Lesson {lesson.id}
+                            </button>
+                        </li>
+                    </NoBullet>
                 )}
                 </ul>
             </div>
