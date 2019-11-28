@@ -88,6 +88,36 @@ class TestResults extends React.Component {
 
 }
 
+class CodeBlock extends React.Component {
+    constructor(props) {
+        super(props);
+        this.count = 0;
+    }
+
+    componentDidMount() {
+        this.mirror = CodeMirror.fromTextArea(document.getElementById('codeblock' + this.props.element.id), {
+            mode: "text/typescript",
+            theme: "monokai",
+            lineNumbers: true,
+            styleActiveLine: true,
+            autoCloseBrackets: true,
+            continueComments: true,
+            extraKeys: {"Ctrl-Space": "autocomplete", "Cmd-Space": "autocomplete"}
+        });
+    }
+
+    render()  {
+        let endIndex = this.props.element.contents.length - 4;
+        let editedContents = this.props.element.contents.substring(14, endIndex);
+
+        return (
+            <div>
+                <textarea id = {'codeblock' + this.props.element.id}>{editedContents}</textarea>
+            </div>
+        );
+    }
+}
+
 
 class Problem extends React.Component {
     constructor(props) {
@@ -220,20 +250,9 @@ class TextElement extends React.Component {
     render() {
         let conv = new showdown.Converter();
         if (this.props.element.contents.substring(0,3) === "```") {
-            let endIndex = this.props.element.contents.length - 3;
-            let editedContents = this.props.element.contents.substring(13, endIndex);
-
-            //while there is a newline char in the editedContents
-            while (editedContents.indexOf("\n") > 0) {
-                editedContents = editedContents.substring(0, editedContents.indexOf("\n")) + "<br>"
-                    + editedContents.substring(editedContents.indexOf("\n") + 2);
-            }
-
-            let html = conv.makeHtml(editedContents);
-
             return (
                 <div className={"lessonContainer"}>
-                    <div dangerouslySetInnerHTML={{__html: html}} className={"lessCode"}/>
+                    <CodeBlock element={this.props.element}/>
                 </div>
             );
         } else {
