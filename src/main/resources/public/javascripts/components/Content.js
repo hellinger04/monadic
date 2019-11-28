@@ -219,12 +219,25 @@ class Problem extends React.Component {
 class TextElement extends React.Component {
     render() {
         let conv = new showdown.Converter();
-        let html = conv.makeHtml(this.props.element.contents);
-        return (
-            <div>
-                <div dangerouslySetInnerHTML={{__html: html}} className={"lessTxt"}/>
-            </div>
-        );
+        if (this.props.element.contents.substring(0,3) === "```") {
+            let endIndex = this.props.element.contents.length - 3;
+            let editedContents = this.props.element.contents.substring(13, endIndex);
+            let html = conv.makeHtml(editedContents);
+
+            return (
+                <div className={"lessonContainer"}>
+                    <div dangerouslySetInnerHTML={{__html: html}} className={"lessCode"}/>
+                </div>
+            );
+        } else {
+            let html = conv.makeHtml(this.props.element.contents);
+
+            return (
+                <div className={"lessonContainer"}>
+                    <div dangerouslySetInnerHTML={{__html: html}} className={"lessTxt"}/>
+                </div>
+            );
+        }
     }
 }
 

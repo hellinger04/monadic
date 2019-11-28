@@ -58,7 +58,6 @@ body {
     position: center;
     top: 0;
     height: 100%;
-    overflow: auto;
     text-align: center;
 }
 
@@ -76,9 +75,23 @@ body {
     padding: 3em;
 }
 
+.lessonContainer {
+    width: 100%;
+}
+
 div.lessTxt p {
     text-align: left;
     font-size: 1.5em;
+    word-wrap: break-word;
+}
+
+div.lessCode p {
+    text-align: left;
+    font-size: 1.5em;
+    word-wrap: break-word;
+    font-family: courier-std, monospace;
+    font-weight: 400;
+    font-style: normal;
 }
 
 div.CodeMirror.cm-s-monokai {
