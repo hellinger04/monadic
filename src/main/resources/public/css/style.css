@@ -38,14 +38,6 @@ body {
     opacity: 0;
 }
 
-/*apply this to everything or everything gets funky*/
-* {
-    /*margin: 0;*/
-    /*padding: 0;*/
-    overflow: auto;
-    text-align: center;
-}
-
 /*your logo*/
 .logo {
     font-family: IBM Bios, Arial;
@@ -66,6 +58,8 @@ body {
     position: center;
     top: 0;
     height: 100%;
+    overflow: auto;
+    text-align: center;
 }
 
 .rForm {
