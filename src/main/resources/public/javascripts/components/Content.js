@@ -89,6 +89,7 @@ class TestResults extends React.Component {
     constructor(props) {
         super(props);
         this.state = {submissions: 0};
+        this.space = " ";
     }
 
     render() {
@@ -99,14 +100,12 @@ class TestResults extends React.Component {
             if (this.props.expected[i] === this.props.student[i]) {
                 // if student result matches expected result, save 'correct' statement to results array
                 results.push(<p style={{color: 'white'}} className='result' key={i}>
-                    Correct! Expected output was {this.props.expected[i]} and actual output was
-                    {this.props.student[i]}
+                    Correct! Expected output was {this.props.expected[i]} and actual output was {this.props.student[i]}
                 </p>);
             } else if (this.props.expected !== this.props.student[i]) {
                 // if student result does not match expected result, save 'incorrect' statement to results array
                 results.push(<p style={{color: 'red'}} className='result' key={i}>
-                    Wrong! Expected output was {this.props.expected[i]} but actual output was
-                    {this.props.student[i]}
+                    Wrong! Expected output was {this.props.expected[i]} but actual output was {this.props.student[i]}
                 </p>);
             }
         }

@@ -91,13 +91,13 @@ body {
 
 div.lessTxt p {
     text-align: left;
-    font-size: 1.5em;
+    font-size: 1.2em;
     word-wrap: break-word;
 }
 
 div.lessCode p {
     text-align: left;
-    font-size: 1.5em;
+    font-size: 1.2em;
     word-wrap: break-word;
     font-family: courier-std, monospace;
     font-weight: 400;
