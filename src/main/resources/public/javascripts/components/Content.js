@@ -54,8 +54,8 @@ class CodeBlock extends React.Component {
         this.mirror = CodeMirror.fromTextArea(document.getElementById('codeblock' + this.props.element.id), {
             mode: "text/typescript",
             theme: "monokai",
-            lineNumbers: true,
-            styleActiveLine: true,
+            lineNumbers: false,
+            styleActiveLine: false,
             autoCloseBrackets: true,
             continueComments: true,
             extraKeys: {"Ctrl-Space": "autocomplete", "Cmd-Space": "autocomplete"},
