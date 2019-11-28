@@ -112,7 +112,7 @@ class CodeBlock extends React.Component {
 
         return (
             <div>
-                <textarea id = {'codeblock' + this.props.element.id}>{editedContents}</textarea>
+                <textarea id={'codeblock' + this.props.element.id}>{editedContents}</textarea>
             </div>
         );
     }
