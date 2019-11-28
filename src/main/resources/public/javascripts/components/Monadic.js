@@ -31,32 +31,34 @@ class Login extends React.Component {
     render() {
         return (
             <div className={"regMain"}>
-                <p><br></br></p>
+                <p><br/></p>
                 <span className={"logo"}>M O N A D I C</span>
-                <p><br></br></p>
+                <p><br/></p>
                 <span className={"asciiLite"}>Welcome back! Please login below.</span>
-                <p></p>
+
+                <br/>
+                <br/>
+                <br/>
 
                 <form onSubmit={this.handleSubmit} className={"rForm"}>
-                    <p></p>
                     <span className={"asciiLite"}>Username</span>
-                    <br></br>
+                    <br/>
                     <label>
                         <input type="text" name="username" placeholder={"Username"}/>
                     </label>
-                    <p><br></br></p>
 
+                    <p/>
                     <span className={"asciiLite"}>Password</span>
-                    <br></br>
+                    <br/>
                     <label>
                         <input type="password" name="password" placeholder={"Password"}/>
                     </label>
 
-                    <p></p>
+                    <p/>
                     <span id="errorSpan" style={{color:"red"}}/>
-                    <p></p>
+                    <p/>
                     <input type="submit" value="Login" />
-                    <p></p>
+                    <p/>
                     <button onClick={() => {this.props.changePage("register", 0, 0)} }>No account? Register now!</button>
                 </form>
             </div>
