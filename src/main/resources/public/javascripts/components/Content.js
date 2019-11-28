@@ -5,6 +5,7 @@ const Space = window.styled.div`
   left: 0;
   width: auto;
   background-size: auto auto;
+  overflow: auto;
 `;
 
 const EarthBound = window.styled.div`
