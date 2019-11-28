@@ -102,7 +102,8 @@ class CodeBlock extends React.Component {
             styleActiveLine: true,
             autoCloseBrackets: true,
             continueComments: true,
-            extraKeys: {"Ctrl-Space": "autocomplete", "Cmd-Space": "autocomplete"}
+            extraKeys: {"Ctrl-Space": "autocomplete", "Cmd-Space": "autocomplete"},
+            readOnly: true
         });
     }
 
