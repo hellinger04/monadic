@@ -13,6 +13,7 @@ const EarthBound = window.styled.div`
   background-position: center;
   background-size: cover;
   height: 100%;
+  overflow: auto;
 `;
 
 const LessonBack = window.styled.div`
