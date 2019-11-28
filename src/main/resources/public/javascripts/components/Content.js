@@ -374,40 +374,29 @@ class Course extends React.Component {
                         }}>Next Course
                 </button>
 
-                <ul>{this.props.courses[course].lessonList.map(lesson =>
+                <br></br>
+                <br></br>
+
+                <h2>Available Lessons</h2>
+
+
+                <li>{this.props.courses[course].lessonList.map(lesson =>
                     <NoBullet>
                         <li>
                             <button onClick={() => {
-                                this.props.changePage("lesson", this.props.currCourse, lesson.id)}}>
-                                Lesson {lesson.id}
+                                this.props.changePage("lesson", this.props.currCourse, lesson.id)}}>Lesson {lesson.id}
                             </button>
                         </li>
                     </NoBullet>
                 )}
-                </ul>
+                </li>
             </div>
         );
     }
 }
 
-
-class CourseButton extends React.Component {
-    render() {
-        return (
-            <div>
-                <li> {
-                    <form>
-                        <button onClick={() => {
-                            this.props.changePage("course", this.props.course.id, 0)}}>Course {this.props.course.id}
-                        </button>
-                    </form>
-                } </li>
-            </div>
-        );
-    }
-}
-
-
+/* This component uses the courses prop to display a list of available courses to the user.
+ */
 class CourseList extends React.Component {
     constructor(props) {
         super(props);
@@ -417,7 +406,11 @@ class CourseList extends React.Component {
         return (
             <NoBullet>
                 <li>{this.props.courses.map(course =>
-                    <CourseButton key={course.id} course={course} changePage={this.props.changePage}/>
+                    <li>
+                        <button onClick={() => {
+                            this.props.changePage("course", course.id, 0)}}>Course {course.id}
+                        </button>
+                    </li>
                 )}
                 </li>
             </NoBullet>
@@ -425,6 +418,11 @@ class CourseList extends React.Component {
     }
 }
 
+
+/* The main Content component. This component keeps track of state throughout courses and lessons, and defines the
+   changePage() function used in subcomponents to change states and navigate through the pages. When this component
+   mounts, it initiates a GET request from the Server to obtain information about all available courses.
+ */
 class Content extends React.Component {
     constructor(props) {
         super(props);
@@ -461,7 +459,6 @@ class Content extends React.Component {
                 <EarthBound>
                     <Format>
                         <Title>Course {this.state.currCourse}</Title>
-                        <h2>Available Lessons</h2>
                         <Course changePage={this.changePage} courses={this.state.courses}
                                 currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
                     </Format>
