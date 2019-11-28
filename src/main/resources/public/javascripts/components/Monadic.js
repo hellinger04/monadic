@@ -1,3 +1,182 @@
+class Login extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    validateLogin(response) {
+        if (response.status === 401) {
+            alert("Invalid username or password. Please try again")
+        } else if (response.status === 200) {
+            this.props.changePage("content", 0, 0)
+        }
+    }
+
+    handleSubmit(event) {
+        // the form lets me submit when empty, this needs to be fixed
+        event.preventDefault();
+        const data = new FormData(event.target);
+
+        fetch('/users/login', {
+            method: 'POST',
+            body: data,
+        }).then((function(response) { this.validateLogin(response) }).bind(this));
+    }
+
+    render() {
+        return (
+            <div className={"regMain"}>
+                <p><br></br></p>
+                <span className={"logo"}>M O N A D I C</span>
+                <p><br></br></p>
+                <span className={"asciiLite"}>Welcome back! Please login below.</span>
+                <p></p>
+
+                <form onSubmit={this.handleSubmit} className={"rForm"}>
+                    <p></p>
+                    <span className={"asciiLite"}>Username</span>
+                    <br></br>
+                    <label>
+                        <input type="text" name="username" placeholder={"Username"}/>
+                    </label>
+                    <p><br></br></p>
+
+                    <span className={"asciiLite"}>Password</span>
+                    <br></br>
+                    <label>
+                        <input type="password" name="password" placeholder={"Password"}/>
+                    </label>
+
+                    <p></p>
+                    <span id="errorSpan" style={{color:"red"}}/>
+                    <p></p>
+                    <input type="submit" value="Login" />
+                    <p></p>
+                    <button onClick={() => {this.props.changePage("register", 0, 0)} }>No account? Register now!</button>
+                </form>
+            </div>
+        );
+    }
+}
+
+
+class Register extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {changes: 0};
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.changedUsername = false;
+        this.changedPassword = false;
+        this.invalidUsername = true;
+        this.invalidPassword = true;
+        this.isMessage = false;
+    }
+
+    usernameExists(response) {
+        if (response.status === 409) {
+            alert("That username already exists. Please try another username.")
+        } else if (response.status === 201) {
+            this.props.changePage("content", 0, 0)
+        }
+    }
+
+    handleChange(event) {
+        if (event.target.getAttribute('name') === "username" && event.target.value.length < 1) {
+            this.changedUsername = true;
+            this.invalidUsername = true;
+        } else if (event.target.getAttribute('name') === "username") {
+            this.changedUsername = true;
+            this.invalidUsername = false;
+        }
+
+        if (event.target.getAttribute('name') === "password" && event.target.value.length < 8) {
+            this.changedPassword = true;
+            this.invalidPassword = true;
+        } else if (event.target.getAttribute('name') === "password") {
+            this.changedPassword = true;
+            this.invalidPassword = false;
+        }
+
+        let message = "";
+
+        if (this.changedUsername && this.invalidUsername) {
+            document.getElementById("registerButton").disabled = true;
+            this.isMessage = true;
+            message = message + "Username cannot be empty. ";
+        }
+
+        if (this.changedPassword && this.invalidPassword) {
+            document.getElementById("registerButton").disabled = true;
+            this.isMessage = true;
+            message = message + "Password must be 8 characters long.";
+        }
+
+        //if message length is zero, don't display anything
+        if (message.length === 0) {
+            this.isMessage = false;
+        }
+
+        //if username and password are valid, enable 'register' button
+        if (!(this.invalidUsername || this.invalidPassword)) {
+            document.getElementById("registerButton").disabled = false;
+        }
+
+        // document.getElementById("errorSpan").style.property = new style
+        // add <br> to inner HTML and remove one <br> from below the <span>
+        document.getElementById("errorSpan").innerHTML = message;
+
+        this.setState({changes: 1});
+    }
+
+    handleSubmit(event) {
+        // TODO the form lets me submit when empty, this needs to be fixed
+        // get target's username value and then check to ensure length > 0
+        event.preventDefault();
+        const data = new FormData(event.target);
+
+        fetch('/users', {
+            method: 'POST',
+            body: data,
+        }).then((function(exists) { this.usernameExists(exists) }).bind(this));
+    }
+
+    render() {
+        return (
+            <div className="regMain">
+                <p><br></br></p>
+                <span className={"logo"}>M O N A D I C</span>
+                <p><br></br></p>
+                <span className={"asciiLite"}>Register now! It's quick and easy.</span>
+                <p></p>
+
+                <form onChange={this.handleChange} onSubmit={this.handleSubmit} className={"rForm"}>
+                    <p></p>
+                    <span className={"asciiLite"}>Username</span>
+                    <br></br>
+                    <label>
+                        <input type="text" name="username" placeholder={"Username"}/>
+                    </label>
+
+                    <p><br></br></p>
+                    <span className={"asciiLite"}>Password</span>
+                    <br></br>
+                    <label>
+                        <input type="password" name="password" placeholder={"Password"}/>
+                    </label>
+
+                    <p></p>
+                    <span id="errorSpan" className={this.isMessage ? 'asciiLite' : 'asciiLiteNoBackground'} style={{color:"red"}}/>
+                    <p></p>
+                    <input id="registerButton" type="submit" value="Register" disabled/>
+                    <p></p>
+                    <button onClick={() => {this.props.changePage("login", 0, 0)} }>Already registered? Login!</button>
+                </form>
+            </div>
+        );
+    }
+}
+
 /* The main component for the Monadic website. By default, this component renders the Regsiter component, but can also
    load the login page, and can load the other two main components, Content and User.
  */
