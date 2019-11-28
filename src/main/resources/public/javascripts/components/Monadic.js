@@ -1,3 +1,8 @@
+/* This component renders a login page for the user. The user can enter their username and password and attempt to login
+   using the "Login" button. Once this button is clicked, the username and password input by the user are sent to the
+   Server, where their authenticity is checked. If the credentials are valid, the user can proceed to view content,
+   otherwise the user must try to enter valid credentials again.
+ */
 class Login extends React.Component {
     constructor(props) {
         super(props);
@@ -59,7 +64,12 @@ class Login extends React.Component {
     }
 }
 
-
+/* This component is the default component that's rendered when navigating to the Monadic website. It allows users to
+   enter a desired username and password in order to create an account. The component will instantly check to ensure
+   that the username entered by the user is at least one character long, and that the password is at least eight
+   characters long. When the user clicks the "Register" button, the component also queries the server to check whether
+   the username already exists. If it does, the program alerts the user that the username is already taken.
+ */
 class Register extends React.Component {
     constructor(props) {
         super(props);
@@ -144,32 +154,34 @@ class Register extends React.Component {
     render() {
         return (
             <div className="regMain">
-                <p><br></br></p>
+                <p><br/></p>
                 <span className={"logo"}>M O N A D I C</span>
-                <p><br></br></p>
+                <p><br/></p>
                 <span className={"asciiLite"}>Register now! It's quick and easy.</span>
-                <p></p>
+
+                <br/>
+                <br/>
+                <br/>
 
                 <form onChange={this.handleChange} onSubmit={this.handleSubmit} className={"rForm"}>
-                    <p></p>
                     <span className={"asciiLite"}>Username</span>
-                    <br></br>
+                    <br/>
                     <label>
                         <input type="text" name="username" placeholder={"Username"}/>
                     </label>
 
-                    <p><br></br></p>
+                    <p/>
                     <span className={"asciiLite"}>Password</span>
-                    <br></br>
+                    <br/>
                     <label>
                         <input type="password" name="password" placeholder={"Password"}/>
                     </label>
 
-                    <p></p>
+                    <p/>
                     <span id="errorSpan" className={this.isMessage ? 'asciiLite' : 'asciiLiteNoBackground'} style={{color:"red"}}/>
-                    <p></p>
+                    <p/>
                     <input id="registerButton" type="submit" value="Register" disabled/>
-                    <p></p>
+                    <p/>
                     <button onClick={() => {this.props.changePage("login", 0, 0)} }>Already registered? Login!</button>
                 </form>
             </div>
