@@ -103,7 +103,7 @@ class CodeBlock extends React.Component {
             autoCloseBrackets: true,
             continueComments: true,
             extraKeys: {"Ctrl-Space": "autocomplete", "Cmd-Space": "autocomplete"},
-            readOnly: true
+            readOnly: "nocursor"
         });
     }
 
