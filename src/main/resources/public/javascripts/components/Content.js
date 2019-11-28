@@ -41,53 +41,9 @@ const Title = window.styled.h1`
 `;
 
 
-class TestResults extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {submissions: 0};
-    }
-
-    render() {
-        // store student results and expected results from props in variables for easier access
-        let student = this.props.student;
-        let expected = this.props.expected;
-        let error = this.props.error;
-        let showError = this.props.showError;
-        // create array to store test results
-        let results = [];
-
-        for (let i = 0; i < student.length; i++) {
-            if (expected[i] === student[i]) {
-                // if student result matches expected result, save 'correct' statement to results array
-                results.push(<p style={{color: 'white'}} className='result' key={i}>
-                    Correct! Expected output was {expected[i]} and actual output was {student[i]}</p>);
-            } else if (expected !== student[i]) {
-                // if student result does not match expected result, save 'incorrect' statement to results array
-                results.push(<p style={{color: 'red'}} className='result' key={i}>
-                    Wrong! Expected output was {expected[i]} but actual output was {student[i]}</p>);
-            }
-        }
-
-        if (error === "No errors!") {
-            return (
-                <div>
-                    Number of submissions: {this.props.numSubmissions}
-                    <p style={{color: 'green'}}> {this.props.showError ? error : null } </p>
-                    {results.map(result => <li>{result}</li>)}
-                </div>
-            );
-        } else {
-            return (
-                <div>
-                    Number of submissions: {this.props.numSubmissions}
-                    <p style={{color: 'red'}}> {this.props.showError ? error : null } </p>
-                </div>
-            );
-        }
-    }
-
-}
-
+/* This component takes TypeScript code and displays it as a read-only CodeMirror text box. This allows for code syntax
+   highlighting, and makes the code formatting neat.
+ */
 class CodeBlock extends React.Component {
     constructor(props) {
         super(props);
@@ -120,6 +76,60 @@ class CodeBlock extends React.Component {
 }
 
 
+/* This component takes the student test results and the expected results and displays information regarding the
+   student's performance on the tests. The component will also display any errors that occurred when running the
+   student's code. This component assists the Problem component
+ */
+class TestResults extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {submissions: 0};
+    }
+
+    render() {
+        // create array to store test results
+        let results = [];
+
+        for (let i = 0; i < this.props.student.length; i++) {
+            if (this.props.expected[i] === this.props.student[i]) {
+                // if student result matches expected result, save 'correct' statement to results array
+                results.push(<p style={{color: 'white'}} className='result' key={i}>
+                    Correct! Expected output was {this.props.expected[i]} and actual output was
+                    {this.props.student[i]}
+                </p>);
+            } else if (this.props.expected !== this.props.student[i]) {
+                // if student result does not match expected result, save 'incorrect' statement to results array
+                results.push(<p style={{color: 'red'}} className='result' key={i}>
+                    Wrong! Expected output was {this.props.expected[i]} but actual output was
+                    {this.props.student[i]}
+                </p>);
+            }
+        }
+
+        if (this.props.error === "No errors!") {
+            return (
+                <div>
+                    Number of submissions: {this.props.numSubmissions}
+                    <p style={{color: 'green'}}> {this.props.showError ? this.props.error : null } </p>
+                    {results.map(result => <li>{result}</li>)}
+                </div>
+            );
+        } else {
+            return (
+                <div>
+                    Number of submissions: {this.props.numSubmissions}
+                    <p style={{color: 'red'}}> {this.props.showError ? this.props.error : null } </p>
+                </div>
+            );
+        }
+    }
+
+}
+
+
+/* This component takes starter code and displays a CodeMirror text box which students will use to write their solution
+   to the given problem. The class contains logic for grading and parsing the student's code.
+ */
 class Problem extends React.Component {
     constructor(props) {
         super(props);
@@ -247,6 +257,10 @@ class Problem extends React.Component {
 }
 
 
+/* This component takes lesson content and displays it as HTML using the dangerouslySetInnerHTML method. It's safe to
+   use this otherwise dangerous method since no lesson text contains text boxes which can be edited or submitted. If the
+   content is a block of code that needs to be displayed, this code is rendered using the CodeBlock component.
+ */
 class TextElement extends React.Component {
     render() {
         let conv = new showdown.Converter();
@@ -269,6 +283,10 @@ class TextElement extends React.Component {
 }
 
 
+/* This component takes current lesson and course information and renders buttons which allow the user to advance to the
+   next lesson, revert to the previous lesson, and return to the course that the lesson belongs to. The states for these
+   different pages are all stored in the Content component.
+ */
 class LessonNavigation extends React.Component {
     render() {
         return (
@@ -296,31 +314,32 @@ class LessonNavigation extends React.Component {
 }
 
 
+/* This component uses the courses, currCourse, and currLesson props to map over the lesson elements in the desired
+   lesson. The component renders each lesson element as either a Problem or a TextElement depending on the element's
+   type. The component also uses the LessonNavigation component to render navigation buttons for the user.
+ */
 class Lesson extends React.Component {
     render() {
-        // store current course/lesson indices and lessonElements from props into variables for easy access
-        const courseID = this.props.currCourse;
-        const lessonID = this.props.currLesson;
-        const lessonElements = this.props.courses[courseID].lessonList[lessonID].lessonElements;
         // count the total lessons available in current course (used to determine which buttons to display)
-        const numLessons = Object.keys(this.props.courses[courseID].lessonList).length;
+        const numLessons = Object.keys(this.props.courses[this.props.currCourse].lessonList).length;
 
         return (
             <div>
-                <LessonNavigation numLessons={numLessons} currLesson={lessonID} currCourse={courseID}
-                                  changePage={this.props.changePage}/>
+                <LessonNavigation numLessons={numLessons} currLesson={this.props.currLesson}
+                                  currCourse={this.props.currCourse} changePage={this.props.changePage}/>
 
                 <div className={"lessonBody"}>
-                    {lessonElements.map(element => {
-                        return element.problem ?
-                            <Problem key={lessonID + " " + element.id} element={element}/> :
-                            <TextElement key={lessonID + " " + element.id} element={element}/>
-                    })
-                    }
+                    {this.props.courses[this.props.currCourse].lessonList[this.props.currLesson].lessonElements.map(
+                        element => {
+                            return element.problem ?
+                                <Problem key={this.props.currLesson + " " + element.id} element={element}/> :
+                                <TextElement key={this.props.currLesson + " " + element.id} element={element}/>
+                        }
+                    )}
                 </div>
 
-                <LessonNavigation numLessons={numLessons} currLesson={lessonID} currCourse={courseID}
-                                  changePage={this.props.changePage}/>
+                <LessonNavigation numLessons={numLessons} currLesson={this.props.currLesson}
+                                  currCourse={this.props.currCourse} changePage={this.props.changePage}/>
             </div>
         );
     }
