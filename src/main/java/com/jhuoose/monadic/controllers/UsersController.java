@@ -1,13 +1,17 @@
 package com.jhuoose.monadic.controllers;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jhuoose.monadic.models.User;
+import com.jhuoose.monadic.models.lesson.Lesson;
 import com.jhuoose.monadic.repositories.UserNotFoundException;
 import com.jhuoose.monadic.repositories.UsersRepository;
 import io.javalin.http.Context;
 import io.javalin.http.ForbiddenResponse;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 
 public class UsersController {
     private UsersRepository usersRepository;
@@ -20,10 +24,32 @@ public class UsersController {
         var userExists = 201;
 
         try {
-            usersRepository.create(new User(ctx.formParam("username", ""),
-                    BCrypt.withDefaults().hashToString(12, ctx.formParam("password", "").toCharArray()))
+            HashMap<Double, Integer> lessonsCompleted = new HashMap<>();
+            for (int i = 0; i < 5; ++i) {
+                lessonsCompleted.put(i / (double) 10, 0);
+            }
+
+            // construct course 1 lessons
+            for (int i = 0; i < 8; ++i) {
+                lessonsCompleted.put(1 + i / (double) 10, 0);
+            }
+
+            // construct course 2 lessons
+            for (int i = 0; i < 5; ++i) {
+                lessonsCompleted.put(2 + i / (double) 10, 0);
+            }
+
+            // construct course 3 lessons
+            for (int i = 0; i < 3; ++i) {
+                lessonsCompleted.put(3 + i / (double) 10, 0);
+            }
+            User user = new User(
+                    ctx.formParam("username", ""),
+                    BCrypt.withDefaults().hashToString(12, ctx.formParam("password", "").toCharArray()),
+                    lessonsCompleted
             );
-        } catch (SQLException e) {
+            usersRepository.create(user);
+        } catch (SQLException | JsonProcessingException e) {
             userExists = 409;
         }
 
@@ -44,6 +70,12 @@ public class UsersController {
         } catch (UserNotFoundException e) {
             ctx.status(401);
         }
+    }
+
+    public void completeLesson(Context ctx, Lesson lesson) {
+        User user = currentUser(ctx);
+        ObjectMapper mapper = new ObjectMapper();
+
     }
 
     public User currentUser(Context ctx) {
