@@ -114,8 +114,8 @@ class TestResults extends React.Component {
             return (
                 <div className={"lessCode"}>
                     Number of submissions: {this.props.numSubmissions}
-                    <p style={{color: 'green'}}> {this.props.showError ? this.props.error : null } </p>
-                    {results.map(result => <li>{result}</li>)}
+                    <p style={{color: 'green'}} className={"lessCode"}> {this.props.showError ? this.props.error : null } </p>
+                    <ul className={"lessCode"}> {results.map(result => <li className={"lessCode"}>{result}</li>)} </ul>
                 </div>
             );
         } else {
