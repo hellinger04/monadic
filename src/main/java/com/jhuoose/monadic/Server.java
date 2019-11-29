@@ -40,7 +40,7 @@ public class Server {
         }
 
         // construct course 2 lessons
-        for (int i = 0; i < 5; ++i) {
+        for (int i = 0; i < 6; ++i) {
             courseTwoLessons.add(new Lesson(2, i));
         }
 
