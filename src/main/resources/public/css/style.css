@@ -47,6 +47,7 @@ html, body {
 /*automatically adjusts the height of CodeMirror boxes*/
 .CodeMirror {
     height: auto;
+    width: 100%;
 }
 
 /*makes lesson navigation buttons center justified*/
