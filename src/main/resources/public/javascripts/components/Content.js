@@ -59,13 +59,15 @@ class CodeBlock extends React.Component {
             this.mirror = CodeMirror.fromTextArea(document.getElementById('codeblock' + this.props.element.id), {
                 mode: this.language,
                 theme: "monokai",
-                readOnly: "nocursor"
+                readOnly: "nocursor",
+                lineWrapping: true
             });
         } else {
             this.mirror = CodeMirror.fromTextArea(document.getElementById('codeblock' + this.props.element.id), {
                 mode: "text/typescript",
                 theme: "monokai",
-                readOnly: "nocursor"
+                readOnly: "nocursor",
+                lineWrapping: true
             });
         }
     }
@@ -156,6 +158,7 @@ class Problem extends React.Component {
             styleActiveLine: true,
             autoCloseBrackets: true,
             continueComments: true,
+            lineWrapping: true,
             extraKeys: {"Ctrl-Space": "autocomplete", "Cmd-Space": "autocomplete"}
         });
     }
