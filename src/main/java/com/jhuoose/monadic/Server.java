@@ -106,6 +106,9 @@ public class Server {
                 path("login", () -> {
                     post(usersController::login);
                 });
+                path("status", () -> {
+                    get(usersController::getUserStatus);
+                });
             });
         });
 

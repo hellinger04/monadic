@@ -72,10 +72,13 @@ public class UsersController {
         }
     }
 
-    public void completeLesson(Context ctx, Lesson lesson) {
-        User user = currentUser(ctx);
-        ObjectMapper mapper = new ObjectMapper();
-
+    public void getUserStatus(Context ctx)  throws UserNotFoundException {
+        try {
+            var user = usersRepository.getOne(ctx.formParam("username", ""));
+            ctx.json(user.getLessonsCompleted());
+        } catch (UserNotFoundException | SQLException e) {
+            ctx.status(401);
+        }
     }
 
     public User currentUser(Context ctx) {
