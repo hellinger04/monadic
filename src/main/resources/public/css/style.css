@@ -94,11 +94,21 @@ div.lessTxt p {
     word-wrap: break-word;
 }
 
-div.problemText p {
+div.problemText {
     font-family: "Courier", monospace;
     text-align: left;
-    font-size: 1.5em;
+    font-size: 1em;
     word-wrap: break-word;
+    background-color: #272822;
+}
+
+.incorrect {
+    font-family: "Courier", monospace;
+    text-align: left;
+    font-size: 1em;
+    word-wrap: break-word;
+    background-color: #272822;
+    color: red;
 }
 
 div.CodeMirror.cm-s-monokai {

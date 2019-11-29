@@ -99,17 +99,17 @@ class TestResults extends React.Component {
         for (let i = 0; i < this.props.student.length; i++) {
             if (this.props.expected[i] === this.props.student[i]) {
                 // if student result matches expected result, save 'correct' statement to results array
-                results.push(<p style={{color: 'white'}} className='result' key={i}>
-                    Test {i + 1}: Correct! Expected output is {this.props.expected[i]} and actual output was
-                    &nbsp;{this.props.student[i]}
-                </p>);
+                results.push(<li className={"problemText"} key={i}>
+                    Test {i + 1}: Correct! Expected output is {this.props.expected[i]} and actual output was&nbsp;
+                    {this.props.student[i]}
+                </li>);
                 numCorrect++;
             } else if (this.props.expected !== this.props.student[i]) {
                 // if student result does not match expected result, save 'incorrect' statement to results array
-                results.push(<p style={{color: 'red'}} className='result' key={i}>
-                    Test {i + 1}: Wrong! Expected output is {this.props.expected[i]} but actual output was
-                    &nbsp;{this.props.student[i]}
-                </p>);
+                results.push(<li className={"incorrect"} key={i}>
+                    Test {i + 1}: Wrong! Expected output is {this.props.expected[i]} but actual output was&nbsp;
+                    {this.props.student[i]}
+                </li>);
             }
         }
 
@@ -117,9 +117,9 @@ class TestResults extends React.Component {
             return (
                 <div class={"problemText"}>
                     <p>Number of submissions: {this.props.numSubmissions}</p>
-                    <p>{this.props.student.length > 0 ? <div>Passed {numCorrect} out of
-                        &nbsp;{this.props.student.length} tests:</div> : null}</p>
-                    {results.map(result => <NoBullet><li>{result}</li></NoBullet>)}
+                    <p>{this.props.student.length > 0 ? <div>Passed {numCorrect} out of&nbsp;
+                        {this.props.student.length} tests:</div> : null}</p>
+                    <ul>{results.map(result => <NoBullet><li>{result}</li></NoBullet>)}</ul>
                 </div>
             );
         } else {
