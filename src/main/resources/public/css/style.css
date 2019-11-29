@@ -1,11 +1,5 @@
-/*initializing emelments not in components*/
-html {
-    height: 100%;
-    min-height: 100%;
-    margin: 0;
-}
-
-body {
+/*initializing elements not in components*/
+html, body {
     height: 100%;
     min-height: 100%;
     padding: 0;
@@ -16,15 +10,6 @@ body {
 #application {
     height: 100%;
     min-height: 100%;
-    margin: 0;
-}
-
-.CodeMirror {
-    height: auto;
-}
-
-.lessonNavigation {
-    text-align: center;
 }
 
 /*custom fonts*/
@@ -33,21 +18,22 @@ body {
     src: url("fonts/Px437_IBM_BIOS.ttf");
 }
 
-/*default styling*/
+/*define register and login page text style*/
 .asciiLite {
-    font-family: IBM Bios, Arial;
+    font-family: IBM Bios, Arial, serif;
     color: #90cbe6;
     /*display: inline;*/
     box-shadow: 0 0 0 .3em #004a7b;
     background-color: #004a7b;
 }
 
+/*used for error span messages on register page*/
 .asciiLiteNoBackground {
     opacity: 0;
     overflow: auto;
 }
 
-/*Monadic logo*/
+/*Monadic logo styling*/
 .logo {
     font-family: IBM Bios, Arial;
     font-size: 4em;
@@ -58,7 +44,17 @@ body {
     padding:  .3em;
 }
 
-/*this is the registration/login section*/
+/*automatically adjusts the height of CodeMirror boxes*/
+.CodeMirror {
+    height: auto;
+}
+
+/*makes lesson navigation buttons center justified*/
+.lessonNavigation {
+    text-align: center;
+}
+
+/*define style for the register and login section*/
 .regMain {
     background-image: url("../img/lofi.gif");
     background-repeat: no-repeat;
@@ -110,6 +106,7 @@ div.CodeMirror.cm-s-monokai {
     font-size: 1.2em;
 }
 
+/*resizes content so that webpage is responsive*/
 @media (max-width: 1000px) {
     .logo {font-size: 3em;}
 }
