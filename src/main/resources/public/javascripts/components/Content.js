@@ -99,28 +99,32 @@ class TestResults extends React.Component {
         for (let i = 0; i < this.props.student.length; i++) {
             if (this.props.expected[i] === this.props.student[i]) {
                 // if student result matches expected result, save 'correct' statement to results array
-                results.push(<p style={{color: 'white'}} className='result' key={i}>
+                results.push(<div className = {"rightCode"}><p className='result' key={i}>
                     Correct! Expected output was {this.props.expected[i]} and actual output was {this.props.student[i]}
-                </p>);
+                </p></div>);
             } else if (this.props.expected !== this.props.student[i]) {
                 // if student result does not match expected result, save 'incorrect' statement to results array
-                results.push(<p style={{color: 'red'}} className='result' key={i}>
+                results.push(<div className={"wrongCode"}> <p className='result' key={i}>
                     Wrong! Expected output was {this.props.expected[i]} but actual output was {this.props.student[i]}
-                </p>);
+                </p> </div>);
             }
         }
 
         if (this.props.error === "No errors!") {
             return (
-                <div className={"lessCode"}>
-                    Number of submissions: {this.props.numSubmissions}
-                    <p style={{color: 'green'}} className={"lessCode"}> {this.props.showError ? this.props.error : null } </p>
-                    <ul className={"lessCode"}> {results.map(result => <li className={"lessCode"}>{result}</li>)} </ul>
+                <div>
+                    <div className={"lessTxt"}> Number of submissions: {this.props.numSubmissions} </div>
+                    <div className={"rightCode"}>
+                        <p>
+                            {this.props.showError ? this.props.error : null }
+                        </p>
+                    </div>
+                    <ul> {results.map(result => <li>{result}</li>)} </ul>
                 </div>
             );
         } else {
             return (
-                <div className={"lessCode"}>
+                <div className={"wrongCode"}>
                     Number of submissions: {this.props.numSubmissions}
                     <p style={{color: 'red'}}> {this.props.showError ? this.props.error : null } </p>
                 </div>
