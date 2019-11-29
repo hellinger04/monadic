@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jhuoose.monadic.models.User;
+import com.jhuoose.monadic.models.lesson.Lesson;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -42,7 +43,7 @@ public class UsersRepository {
 
     public User getOne(String username) throws SQLException, UserNotFoundException {
         ObjectMapper objectMapper = new ObjectMapper();
-        var statement = connection.prepareStatement("SELECT username, password FROM users WHERE username = ?");
+        var statement = connection.prepareStatement("SELECT username, password, lessonsCompleted FROM users WHERE username = ?");
         statement.setString(1, username);
         var result = statement.executeQuery();
         try {
@@ -72,6 +73,19 @@ public class UsersRepository {
         statement.setString(1, user.getUsername());
         statement.setString(2, user.getPassword());
         statement.setString(3, objectMapper.writeValueAsString(user.getLessonsCompleted()));
+        statement.execute();
+        statement.close();
+    }
+
+    public void finishLesson(User user, Lesson lesson, int setting) throws SQLException, JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        double key = lesson.getCourseID() + lesson.getID() / (double) 10;
+        HashMap<Double, Integer> lessonsCompleted = user.getLessonsCompleted();
+        lessonsCompleted.replace(key, setting);
+        user.setLessonsCompleted(lessonsCompleted);
+        var statement = connection.prepareStatement("UPDATE users SET lessonsCompleted = ? WHERE username = ?");
+        statement.setString(1, objectMapper.writeValueAsString(user.getLessonsCompleted()));
+        statement.setString(2, user.getUsername());
         statement.execute();
         statement.close();
     }

@@ -14,11 +14,12 @@ public class Lesson {
 
     private static final String problemRegex = "\\*\\*Problem \\d\\.\\d\\.\\d\\.:\\*\\*";
     private int ID;
+    private int courseID;
     private ArrayList<LessonElement> lessonElements = new ArrayList<>();
 
     public Lesson(int courseID, int lessonID) {
         this.ID = lessonID;
-
+        this.courseID = courseID;
         String filePath = "src/main/resources/lessons/course_" + courseID + "/" + lessonID + ".md";
         String text = "";
         try {
@@ -63,4 +64,7 @@ public class Lesson {
 
     public void addLessonElement(LessonElement lessonElement) { this.lessonElements.add(lessonElement); }
 
+    public int getCourseID() {
+        return courseID;
+    }
 }
