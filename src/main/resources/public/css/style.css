@@ -104,8 +104,6 @@ div.rightCode p {
     font-style: normal;
     list-style-type: none;
     background-color: #272822;
-    text-decoration: overline;
-    text-decoration-color: #00d95a;
     color: #00d95a;
 }
 
@@ -118,8 +116,6 @@ div.wrongCode p {
     font-style: normal;
     list-style-type: none;
     background-color: #272822;
-    text-decoration: overline;
-    text-decoration-color: #eb072d;
     color: #eb072d;
 }
 
