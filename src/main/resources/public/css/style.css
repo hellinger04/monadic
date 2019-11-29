@@ -20,7 +20,7 @@ html, body {
 
 /*define register and login page text style*/
 .asciiLite {
-    font-family: IBM Bios, Arial, serif;
+    font-family: IBM Bios, Arial, sans-serif;
     color: #90cbe6;
     /*display: inline;*/
     box-shadow: 0 0 0 .3em #004a7b;
@@ -35,7 +35,7 @@ html, body {
 
 /*Monadic logo styling*/
 .logo {
-    font-family: IBM Bios, Arial;
+    font-family: IBM Bios, Arial, sans-serif;
     font-size: 4em;
     color: #90cbe6;
     display: inline;
@@ -48,6 +48,7 @@ html, body {
 .CodeMirror {
     height: auto;
     width: 100%;
+    word-wrap: break-word;
 }
 
 /*makes lesson navigation buttons center justified*/
@@ -69,7 +70,7 @@ html, body {
 }
 
 .rForm {
-    font-family: IBM Bios, Arial;
+    font-family: IBM Bios, Arial, sans-serif;
 }
 
 /*splash page styling*/
@@ -93,13 +94,21 @@ div.lessTxt p {
     word-wrap: break-word;
 }
 
-div.lessCode p {
+div.problemText {
+    font-family: "Courier", monospace;
     text-align: left;
-    font-size: 1.5em;
+    font-size: 1em;
     word-wrap: break-word;
-    font-family: courier-std, monospace;
-    font-weight: 400;
-    font-style: normal;
+    background-color: #272822;
+}
+
+.incorrect {
+    font-family: "Courier", monospace;
+    text-align: left;
+    font-size: 1em;
+    word-wrap: break-word;
+    background-color: #272822;
+    color: red;
 }
 
 div.CodeMirror.cm-s-monokai {

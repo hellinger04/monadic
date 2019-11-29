@@ -96,36 +96,39 @@ class TestResults extends React.Component {
     render() {
         // create array to store test results
         let results = [];
+        let numCorrect = 0;
 
         for (let i = 0; i < this.props.student.length; i++) {
             if (this.props.expected[i] === this.props.student[i]) {
                 // if student result matches expected result, save 'correct' statement to results array
-                results.push(<p style={{color: 'white'}} className='result' key={i}>
-                    Correct! Expected output was {this.props.expected[i]} and actual output was
+                results.push(<li className={"problemText"} key={i}>
+                    Test {i + 1}: Correct! Expected output is {this.props.expected[i]} and actual output was&nbsp;
                     {this.props.student[i]}
-                </p>);
+                </li>);
+                numCorrect++;
             } else if (this.props.expected !== this.props.student[i]) {
                 // if student result does not match expected result, save 'incorrect' statement to results array
-                results.push(<p style={{color: 'red'}} className='result' key={i}>
-                    Wrong! Expected output was {this.props.expected[i]} but actual output was
+                results.push(<li className={"incorrect"} key={i}>
+                    Test {i + 1}: Wrong! Expected output is {this.props.expected[i]} but actual output was&nbsp;
                     {this.props.student[i]}
-                </p>);
+                </li>);
             }
         }
 
         if (this.props.error === "No errors!") {
             return (
-                <div>
-                    Number of submissions: {this.props.numSubmissions}
-                    <p style={{color: 'green'}}> {this.props.showError ? this.props.error : null } </p>
-                    {results.map(result => <li>{result}</li>)}
+                <div class={"problemText"}>
+                    <p>Number of submissions: {this.props.numSubmissions}</p>
+                    <p>{this.props.student.length > 0 ? <div>Passed {numCorrect} out of&nbsp;
+                        {this.props.student.length} tests:</div> : null}</p>
+                    <ul>{results.map(result => <NoBullet><li>{result}</li></NoBullet>)}</ul>
                 </div>
             );
         } else {
             return (
-                <div>
-                    Number of submissions: {this.props.numSubmissions}
-                    <p style={{color: 'red'}}> {this.props.showError ? this.props.error : null } </p>
+                <div class={"problemText"}>
+                    <p>Number of submissions: {this.props.numSubmissions}</p>
+                    <p style={{color: 'red'}}>Error: {this.props.showError ? this.props.error : null}</p>
                 </div>
             );
         }
