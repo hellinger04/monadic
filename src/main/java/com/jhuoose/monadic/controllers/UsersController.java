@@ -25,19 +25,19 @@ public class UsersController {
         try {
             HashMap<String, Integer> lessonsCompleted = new HashMap<>();
             for (int i = 0; i < 5; ++i) {
-                lessonsCompleted.put("zero_" + i, 0);
+                lessonsCompleted.put("c0_l" + i, 0);
             }
 
             for (int i = 0; i < 8; ++i) {
-                lessonsCompleted.put("one_" + i, 0);
+                lessonsCompleted.put("c1_l" + i, 0);
             }
 
             for (int i = 0; i < 5; ++i) {
-                lessonsCompleted.put("two_" + i, 0);
+                lessonsCompleted.put("c2_l" + i, 0);
             }
 
             for (int i = 0; i < 3; ++i) {
-                lessonsCompleted.put("three_" + i, 0);
+                lessonsCompleted.put("c3_l" + i, 0);
             }
             User user = new User(
                     ctx.formParam("username", ""),

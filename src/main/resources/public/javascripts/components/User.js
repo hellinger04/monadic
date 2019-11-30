@@ -31,6 +31,25 @@ class User extends React.Component {
         this.setState({page: newpage});
     }
 
+    createList() {
+        let list = [];
+
+        //sort array of lessons by course and lesson
+        const ordered = {};
+        const orderedKeys = Object.keys(this.state.status).sort();
+        for (let i = 0; i < orderedKeys.length; i++) {
+            ordered[orderedKeys[i]] = this.state.status[orderedKeys[i]];
+        }
+
+        //push each lesson to list of lessons
+        for (let i = 0; i < Object.keys(ordered).length; i++) {
+            let currKey = Object.keys(ordered)[i];
+            let currCourse = currKey.substr(1,1);
+            let currLesson = currKey.substr(4,1);
+            list.push(<li key={i}>Course {currCourse}, Lesson {currLesson}: {ordered[currKey]}</li>);
+        }
+        return list;
+    }
 
     render() {
         if (this.state.page === "dashboard") {
@@ -42,9 +61,10 @@ class User extends React.Component {
                             <Title>{this.props.user}'s profile</Title>
                             <h2>{this.props.user}'s picture here</h2>
                             <h3>Course 0</h3>
-                            <NoBullet>
-                                <li>Lesson 0: {this.state.status.zero_0}</li>
-                            </NoBullet>
+                            <ul><NoBullet>
+                                {this.createList()}
+                                {/*<li>Lesson 0: {this.state.status.c0_l0}</li>*/}
+                            </NoBullet></ul>
                         </Format>
                     </EarthBound>
                 );
