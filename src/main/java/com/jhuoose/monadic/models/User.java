@@ -1,6 +1,8 @@
 package com.jhuoose.monadic.models;
 
 
+import java.util.HashMap;
+
 /* Class to represent a User for the Monadic service
  */
 public class User {
@@ -8,10 +10,12 @@ public class User {
     private String username;
     private String password;
     private Enrollment enrollment;
+    private HashMap<Double, Integer> lessonsCompleted;
 
-    public User(String username, String password) {
+    public User(String username, String password, HashMap<Double, Integer> lessonsCompleted) {
         this.username = username;
         this.password = password;
+        this.lessonsCompleted = lessonsCompleted;
     }
 
     public String getUsername() {
@@ -26,6 +30,8 @@ public class User {
         return enrollment;
     }
 
+    public HashMap<Double, Integer> getLessonsCompleted() { return lessonsCompleted; }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -37,4 +43,6 @@ public class User {
     public void setEnrollment(Enrollment enrollment) {
         this.enrollment = enrollment;
     }
+
+    public void setLessonsCompleted(HashMap<Double, Integer> lessonsCompleted) { this.lessonsCompleted = lessonsCompleted; }
 }
