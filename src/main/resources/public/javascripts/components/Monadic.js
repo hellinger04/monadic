@@ -18,6 +18,7 @@ class Login extends React.Component {
     }
 
     handleSubmit(event) {
+        event.preventDefault();
         const data = new FormData(event.target);
 
         fetch('/users/login', {
@@ -140,8 +141,8 @@ class Register extends React.Component {
     }
 
     handleSubmit(event) {
+        event.preventDefault();
         const data = new FormData(event.target);
-
 
         fetch('/users', {
             method: 'POST',
