@@ -22,26 +22,22 @@ public class UsersController {
 
     public void signup(Context ctx) {
         var userExists = 201;
-
         try {
-            HashMap<Double, Integer> lessonsCompleted = new HashMap<>();
+            HashMap<String, Integer> lessonsCompleted = new HashMap<>();
             for (int i = 0; i < 5; ++i) {
-                lessonsCompleted.put(i / (double) 10, 0);
+                lessonsCompleted.put("0-" + i, 0);
             }
 
-            // construct course 1 lessons
             for (int i = 0; i < 8; ++i) {
-                lessonsCompleted.put(1 + i / (double) 10, 0);
+                lessonsCompleted.put("1-" + i, 0);
             }
 
-            // construct course 2 lessons
             for (int i = 0; i < 5; ++i) {
-                lessonsCompleted.put(2 + i / (double) 10, 0);
+                lessonsCompleted.put("2-" + i, 0);
             }
 
-            // construct course 3 lessons
             for (int i = 0; i < 3; ++i) {
-                lessonsCompleted.put(3 + i / (double) 10, 0);
+                lessonsCompleted.put("3-" + i, 0);
             }
             User user = new User(
                     ctx.formParam("username", ""),

@@ -48,7 +48,7 @@ public class UsersRepository {
         var result = statement.executeQuery();
         try {
             if (result.next()) {
-                HashMap<Double, Integer> lessonsCompleted = objectMapper.readValue(result.getString("lessonsCompleted"), HashMap.class);
+                HashMap<String, Integer> lessonsCompleted = objectMapper.readValue(result.getString("lessonsCompleted"), HashMap.class);
                 return new User(
                         result.getString("username"),
                         result.getString("password"),
@@ -79,8 +79,8 @@ public class UsersRepository {
 
     public void finishLesson(User user, Lesson lesson, int setting) throws SQLException, JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        double key = lesson.getCourseID() + lesson.getID() / (double) 10;
-        HashMap<Double, Integer> lessonsCompleted = user.getLessonsCompleted();
+        String key = lesson.getCourseID() + "-" + lesson.getID();
+        HashMap<String, Integer> lessonsCompleted = user.getLessonsCompleted();
         lessonsCompleted.replace(key, setting);
         user.setLessonsCompleted(lessonsCompleted);
         var statement = connection.prepareStatement("UPDATE users SET lessonsCompleted = ? WHERE username = ?");
