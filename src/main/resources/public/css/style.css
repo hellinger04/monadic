@@ -90,8 +90,20 @@ html, body {
 
 div.lessTxt p {
     text-align: left;
-    font-size: 1.5em;
+    font-size: 1.2em;
     word-wrap: break-word;
+}
+
+div.rightCode p {
+    text-align: left;
+    font-size: 1.0em;
+    word-wrap: break-word;
+    font-family: courier-std, monospace;
+    font-weight: 400;
+    font-style: normal;
+    list-style-type: none;
+    background-color: #272822;
+    color: #00d95a;
 }
 
 div.problemText {

@@ -91,6 +91,7 @@ class TestResults extends React.Component {
     constructor(props) {
         super(props);
         this.state = {submissions: 0};
+        this.space = " ";
     }
 
     render() {
