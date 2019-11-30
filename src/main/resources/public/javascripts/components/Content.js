@@ -59,13 +59,15 @@ class CodeBlock extends React.Component {
             this.mirror = CodeMirror.fromTextArea(document.getElementById('codeblock' + this.props.element.id), {
                 mode: this.language,
                 theme: "monokai",
-                readOnly: "nocursor"
+                readOnly: "nocursor",
+                lineWrapping: true
             });
         } else {
             this.mirror = CodeMirror.fromTextArea(document.getElementById('codeblock' + this.props.element.id), {
                 mode: "text/typescript",
                 theme: "monokai",
-                readOnly: "nocursor"
+                readOnly: "nocursor",
+                lineWrapping: true
             });
         }
     }
@@ -95,38 +97,39 @@ class TestResults extends React.Component {
     render() {
         // create array to store test results
         let results = [];
+        let numCorrect = 0;
 
         for (let i = 0; i < this.props.student.length; i++) {
             if (this.props.expected[i] === this.props.student[i]) {
                 // if student result matches expected result, save 'correct' statement to results array
-                results.push(<div className = {"rightCode"}><p className='result' key={i}>
-                    Correct! Expected output was {this.props.expected[i]} and actual output was {this.props.student[i]}
-                </p></div>);
+                results.push(<li className={"problemText"} key={i}>
+                    Test {i + 1}: Correct! Expected output is {this.props.expected[i]} and actual output was&nbsp;
+                    {this.props.student[i]}
+                </li>);
+                numCorrect++;
             } else if (this.props.expected !== this.props.student[i]) {
                 // if student result does not match expected result, save 'incorrect' statement to results array
-                results.push(<div className={"wrongCode"}> <p className='result' key={i}>
-                    Wrong! Expected output was {this.props.expected[i]} but actual output was {this.props.student[i]}
-                </p> </div>);
+                results.push(<li className={"incorrect"} key={i}>
+                    Test {i + 1}: Wrong! Expected output is {this.props.expected[i]} but actual output was&nbsp;
+                    {this.props.student[i]}
+                </li>);
             }
         }
 
         if (this.props.error === "No errors!") {
             return (
-                <div>
-                    <div className={"lessTxt"}> Number of submissions: {this.props.numSubmissions} </div>
-                    <div className={"rightCode"}>
-                        <p>
-                            {this.props.showError ? this.props.error : null }
-                        </p>
-                    </div>
-                    <ul> {results.map(result => <li>{result}</li>)} </ul>
+                <div class={"problemText"}>
+                    <p>Number of submissions: {this.props.numSubmissions}</p>
+                    <p>{this.props.student.length > 0 ? <div>Passed {numCorrect} out of&nbsp;
+                        {this.props.student.length} tests:</div> : null}</p>
+                    <ul>{results.map(result => <NoBullet><li>{result}</li></NoBullet>)}</ul>
                 </div>
             );
         } else {
             return (
-                <div className={"wrongCode"}>
-                    Number of submissions: {this.props.numSubmissions}
-                    <p style={{color: 'red'}}> {this.props.showError ? this.props.error : null } </p>
+                <div class={"problemText"}>
+                    <p>Number of submissions: {this.props.numSubmissions}</p>
+                    <p style={{color: 'red'}}>Error: {this.props.showError ? this.props.error : null}</p>
                 </div>
             );
         }
@@ -159,6 +162,7 @@ class Problem extends React.Component {
             styleActiveLine: true,
             autoCloseBrackets: true,
             continueComments: true,
+            lineWrapping: true,
             extraKeys: {"Ctrl-Space": "autocomplete", "Cmd-Space": "autocomplete"}
         });
     }
@@ -254,7 +258,7 @@ class Problem extends React.Component {
         }
 
         return (
-            <div>
+            <div className={"lessonContainer"}>
                 <textarea id = {'problem' + this.props.element.id}>{this.props.element.starterCode}</textarea>
                 <button onClick={() => this.handleClick()}>Save and Submit</button>
                 <TestResults numSubmissions={this.count} student={this.studentResults} expected={expectedOutputs}

@@ -1,11 +1,5 @@
-/*initializing emelments not in components*/
-html {
-    height: 100%;
-    min-height: 100%;
-    margin: 0;
-}
-
-body {
+/*initializing elements not in components*/
+html, body {
     height: 100%;
     min-height: 100%;
     padding: 0;
@@ -16,15 +10,6 @@ body {
 #application {
     height: 100%;
     min-height: 100%;
-    margin: 0;
-}
-
-.CodeMirror {
-    height: auto;
-}
-
-.lessonNavigation {
-    text-align: center;
 }
 
 /*custom fonts*/
@@ -33,23 +18,24 @@ body {
     src: url("fonts/Px437_IBM_BIOS.ttf");
 }
 
-/*default styling*/
+/*define register and login page text style*/
 .asciiLite {
-    font-family: IBM Bios, Arial;
+    font-family: IBM Bios, Arial, sans-serif;
     color: #90cbe6;
     /*display: inline;*/
     box-shadow: 0 0 0 .3em #004a7b;
     background-color: #004a7b;
 }
 
+/*used for error span messages on register page*/
 .asciiLiteNoBackground {
     opacity: 0;
     overflow: auto;
 }
 
-/*Monadic logo*/
+/*Monadic logo styling*/
 .logo {
-    font-family: IBM Bios, Arial;
+    font-family: IBM Bios, Arial, sans-serif;
     font-size: 4em;
     color: #90cbe6;
     display: inline;
@@ -58,7 +44,19 @@ body {
     padding:  .3em;
 }
 
-/*this is the registration/login section*/
+/*automatically adjusts the height of CodeMirror boxes*/
+.CodeMirror {
+    height: auto;
+    width: 100%;
+    word-wrap: break-word;
+}
+
+/*makes lesson navigation buttons center justified*/
+.lessonNavigation {
+    text-align: center;
+}
+
+/*define style for the register and login section*/
 .regMain {
     background-image: url("../img/lofi.gif");
     background-repeat: no-repeat;
@@ -72,7 +70,7 @@ body {
 }
 
 .rForm {
-    font-family: IBM Bios, Arial;
+    font-family: IBM Bios, Arial, sans-serif;
 }
 
 /*splash page styling*/
@@ -82,11 +80,12 @@ body {
 
 /*lesson page*/
 .lessonBody {
-    padding: 3em;
+    width: 100%;
 }
 
 .lessonContainer {
-    width: 100%;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 div.lessTxt p {
@@ -107,16 +106,21 @@ div.rightCode p {
     color: #00d95a;
 }
 
-div.wrongCode p {
+div.problemText {
+    font-family: "Courier", monospace;
     text-align: left;
-    font-size: 1.0em;
+    font-size: 1em;
     word-wrap: break-word;
-    font-family: courier-std, monospace;
-    font-weight: 400;
-    font-style: normal;
-    list-style-type: none;
     background-color: #272822;
-    color: #eb072d;
+}
+
+.incorrect {
+    font-family: "Courier", monospace;
+    text-align: left;
+    font-size: 1em;
+    word-wrap: break-word;
+    background-color: #272822;
+    color: red;
 }
 
 div.CodeMirror.cm-s-monokai {
@@ -124,12 +128,14 @@ div.CodeMirror.cm-s-monokai {
     font-size: 1.2em;
 }
 
+/*resizes content so that webpage is responsive*/
 @media (max-width: 1000px) {
     .logo {font-size: 3em;}
 }
 
 @media (max-width: 700px) {
     .logo {font-size: 2em;}
+    div.lessTxt p {font-size: 1em;}
 }
 
 @media (max-width: 500px) {
