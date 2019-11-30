@@ -140,9 +140,7 @@ class Register extends React.Component {
     }
 
     handleSubmit(event) {
-        console.log("test");
         const data = new FormData(event.target);
-        console.log(data.get("username"));
 
 
         fetch('/users', {
