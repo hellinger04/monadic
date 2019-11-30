@@ -20,7 +20,7 @@ public class UsersController {
         this.usersRepository = usersRepository;
     }
 
-    public void signup(Context ctx) throws SQLException {
+    public void signup(Context ctx) {
         var userExists = 201;
 
         try {

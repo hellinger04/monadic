@@ -18,8 +18,6 @@ class Login extends React.Component {
     }
 
     handleSubmit(event) {
-        // the form lets me submit when empty, this needs to be fixed
-        event.preventDefault();
         const data = new FormData(event.target);
 
         fetch('/users/login', {
@@ -142,10 +140,10 @@ class Register extends React.Component {
     }
 
     handleSubmit(event) {
-        // TODO the form lets me submit when empty, this needs to be fixed
-        // get target's username value and then check to ensure length > 0
-        event.preventDefault();
+        console.log("test");
         const data = new FormData(event.target);
+        console.log(data.get("username"));
+
 
         fetch('/users', {
             method: 'POST',
