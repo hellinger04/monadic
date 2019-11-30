@@ -72,7 +72,7 @@ public class UsersController {
         }
     }
 
-    public void getUserStatus(Context ctx)  throws UserNotFoundException {
+    public void getUserStatus(Context ctx) {
         try {
             var user = usersRepository.getOne(ctx.formParam("username", ""));
             ctx.json(user.getLessonsCompleted());

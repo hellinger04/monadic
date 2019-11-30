@@ -6,7 +6,8 @@ class User extends React.Component {
     }
 
     async componentDidMount() {
-        this.setState({ courses: await (await fetch("/courses")).json() });
+        this.setState({ status: await (await fetch("/status")).json() });
+        console.log(this.state.status);
     }
 
     changePage(newpage, course, lesson) {
@@ -21,7 +22,7 @@ class User extends React.Component {
                 <EarthBound>
                     <Format>
                         <Title>{this.props.user}'s profile</Title>
-                        <h2>Your Picture Here</h2>
+                        <h2>{this.props.user}'s picture here</h2>
                     </Format>
                 </EarthBound>
             );

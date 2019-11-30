@@ -9,22 +9,23 @@ class Login extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    validateLogin(response) {
+    validateLogin(response, username) {
         if (response.status === 401) {
             alert("Invalid username or password. Please try again")
         } else if (response.status === 200) {
-            this.props.changePage("content", 0, 0)
+            this.props.changePage("content", username)
         }
     }
 
     handleSubmit(event) {
         event.preventDefault();
         const data = new FormData(event.target);
+        const username = data.get("username");
 
         fetch('/users/login', {
             method: 'POST',
             body: data,
-        }).then((function(response) { this.validateLogin(response) }).bind(this));
+        }).then((function(response) { this.validateLogin(response, username) }).bind(this));
     }
 
     render() {
