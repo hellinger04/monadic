@@ -20,10 +20,8 @@ class User extends React.Component {
             return (
                 <EarthBound>
                     <Format>
-                        <Title>Welcome User!</Title>
+                        <Title>{this.props.user}'s profile</Title>
                         <h2>Your Picture Here</h2>
-                        <CourseList changePage={this.changePage} courses={this.state.courses}
-                                    currCourse={this.state.currCourse}/>
                     </Format>
                 </EarthBound>
             );

@@ -58,7 +58,7 @@ class Login extends React.Component {
                     <p/>
                     <input type="submit" value="Login" />
                     <p/>
-                    <button onClick={() => {this.props.changePage("register", 0, 0)} }>No account? Register now!</button>
+                    <button onClick={() => {this.props.changePage("register", "")} }>No account? Register now!</button>
                 </form>
             </div>
         );
@@ -84,11 +84,11 @@ class Register extends React.Component {
         this.isMessage = false;
     }
 
-    usernameExists(response) {
+    usernameExists(response, username) {
         if (response.status === 409) {
-            alert("That username already exists. Please try another username.")
+            alert("That username already exists. Please try another username.");
         } else if (response.status === 201) {
-            this.props.changePage("content", 0, 0)
+            this.props.changePage("content", username);
         }
     }
 
@@ -143,11 +143,12 @@ class Register extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         const data = new FormData(event.target);
+        const username = data.get("username");
 
         fetch('/users', {
             method: 'POST',
             body: data,
-        }).then((function(exists) { this.usernameExists(exists) }).bind(this));
+        }).then((function(exists) { this.usernameExists(exists, username) }).bind(this));
     }
 
     render() {
@@ -181,7 +182,7 @@ class Register extends React.Component {
                     <p/>
                     <input id="registerButton" type="submit" value="Register" disabled/>
                     <p/>
-                    <button onClick={() => {this.props.changePage("login", 0, 0)} }>Already registered? Login!</button>
+                    <button onClick={() => {this.props.changePage("login", "")} }>Already registered? Login!</button>
                 </form>
             </div>
         );
@@ -194,13 +195,14 @@ class Register extends React.Component {
 class Monadic extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {page: "register"};
+        this.state = {page: "register", user: ""};
         this.changePage = this.changePage.bind(this);
     }
 
-    changePage(newpage) {
+    changePage(newpage, username) {
         // update current page string and current course/lesson indices
         this.setState({page: newpage});
+        this.setState({user: username});
     }
 
     render() {
@@ -213,9 +215,9 @@ class Monadic extends React.Component {
                 <Login changePage={this.changePage}/>
             );
         } else if (this.state.page === "user") {
-            return (<User/>);
+            return (<User user={this.state.user}/>);
         } else if (this.state.page === "content") {
-            return (<Content/>);
+            return (<Content user={this.state.user}/>);
         }
     }
 }

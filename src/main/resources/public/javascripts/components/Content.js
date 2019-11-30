@@ -464,12 +464,21 @@ class Content extends React.Component {
             return (
                 <EarthBound>
                     <Format>
-                        <Title>Welcome to Monadic!</Title>
+                        <Title>Welcome, {this.props.user}!</Title>
+                        <button onClick={() => {this.changePage("user")}}>View Profile</button>
+
+                        <br/>
+                        <br/>
+
                         <h2>Available Courses</h2>
                         <CourseList changePage={this.changePage} courses={this.state.courses}
                                     currCourse={this.state.currCourse}/>
                     </Format>
                 </EarthBound>
+            );
+        } else if (this.state.page === "user") {
+            return (
+                <User user={this.props.user}/>
             );
         } else if (this.state.page === "course") {
             return (
