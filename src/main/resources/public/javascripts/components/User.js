@@ -23,7 +23,7 @@ class User extends React.Component {
             method: 'POST',
             body: this.props.user,
         }).then(this.status).then(this.json).then(function(data) {
-                console.log('Request succeeded with JSON response', data);}).bind(this);
+                this.setState({status: data});}.bind(this));
     }
 
     changePage(newpage) {
@@ -34,14 +34,30 @@ class User extends React.Component {
 
     render() {
         if (this.state.page === "dashboard") {
-            return (
-                <EarthBound>
-                    <Format>
-                        <Title>{this.props.user}'s profile</Title>
-                        <h2>{this.props.user}'s picture here</h2>
-                    </Format>
-                </EarthBound>
-            );
+            console.log(this.state.status);
+            if (typeof this.state.status !== 'undefined') {
+                return (
+                    <EarthBound>
+                        <Format>
+                            <Title>{this.props.user}'s profile</Title>
+                            <h2>{this.props.user}'s picture here</h2>
+                            <h3>Course 0</h3>
+                            <NoBullet>
+                                <li>Lesson 0: {this.state.status.zero_0}</li>
+                            </NoBullet>
+                        </Format>
+                    </EarthBound>
+                );
+            } else {
+                return (
+                    <EarthBound>
+                        <Format>
+                            <Title>{this.props.user}'s profile</Title>
+                            <h2>{this.props.user}'s picture here</h2>
+                        </Format>
+                    </EarthBound>
+                );
+            }
         }
     }
 }

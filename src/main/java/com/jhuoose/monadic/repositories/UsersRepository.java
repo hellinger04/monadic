@@ -77,9 +77,23 @@ public class UsersRepository {
         statement.close();
     }
 
+    private String intToString(int toConvert) {
+        if (toConvert == 0) {
+            return "zero";
+        } else if (toConvert == 1) {
+            return "one";
+        } else if (toConvert == 2) {
+            return "two";
+        } else if (toConvert == 3) {
+            return "three";
+        } else {
+            return null;
+        }
+    }
+
     public void finishLesson(User user, Lesson lesson, int setting) throws SQLException, JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        String key = lesson.getCourseID() + "-" + lesson.getID();
+        String key = intToString(lesson.getCourseID()) + "-" + lesson.getID();
         HashMap<String, Integer> lessonsCompleted = user.getLessonsCompleted();
         lessonsCompleted.replace(key, setting);
         user.setLessonsCompleted(lessonsCompleted);
