@@ -5,12 +5,28 @@ class User extends React.Component {
         this.changePage = this.changePage.bind(this);
     }
 
-    async componentDidMount() {
-        this.setState({ status: await (await fetch("/status")).json() });
-        console.log(this.state.status);
+    status(response) {
+        if (response.status === 201) {
+            return Promise.resolve(response);
+        } else if (response.status === 401) {
+            return Promise.reject(new Error("That username doesn't exist. Please try refreshing the page and try again."));
+        }
     }
 
-    changePage(newpage, course, lesson) {
+    json(response) {
+        return response.json()
+    }
+
+
+    async componentDidMount() {
+        fetch('/users/status', {
+            method: 'POST',
+            body: this.props.user,
+        }).then(this.status).then(this.json).then(function(data) {
+                console.log('Request succeeded with JSON response', data);}).bind(this);
+    }
+
+    changePage(newpage) {
         // update current page string
         this.setState({page: newpage});
     }

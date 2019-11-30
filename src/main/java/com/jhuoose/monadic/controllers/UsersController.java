@@ -74,7 +74,8 @@ public class UsersController {
 
     public void getUserStatus(Context ctx) {
         try {
-            var user = usersRepository.getOne(ctx.formParam("username", ""));
+            var user = usersRepository.getOne(ctx.body());
+            ctx.status(201);
             ctx.json(user.getLessonsCompleted());
         } catch (UserNotFoundException | SQLException e) {
             ctx.status(401);
@@ -87,7 +88,7 @@ public class UsersController {
         return user;
     }
 
-    public void changePassword(Context ctx) throws SQLException, UserNotFoundException {
+    public void changePassword(Context ctx) throws SQLException {
         try {
             var user = usersRepository.getOne(ctx.formParam("username", ""));
             // first make sure the user has valid authentication
