@@ -19,7 +19,7 @@ public class UsersRepository {
     public UsersRepository(Connection connection) throws SQLException {
         this.connection = connection;
         var statement = connection.createStatement();
-        statement.execute("DROP TABLE users");
+        statement.execute("DROP TABLE IF EXISTS  users");
         statement.execute("CREATE TABLE IF NOT EXISTS users (username TEXT PRIMARY KEY, password TEXT, lessonsCompleted TEXT)");
         statement.close();
     }
