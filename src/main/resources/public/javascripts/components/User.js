@@ -33,6 +33,7 @@ class User extends React.Component {
 
     createList() {
         let list = [];
+        const lessonStatus = Object.freeze({0:"not started", 1:"in progress", 2:"completed"});
 
         //sort array of lessons by course and lesson
         const ordered = {};
@@ -46,7 +47,7 @@ class User extends React.Component {
             let currKey = Object.keys(ordered)[i];
             let currCourse = currKey.substr(1,1);
             let currLesson = currKey.substr(4,1);
-            list.push(<li key={i}>Course {currCourse}, Lesson {currLesson}: {ordered[currKey]}</li>);
+            list.push(<li key={i}>Course {currCourse}, Lesson {currLesson}: {lessonStatus[ordered[currKey]]}</li>);
         }
         return list;
     }
