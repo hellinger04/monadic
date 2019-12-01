@@ -60,12 +60,11 @@ class User extends React.Component {
                     <EarthBound>
                         <Format>
                             <Title>{this.props.user}'s profile</Title>
-                            <h2>{this.props.user}'s picture here</h2>
-                            <h3>Course 0</h3>
-                            <ul><NoBullet>
+                            <img src={"/img/default-profile.png"} alt={"Profile Picture"}></img>
+                            <h1>Lesson Progress</h1>
+                            <NoBullet>
                                 {this.createList()}
-                                {/*<li>Lesson 0: {this.state.status.c0_l0}</li>*/}
-                            </NoBullet></ul>
+                            </NoBullet>
                         </Format>
                     </EarthBound>
                 );
