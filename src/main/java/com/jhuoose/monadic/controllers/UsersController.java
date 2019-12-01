@@ -7,6 +7,7 @@ import com.jhuoose.monadic.models.User;
 import com.jhuoose.monadic.models.lesson.Lesson;
 import com.jhuoose.monadic.repositories.UserNotFoundException;
 import com.jhuoose.monadic.repositories.UsersRepository;
+import io.javalin.core.validation.Validator;
 import io.javalin.http.Context;
 import io.javalin.http.ForbiddenResponse;
 
@@ -74,6 +75,19 @@ public class UsersController {
             ctx.status(201);
             ctx.json(user.getLessonsCompleted());
         } catch (UserNotFoundException | SQLException e) {
+            ctx.status(401);
+        }
+    }
+
+    public void changeLessonStatus(Context ctx) {
+        try {
+            var user = usersRepository.getOne(ctx.formParam("username", ""));
+            HashMap<String, Integer> lessonsCompleted = user.getLessonsCompleted();
+            String lessonKey = ctx.formParam("lessonKey", "");
+            int newLessonStatus = ctx.formParam("newLessonStatus", Integer.class).getValue();
+            usersRepository.modifyLessonStatus(user, lessonKey, newLessonStatus);
+
+        } catch (UserNotFoundException | SQLException | JsonProcessingException e) {
             ctx.status(401);
         }
     }

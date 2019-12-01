@@ -77,11 +77,10 @@ public class UsersRepository {
         statement.close();
     }
 
-    public void finishLesson(User user, Lesson lesson, int setting) throws SQLException, JsonProcessingException {
+    public void modifyLessonStatus(User user, String lessonID, int setting) throws SQLException, JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        String key = "c" + lesson.getCourseID() + "_l" + lesson.getID();
         HashMap<String, Integer> lessonsCompleted = user.getLessonsCompleted();
-        lessonsCompleted.replace(key, setting);
+        lessonsCompleted.replace(lessonID, setting);
         user.setLessonsCompleted(lessonsCompleted);
         var statement = connection.prepareStatement("UPDATE users SET lessonsCompleted = ? WHERE username = ?");
         statement.setString(1, objectMapper.writeValueAsString(user.getLessonsCompleted()));

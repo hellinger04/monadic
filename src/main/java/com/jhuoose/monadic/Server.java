@@ -118,6 +118,9 @@ public class Server {
                 path("status", () -> {
                     post(usersController::getUserStatus);
                 });
+                path("lesson", () -> {
+                   post(usersController::changeLessonStatus);
+                });
             });
         });
 
