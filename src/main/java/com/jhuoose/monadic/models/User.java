@@ -10,9 +10,9 @@ public class User {
     private String username;
     private String password;
     private Enrollment enrollment;
-    private HashMap<Double, Integer> lessonsCompleted;
+    private HashMap<String, Integer> lessonsCompleted;
 
-    public User(String username, String password, HashMap<Double, Integer> lessonsCompleted) {
+    public User(String username, String password, HashMap<String, Integer> lessonsCompleted) {
         this.username = username;
         this.password = password;
         this.lessonsCompleted = lessonsCompleted;
@@ -30,7 +30,7 @@ public class User {
         return enrollment;
     }
 
-    public HashMap<Double, Integer> getLessonsCompleted() { return lessonsCompleted; }
+    public HashMap<String, Integer> getLessonsCompleted() { return lessonsCompleted; }
 
     public void setUsername(String username) {
         this.username = username;
@@ -44,5 +44,5 @@ public class User {
         this.enrollment = enrollment;
     }
 
-    public void setLessonsCompleted(HashMap<Double, Integer> lessonsCompleted) { this.lessonsCompleted = lessonsCompleted; }
+    public void setLessonsCompleted(HashMap<String, Integer> lessonsCompleted) { this.lessonsCompleted = lessonsCompleted; }
 }

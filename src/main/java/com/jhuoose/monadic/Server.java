@@ -116,7 +116,10 @@ public class Server {
                     post(usersController::login);
                 });
                 path("status", () -> {
-                    get(usersController::getUserStatus);
+                    post(usersController::getUserStatus);
+                });
+                path("lesson", () -> {
+                   post(usersController::changeLessonStatus);
                 });
             });
         });

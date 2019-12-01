@@ -7,6 +7,7 @@ import com.jhuoose.monadic.models.User;
 import com.jhuoose.monadic.models.lesson.Lesson;
 import com.jhuoose.monadic.repositories.UserNotFoundException;
 import com.jhuoose.monadic.repositories.UsersRepository;
+import io.javalin.core.validation.Validator;
 import io.javalin.http.Context;
 import io.javalin.http.ForbiddenResponse;
 
@@ -22,26 +23,22 @@ public class UsersController {
 
     public void signup(Context ctx) {
         var userExists = 201;
-
         try {
-            HashMap<Double, Integer> lessonsCompleted = new HashMap<>();
+            HashMap<String, Integer> lessonsCompleted = new HashMap<>();
             for (int i = 0; i < 5; ++i) {
-                lessonsCompleted.put(i / (double) 10, 0);
+                lessonsCompleted.put("c0_l" + i, 0);
             }
 
-            // construct course 1 lessons
             for (int i = 0; i < 8; ++i) {
-                lessonsCompleted.put(1 + i / (double) 10, 0);
+                lessonsCompleted.put("c1_l" + i, 0);
             }
 
-            // construct course 2 lessons
             for (int i = 0; i < 5; ++i) {
-                lessonsCompleted.put(2 + i / (double) 10, 0);
+                lessonsCompleted.put("c2_l" + i, 0);
             }
 
-            // construct course 3 lessons
             for (int i = 0; i < 3; ++i) {
-                lessonsCompleted.put(3 + i / (double) 10, 0);
+                lessonsCompleted.put("c3_l" + i, 0);
             }
             User user = new User(
                     ctx.formParam("username", ""),
@@ -72,11 +69,25 @@ public class UsersController {
         }
     }
 
-    public void getUserStatus(Context ctx)  throws UserNotFoundException {
+    public void getUserStatus(Context ctx) {
         try {
-            var user = usersRepository.getOne(ctx.formParam("username", ""));
+            var user = usersRepository.getOne(ctx.body());
+            ctx.status(201);
             ctx.json(user.getLessonsCompleted());
         } catch (UserNotFoundException | SQLException e) {
+            ctx.status(401);
+        }
+    }
+
+    public void changeLessonStatus(Context ctx) {
+        try {
+            var user = usersRepository.getOne(ctx.formParam("username", ""));
+            HashMap<String, Integer> lessonsCompleted = user.getLessonsCompleted();
+            String lessonKey = ctx.formParam("lessonKey", "");
+            int newLessonStatus = ctx.formParam("newLessonStatus", Integer.class).getValue();
+            usersRepository.modifyLessonStatus(user, lessonKey, newLessonStatus);
+
+        } catch (UserNotFoundException | SQLException | JsonProcessingException e) {
             ctx.status(401);
         }
     }
@@ -87,7 +98,7 @@ public class UsersController {
         return user;
     }
 
-    public void changePassword(Context ctx) throws SQLException, UserNotFoundException {
+    public void changePassword(Context ctx) throws SQLException {
         try {
             var user = usersRepository.getOne(ctx.formParam("username", ""));
             // first make sure the user has valid authentication
