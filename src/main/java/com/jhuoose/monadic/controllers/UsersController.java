@@ -9,6 +9,7 @@ import com.jhuoose.monadic.models.lesson.element.LessonElement;
 import com.jhuoose.monadic.models.lesson.element.Problem;
 import com.jhuoose.monadic.repositories.UserNotFoundException;
 import com.jhuoose.monadic.repositories.UsersRepository;
+import com.mangofactory.typescript.TypescriptCompiler;
 import io.javalin.http.Context;
 import io.javalin.http.ForbiddenResponse;
 
@@ -97,12 +98,23 @@ public class UsersController {
         }
     }
 
-    public void getProblemStatus(Context ctx) {
+    public void getSolutionStatus(Context ctx) {
         try {
             var user = usersRepository.getOne(ctx.formParam("username", ""));
+            int problemID = Integer.parseInt(ctx.formParam("problemID", ""));
+            String solution = user.getSolutions().get(Integer.toString(problemID));
             String isTypeScript = ctx.formParam("isTypeScript", "");
-            ctx.status(201);
-            ctx.json(user.getSolutions());
+            assert isTypeScript != null;
+            if (isTypeScript.equals("true")) {
+                TypescriptCompiler tsc = new TypescriptCompiler();
+                ctx.json(tsc.compile(solution));
+                ctx.status(201);
+            } else if (isTypeScript.equals("false")) {
+                ctx.json(solution);
+                ctx.status(201);
+            } else {
+                ctx.status(401);
+            }
         } catch (UserNotFoundException | SQLException e) {
             ctx.status(401);
         }
@@ -113,7 +125,7 @@ public class UsersController {
             var user = usersRepository.getOne(ctx.formParam("username", ""));
             HashMap<String, Integer> lessonsCompleted = user.getLessonsCompleted();
             String lessonKey = ctx.formParam("lessonKey", "");
-            int newLessonStatus = ctx.formParam("newLessonStatus", Integer.class).getValue();
+            int newLessonStatus = Integer.parseInt(ctx.formParam("newLessonStatus", ""));
             usersRepository.modifyLessonStatus(user, lessonKey, newLessonStatus);
 
         } catch (UserNotFoundException | SQLException | JsonProcessingException e) {
