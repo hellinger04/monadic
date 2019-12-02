@@ -5,13 +5,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jhuoose.monadic.models.User;
 import com.jhuoose.monadic.models.lesson.Lesson;
+import com.jhuoose.monadic.models.lesson.element.LessonElement;
+import com.jhuoose.monadic.models.lesson.element.Problem;
 import com.jhuoose.monadic.repositories.UserNotFoundException;
 import com.jhuoose.monadic.repositories.UsersRepository;
-import io.javalin.core.validation.Validator;
 import io.javalin.http.Context;
 import io.javalin.http.ForbiddenResponse;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UsersController {
@@ -21,29 +23,45 @@ public class UsersController {
         this.usersRepository = usersRepository;
     }
 
+    private void putProblemElems(HashMap<String, String> solutions, Lesson lesson) {
+        for (LessonElement le: lesson.getLessonElements()) {
+            if (le.isProblem()) {
+                Problem problemLE = (Problem) le;
+                solutions.put(Integer.toString(le.getID()), problemLE.getStarterCode());
+            }
+        }
+    }
+
     public void signup(Context ctx) {
         var userExists = 201;
         try {
             HashMap<String, Integer> lessonsCompleted = new HashMap<>();
+            HashMap<String, String> solutions = new HashMap<>();
             for (int i = 0; i < 5; ++i) {
                 lessonsCompleted.put("c0_l" + i, 0);
+                putProblemElems(solutions, new Lesson(0, i));
             }
 
             for (int i = 0; i < 8; ++i) {
                 lessonsCompleted.put("c1_l" + i, 0);
+                putProblemElems(solutions, new Lesson(1, i));
             }
 
             for (int i = 0; i < 5; ++i) {
                 lessonsCompleted.put("c2_l" + i, 0);
+                putProblemElems(solutions, new Lesson(2, i));
             }
 
             for (int i = 0; i < 3; ++i) {
                 lessonsCompleted.put("c3_l" + i, 0);
+                putProblemElems(solutions, new Lesson(3, i));
             }
+
             User user = new User(
                     ctx.formParam("username", ""),
                     BCrypt.withDefaults().hashToString(12, ctx.formParam("password", "").toCharArray()),
-                    lessonsCompleted
+                    lessonsCompleted,
+                    solutions
             );
             usersRepository.create(user);
         } catch (SQLException | JsonProcessingException e) {
@@ -53,7 +71,7 @@ public class UsersController {
         ctx.status(userExists);
     }
 
-    public void login(Context ctx) throws SQLException, UserNotFoundException {
+    public void login(Context ctx) throws SQLException {
         try {
             var user = usersRepository.getOne(ctx.formParam("username", ""));
             BCrypt.Result result = BCrypt.verifyer().verify(ctx.formParam("password", "").toCharArray(),
@@ -79,6 +97,17 @@ public class UsersController {
         }
     }
 
+    public void getProblemStatus(Context ctx) {
+        try {
+            var user = usersRepository.getOne(ctx.formParam("username", ""));
+            String isTypeScript = ctx.formParam("isTypeScript", "");
+            ctx.status(201);
+            ctx.json(user.getSolutions());
+        } catch (UserNotFoundException | SQLException e) {
+            ctx.status(401);
+        }
+    }
+
     public void changeLessonStatus(Context ctx) {
         try {
             var user = usersRepository.getOne(ctx.formParam("username", ""));
@@ -87,6 +116,18 @@ public class UsersController {
             int newLessonStatus = ctx.formParam("newLessonStatus", Integer.class).getValue();
             usersRepository.modifyLessonStatus(user, lessonKey, newLessonStatus);
 
+        } catch (UserNotFoundException | SQLException | JsonProcessingException e) {
+            ctx.status(401);
+        }
+    }
+
+    public void changeSolution(Context ctx) {
+        try {
+            var user = usersRepository.getOne(ctx.formParam("username", ""));
+            HashMap<String, String> solutions = user.getSolutions();
+            String problemKey = ctx.formParam("problemKey", "");
+            String newSolution = ctx.formParam("newSolution", "");
+            usersRepository.modifySolution(user, problemKey, newSolution);
         } catch (UserNotFoundException | SQLException | JsonProcessingException e) {
             ctx.status(401);
         }

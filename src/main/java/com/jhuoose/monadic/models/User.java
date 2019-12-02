@@ -11,11 +11,13 @@ public class User {
     private String password;
     private Enrollment enrollment;
     private HashMap<String, Integer> lessonsCompleted;
+    private HashMap<String, String> solutions;
 
-    public User(String username, String password, HashMap<String, Integer> lessonsCompleted) {
+    public User(String username, String password, HashMap<String, Integer> lessonsCompleted, HashMap<String, String> solutions) {
         this.username = username;
         this.password = password;
         this.lessonsCompleted = lessonsCompleted;
+        this.solutions = solutions;
     }
 
     public String getUsername() {
@@ -30,7 +32,13 @@ public class User {
         return enrollment;
     }
 
-    public HashMap<String, Integer> getLessonsCompleted() { return lessonsCompleted; }
+    public HashMap<String, Integer> getLessonsCompleted() {
+        return lessonsCompleted;
+    }
+
+    public HashMap<String, String> getSolutions() {
+        return solutions;
+    }
 
     public void setUsername(String username) {
         this.username = username;
@@ -44,5 +52,13 @@ public class User {
         this.enrollment = enrollment;
     }
 
-    public void setLessonsCompleted(HashMap<String, Integer> lessonsCompleted) { this.lessonsCompleted = lessonsCompleted; }
+    public void setLessonsCompleted(HashMap<String, Integer> lessonsCompleted) {
+        this.lessonsCompleted = lessonsCompleted;
+    }
+
+    public void setSolutions(HashMap<String, String> solutions) {
+        this.solutions = solutions;
+    }
+
+
 }
