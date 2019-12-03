@@ -119,13 +119,13 @@ public class Server {
                     post(usersController::getUserStatus);
                 });
                 path("lesson", () -> {
-                   post(usersController::changeLessonStatus);
+                   post(usersController::setLessonStatus);
                 });
                 path("solutionStatus", () -> {
                     post(usersController::getSolutionStatus);
                 });
                 path("solution", () -> {
-                    post(usersController::changeSolution);
+                    post(usersController::setSolution);
                  });
             });
         });

@@ -2,7 +2,6 @@ package com.jhuoose.monadic.controllers;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jhuoose.monadic.models.User;
 import com.jhuoose.monadic.models.lesson.Lesson;
 import com.jhuoose.monadic.models.lesson.element.LessonElement;
@@ -12,9 +11,7 @@ import com.jhuoose.monadic.repositories.UsersRepository;
 import com.mangofactory.typescript.TypescriptCompiler;
 import io.javalin.http.Context;
 import io.javalin.http.ForbiddenResponse;
-
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UsersController {
@@ -120,7 +117,7 @@ public class UsersController {
         }
     }
 
-    public void changeLessonStatus(Context ctx) {
+    public void setLessonStatus(Context ctx) {
         try {
             var user = usersRepository.getOne(ctx.formParam("username", ""));
             HashMap<String, Integer> lessonsCompleted = user.getLessonsCompleted();
@@ -133,7 +130,7 @@ public class UsersController {
         }
     }
 
-    public void changeSolution(Context ctx) {
+    public void setSolution(Context ctx) {
         try {
             var user = usersRepository.getOne(ctx.formParam("username", ""));
             HashMap<String, String> solutions = user.getSolutions();
