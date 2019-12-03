@@ -33,33 +33,9 @@ public class UsersController {
     public void signup(Context ctx) {
         var userExists = 201;
         try {
-            HashMap<String, Integer> lessonsCompleted = new HashMap<>();
-            HashMap<String, String> solutions = new HashMap<>();
-            for (int i = 0; i < 5; ++i) {
-                lessonsCompleted.put("c0_l" + i, 0);
-                putProblemElems(solutions, new Lesson(0, i));
-            }
-
-            for (int i = 0; i < 8; ++i) {
-                lessonsCompleted.put("c1_l" + i, 0);
-                putProblemElems(solutions, new Lesson(1, i));
-            }
-
-            for (int i = 0; i < 5; ++i) {
-                lessonsCompleted.put("c2_l" + i, 0);
-                putProblemElems(solutions, new Lesson(2, i));
-            }
-
-            for (int i = 0; i < 3; ++i) {
-                lessonsCompleted.put("c3_l" + i, 0);
-                putProblemElems(solutions, new Lesson(3, i));
-            }
-
             User user = new User(
                     ctx.formParam("username", ""),
-                    BCrypt.withDefaults().hashToString(12, ctx.formParam("password", "").toCharArray()),
-                    lessonsCompleted,
-                    solutions
+                    BCrypt.withDefaults().hashToString(12, ctx.formParam("password", "").toCharArray())
             );
             usersRepository.create(user);
         } catch (SQLException | JsonProcessingException e) {
@@ -85,7 +61,7 @@ public class UsersController {
         }
     }
 
-    public void getUserStatus(Context ctx) {
+    /*public void getUserStatus(Context ctx) {
         try {
             var user = usersRepository.getOne(ctx.body());
             ctx.status(201);
@@ -93,9 +69,19 @@ public class UsersController {
         } catch (UserNotFoundException | SQLException e) {
             ctx.status(401);
         }
+    }*/
+
+    public void getUserStatus(Context ctx) {
+        try {
+            var user = usersRepository.getOne(ctx.body());
+            ctx.status(201);
+            ctx.json(user.getUserStatus());
+        } catch (UserNotFoundException | SQLException e) {
+            ctx.status(401);
+        }
     }
 
-    public void getSolutionStatus(Context ctx) {
+    public void getSolution(Context ctx) {
         try {
             var user = usersRepository.getOne(ctx.formParam("username", ""));
             int problemID = Integer.parseInt(ctx.formParam("problemID", ""));
@@ -117,13 +103,13 @@ public class UsersController {
         }
     }
 
-    public void setLessonStatus(Context ctx) {
+    public void setProblemStatus(Context ctx) {
         try {
             var user = usersRepository.getOne(ctx.formParam("username", ""));
-            HashMap<String, Integer> lessonsCompleted = user.getLessonsCompleted();
+            HashMap<String, Integer> lessonsCompleted = user.getProblemsCompleted();
             String lessonKey = ctx.formParam("lessonKey", "");
             int newLessonStatus = Integer.parseInt(ctx.formParam("newLessonStatus", ""));
-            usersRepository.modifyLessonStatus(user, lessonKey, newLessonStatus);
+            usersRepository.setProblemStatus(user, lessonKey, newLessonStatus);
 
         } catch (UserNotFoundException | SQLException | JsonProcessingException e) {
             ctx.status(401);
