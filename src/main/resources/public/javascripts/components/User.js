@@ -25,11 +25,6 @@ class User extends React.Component {
         }).then(this.status).then(this.json).then(function(data) {
                 this.setState({status: data});}.bind(this));
     }
-    //
-    // changePage(newpage) {
-    //     // update current page string
-    //     this.setState({page: newpage});
-    // }
 
     createList() {
         let list = [];
