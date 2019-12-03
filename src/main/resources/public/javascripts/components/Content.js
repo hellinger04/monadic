@@ -474,11 +474,14 @@ class Content extends React.Component {
                         <CourseList changePage={this.changePage} courses={this.state.courses}
                                     currCourse={this.state.currCourse}/>
                     </Format>
+                    <div>
+                        <button onClick={() => {this.props.logOut()}}> Log Out </button>
+                    </div>
                 </EarthBound>
             );
         } else if (this.state.page === "user") {
             return (
-                <User user={this.props.user}/>
+                <User changePage={this.changePage} user={this.props.user}/>
             );
         } else if (this.state.page === "course") {
             return (

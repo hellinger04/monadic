@@ -2,7 +2,7 @@ class User extends React.Component {
     constructor(props) {
         super(props);
         this.state = {page: "dashboard"};
-        this.changePage = this.changePage.bind(this);
+        // this.changePage = this.changePage.bind(this);
     }
 
     status(response) {
@@ -25,11 +25,11 @@ class User extends React.Component {
         }).then(this.status).then(this.json).then(function(data) {
                 this.setState({status: data});}.bind(this));
     }
-
-    changePage(newpage) {
-        // update current page string
-        this.setState({page: newpage});
-    }
+    //
+    // changePage(newpage) {
+    //     // update current page string
+    //     this.setState({page: newpage});
+    // }
 
     createList() {
         let list = [];
@@ -65,6 +65,7 @@ class User extends React.Component {
                             <NoBullet>
                                 {this.createList()}
                             </NoBullet>
+                            <button onClick={() => {this.props.changePage("courselist", 0, 0)}}> Go Back </button>
                         </Format>
                     </EarthBound>
                 );
@@ -74,10 +75,12 @@ class User extends React.Component {
                         <Format>
                             <Title>{this.props.user}'s profile</Title>
                             <h2>{this.props.user}'s picture here</h2>
+                            <button onClick={() => {this.props.changePage("courselist", 0, 0)}}> Go Back </button>
                         </Format>
                     </EarthBound>
                 );
             }
+
         }
     }
 }
