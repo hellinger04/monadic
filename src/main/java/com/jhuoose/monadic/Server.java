@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import static io.javalin.apibuilder.ApiBuilder.*;
 
 public class Server {
-    public static void main(String[] args) throws SQLException, JsonProcessingException {
+    public static void main(String[] args) throws SQLException {
         ObjectMapper mapper = new ObjectMapper();
         var connection = DriverManager.getConnection("jdbc:sqlite:monadic.db");
         var usersRepository = new UsersRepository(connection);
@@ -115,12 +115,18 @@ public class Server {
                 path("login", () -> {
                     post(usersController::login);
                 });
-                path("status", () -> {
+                path("getUserStatus", () -> {
                     post(usersController::getUserStatus);
                 });
-                path("lesson", () -> {
-                   post(usersController::changeLessonStatus);
+                path("setProblemStatus", () -> {
+                   post(usersController::setProblemStatus);
                 });
+                path("getSolution", () -> {
+                    post(usersController::getSolution);
+                });
+                path("setSolution", () -> {
+                    post(usersController::setSolution);
+                 });
             });
         });
 

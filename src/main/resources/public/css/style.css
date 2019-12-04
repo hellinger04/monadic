@@ -78,6 +78,52 @@ html, body {
     background-color: #ffa3e2;
 }
 
+.splashWrap {
+    display: grid;
+    grid-template-columns: 10% 1fr 1fr 10%;
+    grid-gap: 10px;
+
+    background-image: url("../img/ecco.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: center;
+    top: 0;
+    height: 100%;
+    text-align: center;
+    overflow: auto;
+    image-rendering: pixelated;
+}
+
+/*weeb text*/
+.sp1 {
+    color: white;
+    font-size: 3em;
+}
+
+/*english text*/
+.sp2 {
+    color: white;
+    font-size: 2em;
+}
+
+/*right header format*/
+.spRightHeader {
+    color: white;
+    font-size: 3.5em;
+}
+
+/*button format*/
+.spB {
+
+}
+
+/*course heading format*/
+.spC {
+    color: white;
+    font-size: 2em;
+}
+
 /*lesson page*/
 .lessonBody {
     width: 100%;
@@ -141,45 +187,3 @@ div.CodeMirror.cm-s-monokai {
 @media (max-width: 500px) {
     .logo {font-size: 1.5em;}
 }
-
-/*const Space = window.styled.div`*/
-/*              background-image: url("/img/outrspc2.gif");*/
-/*height: auto;*/
-/*position: absolute;*/
-/*left: 0;*/
-/*width: auto;*/
-/*background-size: auto auto;*/
-/*`;*/
-
-/*const EarthBound = window.styled.div`*/
-/*                   background-image: url("/img/back2.jpg");*/
-/*background-repeat: no-repeat;*/
-/*background-position: center;*/
-/*background-size: cover;*/
-/*height: 100%;*/
-/*`;*/
-
-/*const LessonBack = window.styled.div`*/
-/*                   font-family: "Times New Roman", Times, serif;*/
-/*color: white;*/
-/*text-align: left;*/
-/*font-size: 1em;*/
-/*`;*/
-
-/*const NoBullet = window.styled.div`*/
-/*                 list-style: none;*/
-/*`;*/
-
-/*const Format = window.styled.div`*/
-/*               font-family: "Comic Sans MS", "Comic Sans", cursive;*/
-/*color: white;*/
-/*text-align: center;*/
-/*font-size: 1em;*/
-/*list-style: none;*/
-/*`;*/
-
-/*const Title = window.styled.h1`*/
-/*              font-size: 5em;*/
-/*text-align: center;*/
-/*color: white;*/
-/*`;*/

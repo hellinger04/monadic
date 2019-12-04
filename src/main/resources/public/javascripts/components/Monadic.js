@@ -89,6 +89,7 @@ class Register extends React.Component {
         if (response.status === 409) {
             alert("That username already exists. Please try another username.");
         } else if (response.status === 201) {
+            console.log(username);
             this.props.changePage("content", username);
         }
     }
@@ -190,7 +191,7 @@ class Register extends React.Component {
     }
 }
 
-/* The main component for the Monadic website. By default, this component renders the Regsiter component, but can also
+/* The main component for the Monadic website. By default, this component renders the Register component, but can also
    load the login page, and can load the other two main components, Content and User.
  */
 class Monadic extends React.Component {
@@ -198,6 +199,7 @@ class Monadic extends React.Component {
         super(props);
         this.state = {page: "register", user: ""};
         this.changePage = this.changePage.bind(this);
+        this.logOut = this.logOut.bind(this);
     }
 
     changePage(newpage, username) {
@@ -206,19 +208,18 @@ class Monadic extends React.Component {
         this.setState({user: username});
     }
 
+    logOut() {
+        this.setState({page: "login"});
+        this.setState({user: ""});
+    }
+
     render() {
         if (this.state.page === "register") {
-            return (
-                <Register changePage={this.changePage}/>
-            );
+            return (<Register changePage={this.changePage}/>);
         } else if (this.state.page === "login") {
-            return (
-                <Login changePage={this.changePage}/>
-            );
-        } else if (this.state.page === "user") {
-            return (<User user={this.state.user}/>);
+            return (<Login changePage={this.changePage}/>);
         } else if (this.state.page === "content") {
-            return (<Content user={this.state.user}/>);
+            return (<Content logOut={this.logOut} user={this.state.user}/>);
         }
     }
 }
