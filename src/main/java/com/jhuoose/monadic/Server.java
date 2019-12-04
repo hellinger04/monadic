@@ -35,12 +35,12 @@ public class Server {
         }
 
         // construct course 1 lessons
-        for (int i = 0; i < 8; ++i) {
+        for (int i = 0; i < 5; ++i) {
             courseOneLessons.add(new Lesson(1, i));
         }
 
         // construct course 2 lessons
-        for (int i = 0; i < 6; ++i) {
+        for (int i = 0; i < 8; ++i) {
             courseTwoLessons.add(new Lesson(2, i));
         }
 
