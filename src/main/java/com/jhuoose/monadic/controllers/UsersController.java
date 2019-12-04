@@ -95,6 +95,7 @@ public class UsersController {
 
     public void setProblemStatus(Context ctx) {
         try {
+            System.out.println(ctx.body());
             var user = usersRepository.getOne(ctx.formParam("username", ""));
             HashMap<String, Integer> lessonsCompleted = user.getProblemsCompleted();
             String lessonKey = ctx.formParam("lessonKey", "");

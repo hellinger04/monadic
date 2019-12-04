@@ -245,7 +245,7 @@ class Content extends React.Component {
             return (
                 <Space>
                     <LessonBack>
-                        <Lesson changePage={this.changePage} courses={this.state.courses}
+                        <Lesson changePage={this.changePage} courses={this.state.courses} user={this.props.user}
                                 currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
                     </LessonBack>
                 </Space>

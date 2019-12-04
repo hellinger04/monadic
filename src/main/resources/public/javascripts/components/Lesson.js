@@ -10,7 +10,6 @@ class CodeBlock extends React.Component {
 
     componentDidMount() {
         if (this.language.match("javascript") === null && this.language.match("typescript") === null) {
-            console.log(this.language);
             this.mirror = CodeMirror.fromTextArea(document.getElementById('codeblock' + this.props.element.id), {
                 mode: this.language,
                 theme: "monokai",
@@ -103,7 +102,9 @@ class Problem extends React.Component {
         this.eliminateComments = this.eliminateComments.bind(this);
         this.parse = this.parse.bind(this);
         this.count = 0;
+        this.passedTests = 0;
         this.studentResults = [];
+        this.expectedOutputs = [];
         this.err = "No errors!";
         this.showErr = false;
         this.state = {results: false};
@@ -128,13 +129,38 @@ class Problem extends React.Component {
     }
 
     handleClick() {
+        //initialize passed tests to 0 each time problem is submitted
+        this.passedTests = 0;
+
         // map over available tests for current problem and grade student submission for each test
-        this.props.element.tests.map(test => this.grade(this.mirror.getValue(), test))
+        this.props.element.tests.map(test => this.grade(this.mirror.getValue(), test));
 
         // increment submission count and call method to update TestResults component
         this.count++;
         this.showErr = true;
         this.showResults();
+
+        //determine whether all tests were passed
+        let result = 0;
+        if (this.passedTests === this.props.element.tests.length) {
+            result = 2;
+        }
+
+        console.log(this.props.user);
+        console.log(this.props.currLesson);
+
+        let data = {
+            Username: this.props.user,
+            LessonKey: this.props.currLesson,
+            ProblemStatus: result
+        };
+
+        let dataJSON = JSON.stringify(data);
+
+        fetch('/users/setProblemStatus', {
+            method: 'POST',
+            body: dataJSON,
+        }).then((function(exists) { console.log(exists) }).bind(this));
     }
 
     grade(studentAnswer, test) {
@@ -158,6 +184,11 @@ class Problem extends React.Component {
 
             // update student results array with test output
             this.studentResults[test.id] = output;
+
+            //update count of passed tests
+            if (this.studentResults[test.id] === this.expectedOutputs[test.id]) {
+                this.passedTests++;
+            }
         }
     }
 
@@ -207,16 +238,15 @@ class Problem extends React.Component {
 
     render()  {
         // store expected output values in array to pass to TestResults
-        let expectedOutputs = [];
         for (let i = 0; i < this.props.element.tests.length; i++) {
-            expectedOutputs[i] = this.props.element.tests[i].output;
+            this.expectedOutputs[i] = this.props.element.tests[i].output;
         }
 
         return (
             <div className={"lessonContainer"}>
                 <textarea id = {'problem' + this.props.element.id}>{this.props.element.starterCode}</textarea>
                 <button onClick={() => this.handleClick()}>Save and Submit</button>
-                <TestResults numSubmissions={this.count} student={this.studentResults} expected={expectedOutputs}
+                <TestResults numSubmissions={this.count} student={this.studentResults} expected={this.expectedOutputs}
                              error={this.err} showError={this.showErr}/>
             </div>
         );
@@ -300,7 +330,8 @@ class Lesson extends React.Component {
                     {this.props.courses[this.props.currCourse].lessonList[this.props.currLesson].lessonElements.map(
                         element => {
                             return element.problem ?
-                                <Problem key={this.props.currLesson + " " + element.id} element={element}/> :
+                                <Problem key={this.props.currLesson + " " + element.id} element={element}
+                                         currLesson={this.props.currLesson} user={this.props.user}/> :
                                 <TextElement key={this.props.currLesson + " " + element.id} element={element}/>
                         }
                     )}
