@@ -51,7 +51,6 @@ class Listing extends React.Component {
 
     genList() {
         let list = [];
-        const lessonStatus = Object.freeze({0:"not started", 1:"in progress", 2:"completed"});
         const availability = Object.freeze({0:"Completed", 1:"Available", 2:"Unavailable"});
 
         //sort array of lessons by course and lesson
@@ -65,12 +64,13 @@ class Listing extends React.Component {
         let prevCourse = -1;
         let avail = 0;
         let completeCount = 0;
+        let furtherCompletion = true;
         for (let i = 0; i < Object.keys(ordered).length; i++) {
             let currKey = Object.keys(ordered)[i];
-            let currCourse = currKey.substr(1,1);
-            let currLesson = currKey.substr(4,1);
+            let currCourse = Number(currKey.substr(1,1));
+            let currLesson = Number(currKey.substr(4,1));
 
-            //generate heading
+            //generate course headings
             if (prevCourse !== currCourse) {
                 list.push(<h2 className={"spC"}> Course {currCourse}</h2>);
                 prevCourse = currCourse
@@ -83,18 +83,20 @@ class Listing extends React.Component {
                 avail = 2;
             }
 
-            //get number of completed courses
-            if (ordered[currKey] === 2) {
+            //if current lesson is not started or is in progress, disqualify any future lesson from being complete
+            if (ordered[currKey] === 0 || ordered[currKey] === 1) {
+                furtherCompletion = false;
+            } else if (furtherCompletion && ordered[currKey] === 2) {
                 completeCount++;
             }
 
             //push to list
             if (avail === 0) {
                 list.push(<button className={"spB"} key={i} onClick={() => {this.props.toLesson(currCourse,currLesson)}}>
-                    Lesson {currLesson}:    <em>Completed</em></button>);
+                    Lesson {currLesson}: <em>Completed</em></button>);
             } else if (avail === 1) {
                 list.push(<button className={"spB"} key={i} onClick={() => {this.props.toLesson(currCourse,currLesson)}}>
-                    Lesson {currLesson}:    <em>Available</em></button>);
+                    Lesson {currLesson}: <em>Available</em></button>);
             } else if (avail === 2) {
                 list.push(<button className={"spB"} key={i}>Lesson {currLesson}: <em>Unavailable</em></button>);
             }
@@ -198,7 +200,6 @@ class Content extends React.Component {
         //get list of courses
         await this.setState({ courses: await (await fetch("/courses")).json() });
 
-        console.log("in componentDidMount for Content!");
         //get status of courses
         fetch('/users/getUserStatus', {
             method: 'POST',
