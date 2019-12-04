@@ -48,8 +48,9 @@ public class User {
         for (LessonElement le: lesson.getLessonElements()) {
             if (le.isProblem()) {
                 Problem problemLE = (Problem) le;
-                problemsCompleted.put(Integer.toString(le.getID()), 0);
-                solutions.put(Integer.toString(le.getID()), problemLE.getStarterCode());
+                String problemKey = "c" + lesson.getCourseID() + "_l" + lesson.getID() + "_p" + problemLE.getID();
+                problemsCompleted.put(problemKey, 0);
+                solutions.put(problemKey, problemLE.getStarterCode());
             }
         }
     }
@@ -98,7 +99,8 @@ public class User {
         for (LessonElement le: lesson.getLessonElements()) {
             if (le.isProblem()) {
                 Problem problemLE = (Problem) le;
-                int problemStatus = problemsCompleted.get(Integer.toString(le.getID()));
+                String problemKey = "c" + lesson.getCourseID() + "_l" + lesson.getID() + "_p" + problemLE.getID();
+                int problemStatus = problemsCompleted.get(problemKey);
                 if (problemStatus != 2) return 0;
             }
         }

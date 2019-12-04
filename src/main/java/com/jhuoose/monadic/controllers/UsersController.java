@@ -2,6 +2,7 @@ package com.jhuoose.monadic.controllers;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jhuoose.monadic.models.User;
 import com.jhuoose.monadic.models.lesson.Lesson;
 import com.jhuoose.monadic.models.lesson.element.LessonElement;
@@ -11,6 +12,8 @@ import com.jhuoose.monadic.repositories.UsersRepository;
 import com.mangofactory.typescript.TypescriptCompiler;
 import io.javalin.http.Context;
 import io.javalin.http.ForbiddenResponse;
+
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 
@@ -19,15 +22,6 @@ public class UsersController {
 
     public UsersController(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
-    }
-
-    private void putProblemElems(HashMap<String, String> solutions, Lesson lesson) {
-        for (LessonElement le: lesson.getLessonElements()) {
-            if (le.isProblem()) {
-                Problem problemLE = (Problem) le;
-                solutions.put(Integer.toString(le.getID()), problemLE.getStarterCode());
-            }
-        }
     }
 
     public void signup(Context ctx) {
@@ -96,13 +90,18 @@ public class UsersController {
     public void setProblemStatus(Context ctx) {
         try {
             System.out.println(ctx.body());
-            var user = usersRepository.getOne(ctx.formParam("username", ""));
-            HashMap<String, Integer> lessonsCompleted = user.getProblemsCompleted();
-            String lessonKey = ctx.formParam("lessonKey", "");
-            int newProblemStatus = Integer.parseInt(ctx.formParam("newProblemStatus", ""));
+            ObjectMapper objectMapper = new ObjectMapper();
+            System.out.println(ctx.body());
+            HashMap<String, String> components = objectMapper.readValue(ctx.body(), HashMap.class);
+            var user = usersRepository.getOne(components.get("Username"));
+            String courseID = components.get("CourseID");
+            String lessonID = components.get("LessonID");
+            String problemID = components.get("ElementID");
+            String lessonKey = "c" + courseID + "_l" + lessonID + "_p" + problemID;
+            int newProblemStatus = Integer.parseInt(components.get("ProblemStatus"));
             usersRepository.setProblemStatus(user, lessonKey, newProblemStatus);
 
-        } catch (UserNotFoundException | SQLException | JsonProcessingException e) {
+        } catch (UserNotFoundException | SQLException | IOException e) {
             ctx.status(401);
         }
     }

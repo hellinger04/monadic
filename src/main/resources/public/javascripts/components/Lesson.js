@@ -151,10 +151,10 @@ class Problem extends React.Component {
 
         let data = {
             Username: this.props.user,
-            CourseID: this.props.currCourse,
-            LessonID: this.props.currLesson,
-            ElementID: this.props.element.id,
-            ProblemStatus: result
+            CourseID: this.props.currCourse.toString(),
+            LessonID: this.props.currLesson.toString(),
+            ElementID: this.props.element.id.toString(),
+            ProblemStatus: result.toString()
         };
 
         let dataJSON = JSON.stringify(data);
