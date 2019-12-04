@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import static io.javalin.apibuilder.ApiBuilder.*;
 
 public class Server {
-    public static void main(String[] args) throws SQLException, JsonProcessingException {
+    public static void main(String[] args) throws SQLException {
         ObjectMapper mapper = new ObjectMapper();
         var connection = DriverManager.getConnection("jdbc:sqlite:monadic.db");
         var usersRepository = new UsersRepository(connection);

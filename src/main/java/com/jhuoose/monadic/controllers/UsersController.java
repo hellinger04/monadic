@@ -61,16 +61,6 @@ public class UsersController {
         }
     }
 
-    /*public void getUserStatus(Context ctx) {
-        try {
-            var user = usersRepository.getOne(ctx.body());
-            ctx.status(201);
-            ctx.json(user.getLessonsCompleted());
-        } catch (UserNotFoundException | SQLException e) {
-            ctx.status(401);
-        }
-    }*/
-
     public void getUserStatus(Context ctx) {
         try {
             var user = usersRepository.getOne(ctx.body());

@@ -198,8 +198,9 @@ class Content extends React.Component {
         //get list of courses
         await this.setState({ courses: await (await fetch("/courses")).json() });
 
+        console.log("in componentDidMount for Content!");
         //get status of courses
-        fetch('/users/status', {
+        fetch('/users/getUserStatus', {
             method: 'POST',
             body: this.props.user,
         }).then(this.status).then(this.json).then(function(data) {
@@ -221,8 +222,14 @@ class Content extends React.Component {
 
     render() {
         //to prevent undefined errors
-        if (this.state.status.length === 0) return null
-        if (this.state.courses.length === 0) return null
+        if (this.state.status.length === 0) {
+            console.log("status length is 0");
+            return null;
+        }
+        if (this.state.courses.length === 0) {
+            console.log("courses length is 0");
+            return null;
+        }
 
         if (this.state.page === "courselist") {
             return (
