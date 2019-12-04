@@ -33,10 +33,10 @@ public class User {
         for (int i = 0; i < 5; ++i) {
             putProblemElems(problemsCompleted, solutions, new Lesson(0, i));
         }
-        for (int i = 0; i < 8; ++i) {
+        for (int i = 0; i < 5; ++i) {
             putProblemElems(problemsCompleted, solutions, new Lesson(1, i));
         }
-        for (int i = 0; i < 5; ++i) {
+        for (int i = 0; i < 8; ++i) {
             putProblemElems(problemsCompleted, solutions, new Lesson(2, i));
         }
         for (int i = 0; i < 3; ++i) {
