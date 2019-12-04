@@ -51,7 +51,6 @@ class Listing extends React.Component {
 
     genList() {
         let list = [];
-        const availability = Object.freeze({0:"Completed", 1:"Available", 2:"Unavailable"});
 
         //sort array of lessons by course and lesson
         const ordered = {};
@@ -108,10 +107,6 @@ class Listing extends React.Component {
     }
 
     render() {
-
-        // get total number of courses
-        const numCourses = Object.keys(this.props.status).length;
-
         return (
             <div>
                 <h1 className={"spRightHeader"} >Lessons</h1>
@@ -122,7 +117,6 @@ class Listing extends React.Component {
                 <br></br> <br></br>
 
                 <span className={"spC"}> <progress max={100} value={this.state.completion}> </progress> {this.state.completion}%</span>
-
             </div>
         );
     }
@@ -182,6 +176,7 @@ class Content extends React.Component {
         super(props);
         this.state = {page: "courselist", currCourse: 0, currLesson: 0, courses: [], status: []};
         this.changePage = this.changePage.bind(this);
+        this.getStatus = this.getStatus.bind(this);
     }
 
     status(response) {
@@ -196,16 +191,22 @@ class Content extends React.Component {
         return response.json()
     }
 
-    async componentDidMount() {
-        //get list of courses
-        await this.setState({ courses: await (await fetch("/courses")).json() });
-
+    getStatus() {
         //get status of courses
         fetch('/users/getUserStatus', {
             method: 'POST',
             body: this.props.user,
         }).then(this.status).then(this.json).then(function(data) {
             this.setState({status: data});}.bind(this));
+
+        console.log("Got updated lesson status!");
+    }
+
+    async componentDidMount() {
+        //get list of courses
+        await this.setState({ courses: await (await fetch("/courses")).json() });
+
+        this.getStatus();
     }
 
     changePage(newpage, course, lesson) {
@@ -213,12 +214,6 @@ class Content extends React.Component {
         this.setState({page: newpage});
         this.setState({currCourse: course});
         this.setState({currLesson: lesson});
-
-        //some debug shit
-        console.log("Here's where I am: ");
-        console.log(newpage);
-        console.log(course);
-        console.log(lesson);
     }
 
     render() {
@@ -246,7 +241,8 @@ class Content extends React.Component {
                 <Space>
                     <LessonBack>
                         <Lesson changePage={this.changePage} courses={this.state.courses} user={this.props.user}
-                                currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
+                                currCourse={this.state.currCourse} currLesson={this.state.currLesson}
+                                getStatus={this.getStatus}/>
                     </LessonBack>
                 </Space>
             );

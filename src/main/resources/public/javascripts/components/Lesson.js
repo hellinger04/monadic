@@ -128,6 +128,18 @@ class Problem extends React.Component {
         this.setState({results: true});
     }
 
+    status(response) {
+        if (response.status === 201) {
+            return Promise.resolve(response);
+        } else if (response.status === 401) {
+            return Promise.reject(new Error("That username doesn't exist. Please try refreshing the page and try again."));
+        }
+    }
+
+    json(response) {
+        return response.json()
+    }
+
     handleClick() {
         //initialize passed tests to 0 each time problem is submitted
         this.passedTests = 0;
@@ -146,9 +158,6 @@ class Problem extends React.Component {
             result = 2;
         }
 
-        console.log(this.props.user);
-        console.log(this.props.currLesson);
-
         let data = {
             Username: this.props.user,
             CourseID: this.props.currCourse.toString(),
@@ -162,7 +171,11 @@ class Problem extends React.Component {
         fetch('/users/setProblemStatus', {
             method: 'POST',
             body: dataJSON,
-        }).then((function(exists) { console.log(exists) }).bind(this));
+        }).then(this.status).then(this.json).then(function(data) {
+            console.log(data);}.bind(this));
+
+        this.props.getStatus();
+        console.log("reached end of handleClick()");
     }
 
     grade(studentAnswer, test) {
@@ -334,7 +347,7 @@ class Lesson extends React.Component {
                             return element.problem ?
                                 <Problem key={this.props.currLesson + " " + element.id} element={element}
                                          currCourse={this.props.currCourse } currLesson={this.props.currLesson}
-                                         user={this.props.user}/> :
+                                         user={this.props.user} getStatus={this.props.getStatus}/> :
                                 <TextElement key={this.props.currLesson + " " + element.id} element={element}/>
                         }
                     )}

@@ -100,6 +100,7 @@ public class UsersController {
             String lessonKey = "c" + courseID + "_l" + lessonID + "_p" + problemID;
             int newProblemStatus = Integer.parseInt(components.get("ProblemStatus"));
             usersRepository.setProblemStatus(user, lessonKey, newProblemStatus);
+            ctx.json(user.getUserStatus());
 
         } catch (UserNotFoundException | SQLException | IOException e) {
             ctx.status(401);
