@@ -255,24 +255,25 @@ class TextElement extends React.Component {
    different pages are all stored in the Content component.
  */
 class LessonNavigation extends React.Component {
+
     render() {
         return (
             <div className={"lessonNavigation"}>
                 <button onClick={() => {
-                    this.props.changePage("course", this.props.currCourse, 0)}}>Back to Course {this.props.currCourse}
+                    this.props.changePage("courselist", this.props.currCourse, 0)}}>Back to the Main Page
                 </button>
 
                 <br></br>
 
                 <button style={{display: 0 <= this.props.currLesson - 1 ? "inline" : "none"}}
                         onClick={() => {
-                            this.props.changePage("lesson", this.props.currCourse, this.props.currLesson - 1)
+                            this.props.changePage("lesson", this.props.currCourse, Number(this.props.currLesson) - 1)
                         }}>Previous Lesson
                 </button>
 
                 <button style={{display: this.props.numLessons > this.props.currLesson + 1 ? "inline" : "none"}}
                         onClick={() => {
-                            this.props.changePage("lesson", this.props.currCourse, this.props.currLesson + 1)
+                            this.props.changePage("lesson", this.props.currCourse, Number(this.props.currLesson) + 1)
                         }}>Next Lesson
                 </button>
             </div>

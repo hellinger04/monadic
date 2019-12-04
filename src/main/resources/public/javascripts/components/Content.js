@@ -42,105 +42,130 @@ const Title = window.styled.h1`
   color: white;
 `;
 
-/* This component uses the currCourse and courses props to render buttons for available course lessons. It also renders
-   buttons which the user can use to navigate to the next or previous course, and also to return to the list of courses.
- */
-class Course extends React.Component {
+// This class displays a directory of available courses, and provides buttons which link to them
+class Listing extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {completion: 0.0}
+    }
+
+    genList() {
+        let list = [];
+        const lessonStatus = Object.freeze({0:"not started", 1:"in progress", 2:"completed"});
+        const availability = Object.freeze({0:"Completed", 1:"Available", 2:"Unavailable"});
+
+        //sort array of lessons by course and lesson
+        const ordered = {};
+        const orderedKeys = Object.keys(this.props.status).sort();
+        for (let i = 0; i < orderedKeys.length; i++) {
+            ordered[orderedKeys[i]] = this.props.status[orderedKeys[i]];
+        }
+
+        //push each lesson to list of lessons
+        let prevCourse = -1;
+        let avail = 0;
+        let completeCount = 0;
+        for (let i = 0; i < Object.keys(ordered).length; i++) {
+            let currKey = Object.keys(ordered)[i];
+            let currCourse = currKey.substr(1,1);
+            let currLesson = currKey.substr(4,1);
+
+            //generate heading
+            if (prevCourse !== currCourse) {
+                list.push(<h2 className={"spC"}> Course {currCourse}</h2>);
+                prevCourse = currCourse
+            }
+
+            //logic for availability
+            if (avail === 0 && ordered[currKey] !== 2) {
+                avail = 1;
+            } else if (avail === 1) {
+                avail = 2;
+            }
+
+            //get number of completed courses
+            if (ordered[currKey] === 2) {
+                completeCount++;
+            }
+
+            //push to list
+            if (avail === 0) {
+                list.push(<button className={"spB"} key={i} onClick={() => {this.props.toLesson(currCourse,currLesson)}}>
+                    Lesson {currLesson}:    <em>Completed</em></button>);
+            } else if (avail === 1) {
+                list.push(<button className={"spB"} key={i} onClick={() => {this.props.toLesson(currCourse,currLesson)}}>
+                    Lesson {currLesson}:    <em>Available</em></button>);
+            } else if (avail === 2) {
+                list.push(<button className={"spB"} key={i}>Lesson {currLesson}: <em>Unavailable</em></button>);
+            }
+        }
+
+        this.state.completion = (completeCount / Object.keys(ordered).length) * 100 ;
+
+        return list;
     }
 
     render() {
-        // store current course index and count total number of available courses
-        const course = this.props.currCourse;
-        const numCourses = Object.keys(this.props.courses).length;
+
+        // get total number of courses
+        const numCourses = Object.keys(this.props.status).length;
 
         return (
             <div>
-                <button onClick={() => {
-                    this.props.changePage("courselist", 0, 0)}}>Back to Courses
-                </button>
+                <h1 className={"spRightHeader"} >Lessons</h1>
+                <NoBullet>
+                    {this.genList()}
+                </NoBullet>
 
-                <br></br>
+                <br></br> <br></br>
 
-                <button style={{display: 0 <= this.props.currCourse - 1 ? "inline" : "none"}}
-                        onClick={() => {
-                            this.props.changePage("course", this.props.currCourse - 1, 0)
-                        }}>Previous Course
-                </button>
+                <span className={"spC"}> <progress max={100} value={this.state.completion}> </progress> {this.state.completion}%</span>
 
-                <button style={{display: numCourses > this.props.currCourse + 1 ? "inline" : "none"}}
-                        onClick={() => {
-                            this.props.changePage("course", this.props.currCourse + 1, 0)
-                        }}>Next Course
-                </button>
-
-                <br></br>
-                <br></br>
-
-                <h2>Available Lessons</h2>
-
-
-                <li>{this.props.courses[course].lessonList.map(lesson =>
-                    <NoBullet>
-                        <li>
-                            <button onClick={() => {
-                                this.props.changePage("lesson", this.props.currCourse, lesson.id)}}>Lesson {lesson.id}
-                            </button>
-                        </li>
-                    </NoBullet>
-                )}
-                </li>
             </div>
         );
     }
 }
 
-/* This component uses the courses prop to display a list of available courses to the user.
- */
-class CourseList extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <NoBullet>
-                <li>{this.props.courses.map(course =>
-                    <li>
-                        <button onClick={() => {
-                            this.props.changePage("course", course.id, 0)}}>Course {course.id}
-                        </button>
-                    </li>
-                )}
-                </li>
-            </NoBullet>
-        );
-    }
-}
-
+//this class serves as a wrapper for navigating the directory and user pages after logging in
 class Splash extends React.Component {
     constructor(props) {
         super(props);
+        this.toUser = this.toUser.bind(this);
+        this.toLesson = this.toLesson.bind(this);
+    }
+
+    toUser() {
+        this.props.changePage("user", 0, 0);
+    }
+
+    toLesson(course, lesson) {
+        this.props.changePage("lesson", course, lesson);
     }
 
     render() {
-
-        //debug
-        console.log(this.props.courses);
-
         return(
           <div className={"splashWrap"}>
+
+              <div></div>
+
               <div>
-                  <h1> Welcome, <em>dipshit</em>. <br></br>
-                      Look around if you want.
+                  <h1 className={"sp1"}>
+                      ようこそ、<em>{this.props.user}</em>！ <br></br>
+                      コースを選択してください。
                   </h1>
+
+                  <h2 className={"sp2"}> Welcome, <em>{this.props.user}</em>! <br></br>
+                      Please choose a course.
+                  </h2>
+                  <button onClick={() => {this.toUser()}}> Profile </button>
+                  <button onClick={() => {this.props.logOut()}}> Log Out </button>
               </div>
 
               <div>
-                  <Course changePage={this.props.changePage} courses={this.props.courses}
-                          currCourse={0} currLesson={0}/>
+                  <Listing status={this.props.status} courses={this.props.courses} toLesson={this.toLesson}/>
               </div>
+
+              <div></div>
           </div>
         );
     }
@@ -153,13 +178,32 @@ class Splash extends React.Component {
 class Content extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {page: "course", currCourse: 0, currLesson: 0, courses: []};
+        this.state = {page: "courselist", currCourse: 0, currLesson: 0, courses: [], status: []};
         this.changePage = this.changePage.bind(this);
+    }
+
+    status(response) {
+        if (response.status === 201) {
+            return Promise.resolve(response);
+        } else if (response.status === 401) {
+            return Promise.reject(new Error("That username doesn't exist. Please try refreshing the page and try again."));
+        }
+    }
+
+    json(response) {
+        return response.json()
     }
 
     async componentDidMount() {
         //get list of courses
-        this.setState({ courses: await (await fetch("/courses")).json() });
+        await this.setState({ courses: await (await fetch("/courses")).json() });
+
+        //get status of courses
+        fetch('/users/status', {
+            method: 'POST',
+            body: this.props.user,
+        }).then(this.status).then(this.json).then(function(data) {
+            this.setState({status: data});}.bind(this));
     }
 
     changePage(newpage, course, lesson) {
@@ -176,45 +220,18 @@ class Content extends React.Component {
     }
 
     render() {
+        //to prevent undefined errors
+        if (this.state.status.length === 0) return null
+        if (this.state.courses.length === 0) return null
 
-        console.log("test1");
-        console.log(this.state.courses);
         if (this.state.page === "courselist") {
             return (
-                <Splash changePange={this.changePage} courses={this.state.courses}
-                    status={this.state.status} user={this.state.user}/>
+                <Splash changePage={this.changePage} courses={this.state.courses}
+                    status={this.state.status} user={this.props.user} logOut={this.props.logOut}/>
             );
-
-                    {/*// <EarthBound>*/}
-                    {/*//     <Format>*/}
-                    {/*//         <Title>Welcome, {this.props.user}!</Title>*/}
-                    {/*//         <button onClick={() => {this.changePage("user")}}>View Profile</button>*/}
-                    {/*//*/}
-                    {/*//         <br/>*/}
-                    {/*//         <br/>*/}
-                    {/*//*/}
-                    {/*//         <h2>Available Courses</h2>*/}
-                    {/*//         <CourseList changePage={this.changePage} courses={this.state.courses}*/}
-                    {/*//                     currCourse={this.state.currCourse}/>*/}
-                    {/*//     </Format>*/}
-                    {/*//     <div>*/}
-                    {/*//         <button onClick={() => {this.props.logOut()}}> Log Out </button>*/}
-                    {/*//     </div>*/}
-                    {/*// </EarthBound>*/}
-
         } else if (this.state.page === "user") {
             return (
                 <User changePage={this.changePage} user={this.props.user}/>
-            );
-        } else if (this.state.page === "course") {
-            return (
-                <EarthBound>
-                    <Format>
-                        <Title>Course {this.state.currCourse}</Title>
-                        <Course changePage={this.changePage} courses={this.state.courses}
-                                currCourse={this.state.currCourse} currLesson={this.state.currLesson}/>
-                    </Format>
-                </EarthBound>
             );
         } else if (this.state.page === "lesson") {
             return (

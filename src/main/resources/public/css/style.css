@@ -80,9 +80,48 @@ html, body {
 
 .splashWrap {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 100px 100px;
+    grid-template-columns: 10% 1fr 1fr 10%;
     grid-gap: 10px;
+
+    background-image: url("../img/ecco.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: center;
+    top: 0;
+    height: 100%;
+    text-align: center;
+    overflow: auto;
+    image-rendering: pixelated;
+}
+
+/*weeb text*/
+.sp1 {
+    color: white;
+    font-size: 3em;
+}
+
+/*english text*/
+.sp2 {
+    color: white;
+    font-size: 2em;
+}
+
+/*right header format*/
+.spRightHeader {
+    color: white;
+    font-size: 3.5em;
+}
+
+/*button format*/
+.spB {
+
+}
+
+/*course heading format*/
+.spC {
+    color: white;
+    font-size: 2em;
 }
 
 /*lesson page*/
