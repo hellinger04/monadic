@@ -98,8 +98,8 @@ public class UsersController {
             var user = usersRepository.getOne(ctx.formParam("username", ""));
             HashMap<String, Integer> lessonsCompleted = user.getProblemsCompleted();
             String lessonKey = ctx.formParam("lessonKey", "");
-            int newLessonStatus = Integer.parseInt(ctx.formParam("newLessonStatus", ""));
-            usersRepository.setProblemStatus(user, lessonKey, newLessonStatus);
+            int newProblemStatus = Integer.parseInt(ctx.formParam("newProblemStatus", ""));
+            usersRepository.setProblemStatus(user, lessonKey, newProblemStatus);
 
         } catch (UserNotFoundException | SQLException | JsonProcessingException e) {
             ctx.status(401);
