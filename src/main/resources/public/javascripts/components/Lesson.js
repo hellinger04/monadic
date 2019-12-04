@@ -128,18 +128,6 @@ class Problem extends React.Component {
         this.setState({results: true});
     }
 
-    status(response) {
-        if (response.status === 201) {
-            return Promise.resolve(response);
-        } else if (response.status === 401) {
-            return Promise.reject(new Error("That username doesn't exist. Please try refreshing the page and try again."));
-        }
-    }
-
-    json(response) {
-        return response.json()
-    }
-
     handleClick() {
         //initialize passed tests to 0 each time problem is submitted
         this.passedTests = 0;
@@ -171,8 +159,7 @@ class Problem extends React.Component {
         fetch('/users/setProblemStatus', {
             method: 'POST',
             body: dataJSON,
-        }).then(this.status).then(this.json).then(function(data) {
-            console.log(data);}.bind(this));
+        }).then((function(response) { console.log("Changed problem status!"); }).bind(this));
 
         this.props.getStatus();
         console.log("reached end of handleClick()");

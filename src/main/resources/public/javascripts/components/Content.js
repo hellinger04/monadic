@@ -214,6 +214,7 @@ class Content extends React.Component {
         this.setState({page: newpage});
         this.setState({currCourse: course});
         this.setState({currLesson: lesson});
+        this.getStatus();
     }
 
     render() {
