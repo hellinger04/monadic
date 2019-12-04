@@ -151,7 +151,9 @@ class Problem extends React.Component {
 
         let data = {
             Username: this.props.user,
-            LessonKey: this.props.currLesson,
+            CourseID: this.props.currCourse,
+            LessonID: this.props.currLesson,
+            ElementID: this.props.element.id,
             ProblemStatus: result
         };
 
@@ -331,7 +333,8 @@ class Lesson extends React.Component {
                         element => {
                             return element.problem ?
                                 <Problem key={this.props.currLesson + " " + element.id} element={element}
-                                         currLesson={this.props.currLesson} user={this.props.user}/> :
+                                         currCourse={this.props.currCourse } currLesson={this.props.currLesson}
+                                         user={this.props.user}/> :
                                 <TextElement key={this.props.currLesson + " " + element.id} element={element}/>
                         }
                     )}
