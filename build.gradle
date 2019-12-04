@@ -19,6 +19,7 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-databind:2.9.8'
     compile 'org.xerial:sqlite-jdbc:3.27.2.1'
     compile 'at.favre.lib:bcrypt:0.8.0'
+    compile 'com.mangofactory:typescript4j:0.4.0'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.4.2'
 }
 

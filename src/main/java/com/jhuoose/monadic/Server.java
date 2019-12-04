@@ -115,12 +115,18 @@ public class Server {
                 path("login", () -> {
                     post(usersController::login);
                 });
-                path("status", () -> {
+                path("getUserStatus", () -> {
                     post(usersController::getUserStatus);
                 });
-                path("lesson", () -> {
-                   post(usersController::changeLessonStatus);
+                path("setProblemStatus", () -> {
+                   post(usersController::setProblemStatus);
                 });
+                path("getSolution", () -> {
+                    post(usersController::getSolution);
+                });
+                path("setSolution", () -> {
+                    post(usersController::setSolution);
+                 });
             });
         });
 

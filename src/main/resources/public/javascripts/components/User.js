@@ -19,7 +19,7 @@ class User extends React.Component {
 
 
     async componentDidMount() {
-        fetch('/users/status', {
+        fetch('/users/getUserStatus', {
             method: 'POST',
             body: this.props.user,
         }).then(this.status).then(this.json).then(function(data) {
