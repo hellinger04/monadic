@@ -161,7 +161,7 @@ class Problem extends React.Component {
             body: dataJSON,
         }).then((function(response) { console.log("Changed problem status!"); }).bind(this));
 
-        this.props.getStatus();
+        this.props.getUserStatus();
     }
 
     grade(studentAnswer, test) {
@@ -333,7 +333,7 @@ class Lesson extends React.Component {
                             return element.problem ?
                                 <Problem key={this.props.currLesson + " " + element.id} element={element}
                                          currCourse={this.props.currCourse } currLesson={this.props.currLesson}
-                                         user={this.props.user} getStatus={this.props.getStatus}/> :
+                                         user={this.props.user} getUserStatus={this.props.getUserStatus}/> :
                                 <TextElement key={this.props.currLesson + " " + element.id} element={element}/>
                         }
                     )}

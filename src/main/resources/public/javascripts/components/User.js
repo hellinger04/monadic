@@ -23,7 +23,7 @@ class User extends React.Component {
             method: 'POST',
             body: this.props.user,
         }).then(this.status).then(this.json).then(function(data) {
-                this.setState({status: data});}.bind(this));
+                this.setState({userStatus: data});}.bind(this));
     }
 
     createList() {
@@ -32,9 +32,9 @@ class User extends React.Component {
 
         //sort array of lessons by course and lesson
         const ordered = {};
-        const orderedKeys = Object.keys(this.state.status).sort();
+        const orderedKeys = Object.keys(this.state.userStatus).sort();
         for (let i = 0; i < orderedKeys.length; i++) {
-            ordered[orderedKeys[i]] = this.state.status[orderedKeys[i]];
+            ordered[orderedKeys[i]] = this.state.userStatus[orderedKeys[i]];
         }
 
         //push each lesson to list of lessons
@@ -49,13 +49,12 @@ class User extends React.Component {
 
     render() {
         if (this.state.page === "dashboard") {
-            console.log(this.state.status);
-            if (typeof this.state.status !== 'undefined') {
+            if (typeof this.state.userStatus !== 'undefined') {
                 return (
                     <EarthBound>
                         <Format>
                             <Title>{this.props.user}'s profile</Title>
-                            <img src={"/img/default-profile.png"} alt={"Profile Picture"}></img>
+                            <img src={"/img/default-profile.png"} alt={"Profile Picture"}/>
                             <h1>Lesson Progress</h1>
                             <NoBullet>
                                 {this.createList()}

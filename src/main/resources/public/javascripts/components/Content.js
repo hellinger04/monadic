@@ -54,9 +54,9 @@ class Listing extends React.Component {
 
         //sort array of lessons by course and lesson
         const ordered = {};
-        const orderedKeys = Object.keys(this.props.status).sort();
+        const orderedKeys = Object.keys(this.props.userStatus).sort();
         for (let i = 0; i < orderedKeys.length; i++) {
-            ordered[orderedKeys[i]] = this.props.status[orderedKeys[i]];
+            ordered[orderedKeys[i]] = this.props.userStatus[orderedKeys[i]];
         }
 
         //push each lesson to list of lessons
@@ -158,7 +158,7 @@ class Splash extends React.Component {
               </div>
 
               <div>
-                  <Listing status={this.props.status} courses={this.props.courses} toLesson={this.toLesson}/>
+                  <Listing userStatus={this.props.userStatus} courses={this.props.courses} toLesson={this.toLesson}/>
               </div>
 
               <div></div>
@@ -174,9 +174,9 @@ class Splash extends React.Component {
 class Content extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {page: "courselist", currCourse: 0, currLesson: 0, courses: [], status: []};
+        this.state = {page: "courselist", currCourse: 0, currLesson: 0, courses: [], userStatus: []};
         this.changePage = this.changePage.bind(this);
-        this.getStatus = this.getStatus.bind(this);
+        this.getUserStatus = this.getUserStatus.bind(this);
     }
 
     status(response) {
@@ -191,22 +191,22 @@ class Content extends React.Component {
         return response.json()
     }
 
-    getStatus() {
-        //get status of courses
+    //get status of user's courses progression
+    getUserStatus() {
         fetch('/users/getUserStatus', {
             method: 'POST',
             body: this.props.user,
         }).then(this.status).then(this.json).then(function(data) {
-            this.setState({status: data});}.bind(this));
+            this.setState({userStatus: data});}.bind(this));
 
-        console.log("Got updated lesson status!");
+        console.log("Got updated lesson userStatus!");
     }
 
     async componentDidMount() {
         //get list of courses
         await this.setState({ courses: await (await fetch("/courses")).json() });
 
-        this.getStatus();
+        this.getUserStatus();
     }
 
     changePage(newpage, course, lesson) {
@@ -214,13 +214,13 @@ class Content extends React.Component {
         this.setState({page: newpage});
         this.setState({currCourse: course});
         this.setState({currLesson: lesson});
-        this.getStatus();
+        this.getUserStatus();
     }
 
     render() {
         //to prevent undefined errors
-        if (this.state.status.length === 0) {
-            console.log("status length is 0");
+        if (this.state.userStatus.length === 0) {
+            console.log("userStatus length is 0");
             return null;
         }
         if (this.state.courses.length === 0) {
@@ -231,7 +231,7 @@ class Content extends React.Component {
         if (this.state.page === "courselist") {
             return (
                 <Splash changePage={this.changePage} courses={this.state.courses}
-                    status={this.state.status} user={this.props.user} logOut={this.props.logOut}/>
+                    userStatus={this.state.userStatus} user={this.props.user} logOut={this.props.logOut}/>
             );
         } else if (this.state.page === "user") {
             return (
@@ -243,7 +243,7 @@ class Content extends React.Component {
                     <LessonBack>
                         <Lesson changePage={this.changePage} courses={this.state.courses} user={this.props.user}
                                 currCourse={this.state.currCourse} currLesson={this.state.currLesson}
-                                getStatus={this.getStatus}/>
+                                getUserStatus={this.getUserStatus}/>
                     </LessonBack>
                 </Space>
             );
