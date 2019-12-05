@@ -97,7 +97,7 @@ class Listing extends React.Component {
                 list.push(<button className={"spB"} key={i} onClick={() => {this.props.toLesson(currCourse,currLesson)}}>
                     Lesson {currLesson}: <em>Available</em></button>);
             } else if (avail === 2) {
-                list.push(<button className={"spB"} key={i}>Lesson {currLesson}: <em>Unavailable</em></button>);
+                list.push(<button className={"spB"} key={i} disabled={true}>Lesson {currLesson}: <em>Unavailable</em></button>);
             }
         }
 

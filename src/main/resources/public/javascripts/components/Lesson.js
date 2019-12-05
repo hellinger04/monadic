@@ -162,7 +162,6 @@ class Problem extends React.Component {
         }).then((function(response) { console.log("Changed problem status!"); }).bind(this));
 
         this.props.getStatus();
-        console.log("reached end of handleClick()");
     }
 
     grade(studentAnswer, test) {
