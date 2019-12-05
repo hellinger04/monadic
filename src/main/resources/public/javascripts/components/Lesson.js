@@ -44,13 +44,17 @@ class CodeBlock extends React.Component {
 class TestResults extends React.Component {
     constructor(props) {
         super(props);
+        this.numCorrect = 0;
         this.state = {submissions: 0};
+        this.genList = this.genList.bind(this);
     }
 
-    render() {
+    genList() {
+        //reset numCorrect to 0
+        this.numCorrect = 0;
+
         // create array to store test results
         let results = [];
-        let numCorrect = 0;
 
         for (let i = 0; i < this.props.student.length; i++) {
             if (this.props.expected[i] === this.props.student[i]) {
@@ -59,7 +63,7 @@ class TestResults extends React.Component {
                     Test {i + 1}: Correct! Expected output is {this.props.expected[i]} and actual output was&nbsp;
                     {this.props.student[i]}
                 </li>);
-                numCorrect++;
+                this.numCorrect++;
             } else if (this.props.expected !== this.props.student[i]) {
                 // if student result does not match expected result, save 'incorrect' statement to results array
                 results.push(<li className={"incorrect"} key={i}>
@@ -69,13 +73,17 @@ class TestResults extends React.Component {
             }
         }
 
+        return results;
+    }
+
+    render() {
         if (this.props.error === "No errors!") {
             return (
                 <div className={"problemText"}>
                     <p>Number of submissions: {this.props.numSubmissions}</p>
-                    {this.props.student.length > 0 ? <p>Passed {numCorrect} out of&nbsp;
+                    {this.props.student.length > 0 ? <p>Passed {this.numCorrect} out of&nbsp;
                         {this.props.student.length} tests:</p> : null}
-                    <ul>{results.map(result => <NoBullet>{result}</NoBullet>)}</ul>
+                    <NoBullet>{this.genList()}</NoBullet>
                 </div>
             );
         } else {
@@ -337,11 +345,6 @@ class LessonNavigation extends React.Component {
    type. The component also uses the LessonNavigation component to render navigation buttons for the user.
  */
 class Lesson extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         // count the total lessons available in current course (used to determine which buttons to display)
         const numLessons = Object.keys(this.props.courses[this.props.currCourse].lessonList).length;
