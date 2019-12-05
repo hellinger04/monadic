@@ -89,9 +89,7 @@ public class UsersController {
 
     public void setProblemStatus(Context ctx) {
         try {
-            System.out.println(ctx.body());
             ObjectMapper objectMapper = new ObjectMapper();
-            System.out.println(ctx.body());
             HashMap<String, String> components = objectMapper.readValue(ctx.body(), HashMap.class);
             var user = usersRepository.getOne(components.get("Username"));
             String courseID = components.get("CourseID");

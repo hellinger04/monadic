@@ -31,7 +31,7 @@ class CodeBlock extends React.Component {
         let editedContents = this.props.element.contents.substring((this.props.element.contents.indexOf("\n") + 1), endIndex);
         return (
             <div>
-                <textarea id={'codeblock' + this.props.element.id}>{editedContents}</textarea>
+                <textarea id={'codeblock' + this.props.element.id} value={editedContents}/>
             </div>
         );
     }
@@ -72,7 +72,7 @@ class TestResults extends React.Component {
 
         if (this.props.error === "No errors!") {
             return (
-                <div class={"problemText"}>
+                <div className={"problemText"}>
                     <p>Number of submissions: {this.props.numSubmissions}</p>
                     <p>{this.props.student.length > 0 ? <div>Passed {numCorrect} out of&nbsp;
                         {this.props.student.length} tests:</div> : null}</p>
@@ -81,7 +81,7 @@ class TestResults extends React.Component {
             );
         } else {
             return (
-                <div class={"problemText"}>
+                <div className={"problemText"}>
                     <p>Number of submissions: {this.props.numSubmissions}</p>
                     <p style={{color: 'red'}}>Error: {this.props.showError ? this.props.error : null}</p>
                 </div>
@@ -159,7 +159,7 @@ class Problem extends React.Component {
         fetch('/users/setProblemStatus', {
             method: 'POST',
             body: dataJSON,
-        }).then((function(response) { console.log(); }).bind(this));
+        }).then((function(response) {  }).bind(this));
 
         this.props.getUserStatus();
     }
@@ -245,7 +245,7 @@ class Problem extends React.Component {
 
         return (
             <div className={"lessonContainer"}>
-                <textarea id = {'problem' + this.props.element.id}>{this.props.element.starterCode}</textarea>
+                <textarea id={'problem' + this.props.element.id} value={this.props.element.starterCode}/>
                 <button onClick={() => this.handleClick()}>Save and Submit</button>
                 <TestResults numSubmissions={this.count} student={this.studentResults} expected={this.expectedOutputs}
                              error={this.err} showError={this.showErr}/>
@@ -274,13 +274,6 @@ class TextElement extends React.Component {
             let before = this.props.element.contents.substring(0, begin);
             let img = this.props.element.contents.substring(begin, (this.props.element.contents.indexOf(")", begin) + 1));
             let after = this.props.element.contents.substring(this.props.element.contents.indexOf(")", begin) + 1, this.props.element.contents.length);
-
-            console.log("before");
-            console.log(before);
-            console.log("img");
-            console.log(img);
-            console.log("after");
-            console.log(after);
 
             let beforeHTML = conv.makeHtml(before);
             let imgHTML = conv.makeHtml(img);
@@ -345,12 +338,23 @@ class LessonNavigation extends React.Component {
    type. The component also uses the LessonNavigation component to render navigation buttons for the user.
  */
 class Lesson extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.myRef = React.createRef();
+    }
+
+    componentDidMount() {
+        console.log("component is mounting");
+        this.myRef.current.scrollTo(0, 0);
+    }
+
     render() {
         // count the total lessons available in current course (used to determine which buttons to display)
         const numLessons = Object.keys(this.props.courses[this.props.currCourse].lessonList).length;
 
         return (
-            <div>
+            <div ref={this.myRef}>
                 <LessonNavigation numLessons={numLessons} currLesson={this.props.currLesson}
                                   currCourse={this.props.currCourse} changePage={this.props.changePage}
                                   userStatus={this.props.userStatus}/>
