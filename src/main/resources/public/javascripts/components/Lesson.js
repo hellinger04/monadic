@@ -286,6 +286,9 @@ class TextElement extends React.Component {
    different pages are all stored in the Content component.
  */
 class LessonNavigation extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
     render() {
         return (
@@ -302,7 +305,7 @@ class LessonNavigation extends React.Component {
                         }}>Previous Lesson
                 </button>
 
-                <button style={{display: this.props.numLessons > this.props.currLesson + 1 ? "inline" : "none"}}
+                <button style={{display: ((this.props.userStatus["c" + this.props.currCourse + "_l" + this.props.currLesson] === 2) && (this.props.numLessons >= this.props.currLesson + 1) ? "inline" : "none")}}
                         onClick={() => {
                             this.props.changePage("lesson", this.props.currCourse, Number(this.props.currLesson) + 1)
                         }}>Next Lesson
@@ -325,7 +328,8 @@ class Lesson extends React.Component {
         return (
             <div>
                 <LessonNavigation numLessons={numLessons} currLesson={this.props.currLesson}
-                                  currCourse={this.props.currCourse} changePage={this.props.changePage}/>
+                                  currCourse={this.props.currCourse} changePage={this.props.changePage}
+                                  userStatus={this.props.userStatus}/>
 
                 <div className={"lessonBody"}>
                     {this.props.courses[this.props.currCourse].lessonList[this.props.currLesson].lessonElements.map(
@@ -340,7 +344,8 @@ class Lesson extends React.Component {
                 </div>
 
                 <LessonNavigation numLessons={numLessons} currLesson={this.props.currLesson}
-                                  currCourse={this.props.currCourse} changePage={this.props.changePage}/>
+                                  currCourse={this.props.currCourse} changePage={this.props.changePage}
+                                  userStatus={this.props.userStatus}/>
             </div>
         );
     }

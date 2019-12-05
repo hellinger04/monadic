@@ -192,7 +192,11 @@ class Content extends React.Component {
     }
 
     //get status of user's courses progression
-    getUserStatus() {
+    async getUserStatus() {
+        //get list of courses
+        await this.setState({ courses: await (await fetch("/courses")).json() });
+
+        //get user status
         fetch('/users/getUserStatus', {
             method: 'POST',
             body: this.props.user,
@@ -200,12 +204,10 @@ class Content extends React.Component {
             this.setState({userStatus: data});}.bind(this));
 
         console.log("Got updated lesson userStatus!");
+        console.log(this.state.userStatus["c0_l0"]);
     }
 
     async componentDidMount() {
-        //get list of courses
-        await this.setState({ courses: await (await fetch("/courses")).json() });
-
         this.getUserStatus();
     }
 
@@ -219,11 +221,11 @@ class Content extends React.Component {
 
     render() {
         //to prevent undefined errors
-        if (this.state.userStatus.length === 0) {
+        if (this.state.userStatus == null) {
             console.log("userStatus length is 0");
             return null;
         }
-        if (this.state.courses.length === 0) {
+        if (this.state.courses == null) {
             console.log("courses length is 0");
             return null;
         }
@@ -243,7 +245,7 @@ class Content extends React.Component {
                     <LessonBack>
                         <Lesson changePage={this.changePage} courses={this.state.courses} user={this.props.user}
                                 currCourse={this.state.currCourse} currLesson={this.state.currLesson}
-                                getUserStatus={this.getUserStatus}/>
+                                userStatus={this.state.userStatus} getUserStatus={this.getUserStatus}/>
                     </LessonBack>
                 </Space>
             );
