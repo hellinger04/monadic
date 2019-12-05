@@ -329,7 +329,7 @@ class LessonNavigation extends React.Component {
                         window.scrollTo(0, 0);}} >Previous Lesson
                 </button>
 
-                <button style={{display: ((this.props.userStatus["c" + this.props.currCourse + "_l" + this.props.currLesson] === 2) && (this.props.numLessons >= this.props.currLesson + 1) ? "inline" : "none")}}
+                <button style={{display: (((this.props.numLessons > this.props.currLesson + 1) && (this.props.userStatus["c" + this.props.currCourse + "_l" + this.props.currLesson] === 2 || this.props.user === "admin")) ? "inline" : "none")}}
                         onClick={() => {
                             this.props.changePage("lesson", this.props.currCourse, Number(this.props.currLesson) + 1);
                             window.scrollTo(0, 0);}}>Next Lesson
@@ -353,7 +353,7 @@ class Lesson extends React.Component {
             <div>
                 <LessonNavigation numLessons={numLessons} currLesson={this.props.currLesson}
                                   currCourse={this.props.currCourse} changePage={this.props.changePage}
-                                  userStatus={this.props.userStatus}/>
+                                  user={this.props.user} userStatus={this.props.userStatus}/>
 
                 <div className={"lessonBody"}>
                     {this.props.courses[this.props.currCourse].lessonList[this.props.currLesson].lessonElements.map(
@@ -369,7 +369,7 @@ class Lesson extends React.Component {
 
                 <LessonNavigation numLessons={numLessons} currLesson={this.props.currLesson}
                                   currCourse={this.props.currCourse} changePage={this.props.changePage}
-                                  userStatus={this.props.userStatus}/>
+                                  user={this.props.user} userStatus={this.props.userStatus}/>
             </div>
         );
     }
