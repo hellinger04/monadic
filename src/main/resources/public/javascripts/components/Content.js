@@ -79,7 +79,7 @@ class Listing extends React.Component {
 
                 //generate course headings
                 if (prevCourse !== currCourse) {
-                    list.push(<h2 className={"spC"}> Course {currCourse}</h2>);
+                    list.push(<h2 className={"spC"} key={currCourse}> Course {currCourse}</h2>);
                     prevCourse = currCourse
                 }
 
@@ -99,17 +99,17 @@ class Listing extends React.Component {
 
                 //push to list
                 if (avail === 0) {
-                    list.push(<button className={"spB"} key={i} onClick={() => {
+                    list.push(<button className={"spB"} key={currKey} onClick={() => {
                         this.props.toLesson(currCourse, currLesson)
                     }}>
                         Lesson {currLesson}: <em>Completed</em></button>);
                 } else if (avail === 1) {
-                    list.push(<button className={"spB"} key={i} onClick={() => {
+                    list.push(<button className={"spB"} key={currKey} onClick={() => {
                         this.props.toLesson(currCourse, currLesson)
                     }}>
                         Lesson {currLesson}: <em>Available</em></button>);
                 } else if (avail === 2) {
-                    list.push(<button className={"spB"} key={i}
+                    list.push(<button className={"spB"} key={currKey}
                                       disabled={true}>Lesson {currLesson}: <em>Unavailable</em></button>);
                 }
             }
