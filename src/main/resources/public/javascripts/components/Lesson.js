@@ -318,14 +318,14 @@ class LessonNavigation extends React.Component {
 
                 <button style={{display: 0 <= this.props.currLesson - 1 ? "inline" : "none"}}
                         onClick={() => {
-                            this.props.changePage("lesson", this.props.currCourse, Number(this.props.currLesson) - 1)
-                        }}>Previous Lesson
+                            this.props.changePage("lesson", this.props.currCourse, Number(this.props.currLesson) - 1);
+                        window.scrollTo(0, 0);}} >Previous Lesson
                 </button>
 
                 <button style={{display: ((this.props.userStatus["c" + this.props.currCourse + "_l" + this.props.currLesson] === 2) && (this.props.numLessons >= this.props.currLesson + 1) ? "inline" : "none")}}
                         onClick={() => {
-                            this.props.changePage("lesson", this.props.currCourse, Number(this.props.currLesson) + 1)
-                        }}>Next Lesson
+                            this.props.changePage("lesson", this.props.currCourse, Number(this.props.currLesson) + 1);
+                            window.scrollTo(0, 0);}}>Next Lesson
                 </button>
             </div>
         );
@@ -341,12 +341,6 @@ class Lesson extends React.Component {
 
     constructor(props) {
         super(props);
-        this.myRef = React.createRef();
-    }
-
-    componentDidMount() {
-        console.log("component is mounting");
-        this.myRef.current.scrollTo(0, 0);
     }
 
     render() {
