@@ -74,7 +74,6 @@ class Listing extends React.Component {
             let currKey = "";
             for (let j = 0; j < Object.keys(this.props.courses[i].lessonList).length; j++) {
                 currKey = "c" + i + "_l" + j;
-                console.log(currKey);
                 let currCourse = i;
                 let currLesson = j;
 
@@ -220,9 +219,6 @@ class Content extends React.Component {
             body: this.props.user,
         }).then(this.status).then(this.json).then(function(data) {
             this.setState({userStatus: data});}.bind(this));
-
-        console.log("Got updated lesson userStatus!");
-        console.log(this.state.userStatus["c0_l0"]);
     }
 
     async componentDidMount() {
@@ -240,11 +236,9 @@ class Content extends React.Component {
     render() {
         //to prevent undefined errors
         if (this.state.userStatus == null) {
-            console.log("userStatus length is 0");
             return null;
         }
         if (this.state.courses == null) {
-            console.log("courses length is 0");
             return null;
         }
 

@@ -159,7 +159,7 @@ class Problem extends React.Component {
         fetch('/users/setProblemStatus', {
             method: 'POST',
             body: dataJSON,
-        }).then((function(response) { console.log("Changed problem status!"); }).bind(this));
+        }).then((function(response) { console.log(); }).bind(this));
 
         this.props.getUserStatus();
     }
@@ -268,9 +268,33 @@ class TextElement extends React.Component {
                     <CodeBlock element={this.props.element}/>
                 </div>
             );
+        } else if (this.props.element.contents.indexOf("![") > -1) {
+            let begin = this.props.element.contents.indexOf("![");
+
+            let before = this.props.element.contents.substring(0, begin);
+            let img = this.props.element.contents.substring(begin, (this.props.element.contents.indexOf(")", begin) + 1));
+            let after = this.props.element.contents.substring(this.props.element.contents.indexOf(")", begin) + 1, this.props.element.contents.length);
+
+            console.log("before");
+            console.log(before);
+            console.log("img");
+            console.log(img);
+            console.log("after");
+            console.log(after);
+
+            let beforeHTML = conv.makeHtml(before);
+            let imgHTML = conv.makeHtml(img);
+            let afterHTML = conv.makeHtml(after);
+
+            return (
+                <div className={"lessonContainer"}>
+                    <div dangerouslySetInnerHTML={{__html: beforeHTML}} className={"lessTxt"}/>
+                    <div dangerouslySetInnerHTML={{__html: imgHTML}} className={"lessImg"}/>
+                    <div dangerouslySetInnerHTML={{__html: afterHTML}} className={"lessTxt"}/>
+                </div>
+            );
         } else {
             let html = conv.makeHtml(this.props.element.contents);
-
             return (
                 <div className={"lessonContainer"}>
                     <div dangerouslySetInnerHTML={{__html: html}} className={"lessTxt"}/>

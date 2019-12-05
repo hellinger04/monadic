@@ -1,8 +1,5 @@
 package com.jhuoose.monadic.models.lesson.element;
 
-import com.jhuoose.monadic.models.lesson.element.LessonElement;
-
-
 public class Text implements LessonElement {
 
     private int ID;
