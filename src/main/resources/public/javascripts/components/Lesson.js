@@ -31,7 +31,7 @@ class CodeBlock extends React.Component {
         let editedContents = this.props.element.contents.substring((this.props.element.contents.indexOf("\n") + 1), endIndex);
         return (
             <div>
-                <textarea id={'codeblock' + this.props.element.id} value={editedContents}/>
+                <textarea id={'codeblock' + this.props.element.id} defaultValue={editedContents}/>
             </div>
         );
     }
@@ -74,9 +74,9 @@ class TestResults extends React.Component {
             return (
                 <div className={"problemText"}>
                     <p>Number of submissions: {this.props.numSubmissions}</p>
-                    <p>{this.props.student.length > 0 ? <div>Passed {numCorrect} out of&nbsp;
-                        {this.props.student.length} tests:</div> : null}</p>
-                    <ul>{results.map(result => <NoBullet><li>{result}</li></NoBullet>)}</ul>
+                    {this.props.student.length > 0 ? <p>Passed {numCorrect} out of&nbsp;
+                        {this.props.student.length} tests:</p> : null}
+                    <ul>{results.map(result => <NoBullet>{result}</NoBullet>)}</ul>
                 </div>
             );
         } else {
@@ -245,7 +245,7 @@ class Problem extends React.Component {
 
         return (
             <div className={"lessonContainer"}>
-                <textarea id={'problem' + this.props.element.id} value={this.props.element.starterCode}/>
+                <textarea id={'problem' + this.props.element.id} defaultValue={this.props.element.starterCode}/>
                 <button onClick={() => this.handleClick()}>Save and Submit</button>
                 <TestResults numSubmissions={this.count} student={this.studentResults} expected={this.expectedOutputs}
                              error={this.err} showError={this.showErr}/>
@@ -338,23 +338,12 @@ class LessonNavigation extends React.Component {
    type. The component also uses the LessonNavigation component to render navigation buttons for the user.
  */
 class Lesson extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.myRef = React.createRef();
-    }
-
-    componentDidMount() {
-        console.log("component is mounting");
-        this.myRef.current.scrollTo(0, 0);
-    }
-
     render() {
         // count the total lessons available in current course (used to determine which buttons to display)
         const numLessons = Object.keys(this.props.courses[this.props.currCourse].lessonList).length;
 
         return (
-            <div ref={this.myRef}>
+            <div>
                 <LessonNavigation numLessons={numLessons} currLesson={this.props.currLesson}
                                   currCourse={this.props.currCourse} changePage={this.props.changePage}
                                   userStatus={this.props.userStatus}/>
