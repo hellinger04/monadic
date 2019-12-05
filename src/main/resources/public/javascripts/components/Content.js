@@ -116,7 +116,7 @@ class Listing extends React.Component {
 
                 <br></br> <br></br>
 
-                <span className={"spC"}> <progress max={100} value={this.state.completion}> </progress> {this.state.completion}%</span>
+                <span className={"spC"}> <progress max={100} value={this.state.completion}> </progress> {Math.round(this.state.completion * 100) / 100}%</span>
             </div>
         );
     }
