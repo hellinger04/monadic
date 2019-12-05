@@ -59,6 +59,10 @@ public class UsersController {
         try {
             var user = usersRepository.getOne(ctx.body());
             ctx.status(201);
+            HashMap<String, Integer> lessonStatus = user.getUserStatus();
+            for (String key: lessonStatus.keySet()) {
+                System.out.println("key: " + key + " value: " + lessonStatus.get(key));
+            }
             ctx.json(user.getUserStatus());
         } catch (UserNotFoundException | SQLException e) {
             ctx.status(401);

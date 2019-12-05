@@ -318,14 +318,14 @@ class LessonNavigation extends React.Component {
 
                 <button style={{display: 0 <= this.props.currLesson - 1 ? "inline" : "none"}}
                         onClick={() => {
-                            this.props.changePage("lesson", this.props.currCourse, Number(this.props.currLesson) - 1)
-                        }}>Previous Lesson
+                            this.props.changePage("lesson", this.props.currCourse, Number(this.props.currLesson) - 1);
+                        window.scrollTo(0, 0);}} >Previous Lesson
                 </button>
 
                 <button style={{display: ((this.props.userStatus["c" + this.props.currCourse + "_l" + this.props.currLesson] === 2) && (this.props.numLessons >= this.props.currLesson + 1) ? "inline" : "none")}}
                         onClick={() => {
-                            this.props.changePage("lesson", this.props.currCourse, Number(this.props.currLesson) + 1)
-                        }}>Next Lesson
+                            this.props.changePage("lesson", this.props.currCourse, Number(this.props.currLesson) + 1);
+                            window.scrollTo(0, 0);}}>Next Lesson
                 </button>
             </div>
         );
@@ -338,6 +338,11 @@ class LessonNavigation extends React.Component {
    type. The component also uses the LessonNavigation component to render navigation buttons for the user.
  */
 class Lesson extends React.Component {
+
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         // count the total lessons available in current course (used to determine which buttons to display)
         const numLessons = Object.keys(this.props.courses[this.props.currCourse].lessonList).length;
