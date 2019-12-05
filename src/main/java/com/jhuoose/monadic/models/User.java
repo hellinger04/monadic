@@ -1,6 +1,7 @@
 package com.jhuoose.monadic.models;
 
 
+import com.jhuoose.monadic.models.lesson.Course;
 import com.jhuoose.monadic.models.lesson.Lesson;
 import com.jhuoose.monadic.models.lesson.element.LessonElement;
 import com.jhuoose.monadic.models.lesson.element.Problem;
@@ -29,16 +30,16 @@ public class User {
         this.password = password;
         this.problemsCompleted = new HashMap<>();
         this.solutions = new HashMap<>();
-        for (int i = 0; i < 5; ++i) {
+        for (int i = 0; i < Course.COURSE_0_SIZE; ++i) {
             putProblemElems(problemsCompleted, solutions, new Lesson(0, i));
         }
-        for (int i = 0; i < 5; ++i) {
+        for (int i = 0; i < Course.COURSE_1_SIZE; ++i) {
             putProblemElems(problemsCompleted, solutions, new Lesson(1, i));
         }
-        for (int i = 0; i < 8; ++i) {
+        for (int i = 0; i < Course.COURSE_2_SIZE; ++i) {
             putProblemElems(problemsCompleted, solutions, new Lesson(2, i));
         }
-        for (int i = 0; i < 4; ++i) {
+        for (int i = 0; i < Course.COURSE_3_SIZE; ++i) {
             putProblemElems(problemsCompleted, solutions, new Lesson(3, i));
         }
     }
@@ -100,16 +101,16 @@ public class User {
 
     public HashMap<String, Integer> getUserStatus() {
         HashMap<String, Integer> lessonStatus = new HashMap<>();
-        for (int i = 0; i < 5; ++i) {
+        for (int i = 0; i < Course.COURSE_0_SIZE; ++i) {
             lessonStatus.put("c0_l" + i, getLessonStatus(new Lesson(0, i)));
         }
-        for (int i = 0; i < 5; ++i) {
+        for (int i = 0; i < Course.COURSE_1_SIZE; ++i) {
             lessonStatus.put("c1_l" + i, getLessonStatus(new Lesson(1, i)));
         }
-        for (int i = 0; i < 8; ++i) {
+        for (int i = 0; i < Course.COURSE_2_SIZE; ++i) {
             lessonStatus.put("c2_l" + i, getLessonStatus(new Lesson(2, i)));
         }
-        for (int i = 0; i < 4; ++i) {
+        for (int i = 0; i < Course.COURSE_3_SIZE; ++i) {
             lessonStatus.put("c3_l" + i, getLessonStatus(new Lesson(3, i)));
         }
 

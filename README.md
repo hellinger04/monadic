@@ -49,6 +49,12 @@ submitted for each activity.
 
 ![](docs/activities2.png)
 
+## Works Cited
+
+Course 1 is based off of the blog post ["No really, what's a monad?"](https://rmarcus.info/blog/2016/12/14/monads.html) by Ryan Marcus.
+
+Courses 2, 3, and 4 are based off of material from the course ["Functional programming and type systems"](https://xavierleroy.org/mpri/2-4/), taught by OCaml developer [Xavier Leroy](https://xavierleroy.org/teaching.html). In particular, the Exception, State, and Continuation monads are mainly TypeScript re-implementations of monads that Leroy originally implemented in OCaml.
+
   
 
 
