@@ -30,22 +30,22 @@ public class Server {
         var courseList = new ArrayList<Course>();
 
         // construct course 0 lessons
-        for (int i = 0; i < 5; ++i) {
+        for (int i = 0; i < Course.COURSE_0_SIZE; ++i) {
             courseZeroLessons.add(new Lesson(0, i));
         }
 
         // construct course 1 lessons
-        for (int i = 0; i < 5; ++i) {
+        for (int i = 0; i < Course.COURSE_1_SIZE; ++i) {
             courseOneLessons.add(new Lesson(1, i));
         }
 
         // construct course 2 lessons
-        for (int i = 0; i < 8; ++i) {
+        for (int i = 0; i < Course.COURSE_2_SIZE; ++i) {
             courseTwoLessons.add(new Lesson(2, i));
         }
 
         // construct course 3 lessons 
-        for (int i = 0; i < 4; ++i) {
+        for (int i = 0; i < Course.COURSE_3_SIZE; ++i) {
             courseThreeLessons.add(new Lesson(3, i));
         }
 
