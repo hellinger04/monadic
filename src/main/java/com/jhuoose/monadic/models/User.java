@@ -32,7 +32,7 @@ public class User {
         for (int i = 0; i < 5; ++i) {
             putProblemElems(problemsCompleted, solutions, new Lesson(0, i));
         }
-        for (int i = 0; i < 5; ++i) {
+        for (int i = 0; i < 7; ++i) {
             putProblemElems(problemsCompleted, solutions, new Lesson(1, i));
         }
         for (int i = 0; i < 8; ++i) {
@@ -103,13 +103,13 @@ public class User {
         for (int i = 0; i < 5; ++i) {
             lessonStatus.put("c0_l" + i, getLessonStatus(new Lesson(0, i)));
         }
-        for (int i = 0; i < 8; ++i) {
+        for (int i = 0; i < 7; ++i) {
             lessonStatus.put("c1_l" + i, getLessonStatus(new Lesson(1, i)));
         }
-        for (int i = 0; i < 5; ++i) {
+        for (int i = 0; i < 8; ++i) {
             lessonStatus.put("c2_l" + i, getLessonStatus(new Lesson(2, i)));
         }
-        for (int i = 0; i < 3; ++i) {
+        for (int i = 0; i < 4; ++i) {
             lessonStatus.put("c3_l" + i, getLessonStatus(new Lesson(3, i)));
         }
 
