@@ -14,7 +14,6 @@ public class User {
 
     private String username;
     private String password;
-    private Enrollment enrollment;
     private HashMap<String, String> solutions;
     private HashMap<String, Integer> problemsCompleted;
 
@@ -63,10 +62,6 @@ public class User {
         return password;
     }
 
-    public Enrollment getEnrollment() {
-        return enrollment;
-    }
-
     public HashMap<String, String> getSolutions() {
         return solutions;
     }
@@ -81,10 +76,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public void setEnrollment(Enrollment enrollment) {
-        this.enrollment = enrollment;
     }
 
     public void setSolutions(HashMap<String, String> solutions) {

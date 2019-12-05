@@ -51,11 +51,18 @@ class Listing extends React.Component {
 
     genList() {
         let list = [];
+        let numLessons = 0;
 
+        //determine number of lessons
+        for (let i = 0; i < this.props.courses.length; i++) {
+            numLessons = numLessons + Object.keys(this.props.courses[i].lessonList).length;
+        }
+
+        console.log("num lessons: " + numLessons);
         //sort array of lessons by course and lesson
         const ordered = {};
         const orderedKeys = Object.keys(this.props.userStatus).sort();
-        for (let i = 0; i < orderedKeys.length; i++) {
+        for (let i = 0; i < numLessons - 1; i++) {
             ordered[orderedKeys[i]] = this.props.userStatus[orderedKeys[i]];
         }
 
@@ -64,10 +71,12 @@ class Listing extends React.Component {
         let avail = 0;
         let completeCount = 0;
         let furtherCompletion = true;
-        for (let i = 0; i < Object.keys(ordered).length; i++) {
+        for (let i = 0; i < numLessons - 1; i++) {
             let currKey = Object.keys(ordered)[i];
             let currCourse = Number(currKey.substr(1,1));
             let currLesson = Number(currKey.substr(4,1));
+            // console.log(currKey);
+            // console.log(i);
 
             //generate course headings
             if (prevCourse !== currCourse) {
@@ -101,7 +110,7 @@ class Listing extends React.Component {
             }
         }
 
-        this.state.completion = (completeCount / Object.keys(ordered).length) * 100 ;
+        this.state.completion = (completeCount / numLessons) * 100 ;
 
         return list;
     }
