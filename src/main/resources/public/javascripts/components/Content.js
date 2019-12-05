@@ -58,12 +58,11 @@ class Listing extends React.Component {
             numLessons = numLessons + Object.keys(this.props.courses[i].lessonList).length;
         }
 
-        console.log("num lessons: " + numLessons);
         //sort array of lessons by course and lesson
         const ordered = {};
         const orderedKeys = Object.keys(this.props.userStatus).sort();
-        for (let i = 0; i < numLessons - 1; i++) {
-            ordered[orderedKeys[i]] = this.props.userStatus[orderedKeys[i]];
+        for (let i = 0; i < numLessons; i++) {
+                ordered[orderedKeys[i]] = this.props.userStatus[orderedKeys[i]];
         }
 
         //push each lesson to list of lessons
@@ -71,42 +70,49 @@ class Listing extends React.Component {
         let avail = 0;
         let completeCount = 0;
         let furtherCompletion = true;
-        for (let i = 0; i < numLessons - 1; i++) {
-            let currKey = Object.keys(ordered)[i];
-            let currCourse = Number(currKey.substr(1,1));
-            let currLesson = Number(currKey.substr(4,1));
-            // console.log(currKey);
-            // console.log(i);
+        for (let i = 0; i < this.props.courses.length; i++) {
+            let currKey = "";
+            for (let j = 0; j < Object.keys(this.props.courses[i].lessonList).length; j++) {
+                currKey = "c" + i + "_l" + j;
+                console.log(currKey);
+                let currCourse = i;
+                let currLesson = j;
 
-            //generate course headings
-            if (prevCourse !== currCourse) {
-                list.push(<h2 className={"spC"}> Course {currCourse}</h2>);
-                prevCourse = currCourse
-            }
+                //generate course headings
+                if (prevCourse !== currCourse) {
+                    list.push(<h2 className={"spC"}> Course {currCourse}</h2>);
+                    prevCourse = currCourse
+                }
 
-            //logic for availability
-            if (avail === 0 && ordered[currKey] !== 2) {
-                avail = 1;
-            } else if (avail === 1) {
-                avail = 2;
-            }
+                //logic for availability
+                if (avail === 0 && ordered[currKey] !== 2) {
+                    avail = 1;
+                } else if (avail === 1) {
+                    avail = 2;
+                }
 
-            //if current lesson is not started or is in progress, disqualify any future lesson from being complete
-            if (ordered[currKey] === 0 || ordered[currKey] === 1) {
-                furtherCompletion = false;
-            } else if (furtherCompletion && ordered[currKey] === 2) {
-                completeCount++;
-            }
+                //if current lesson is not started or is in progress, disqualify any future lesson from being complete
+                if (ordered[currKey] === 0 || ordered[currKey] === 1) {
+                    furtherCompletion = false;
+                } else if (furtherCompletion && ordered[currKey] === 2) {
+                    completeCount++;
+                }
 
-            //push to list
-            if (avail === 0) {
-                list.push(<button className={"spB"} key={i} onClick={() => {this.props.toLesson(currCourse,currLesson)}}>
-                    Lesson {currLesson}: <em>Completed</em></button>);
-            } else if (avail === 1) {
-                list.push(<button className={"spB"} key={i} onClick={() => {this.props.toLesson(currCourse,currLesson)}}>
-                    Lesson {currLesson}: <em>Available</em></button>);
-            } else if (avail === 2) {
-                list.push(<button className={"spB"} key={i} disabled={true}>Lesson {currLesson}: <em>Unavailable</em></button>);
+                //push to list
+                if (avail === 0) {
+                    list.push(<button className={"spB"} key={i} onClick={() => {
+                        this.props.toLesson(currCourse, currLesson)
+                    }}>
+                        Lesson {currLesson}: <em>Completed</em></button>);
+                } else if (avail === 1) {
+                    list.push(<button className={"spB"} key={i} onClick={() => {
+                        this.props.toLesson(currCourse, currLesson)
+                    }}>
+                        Lesson {currLesson}: <em>Available</em></button>);
+                } else if (avail === 2) {
+                    list.push(<button className={"spB"} key={i}
+                                      disabled={true}>Lesson {currLesson}: <em>Unavailable</em></button>);
+                }
             }
         }
 
