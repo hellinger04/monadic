@@ -32,7 +32,7 @@ public class Problem implements LessonElement {
         for (String section : sections) {
             if (section.startsWith("CODE")) {
                 this.starterCode = section.replaceFirst("CODE\\s*", "");
-            } else if (section.startsWith("ANSWER")) {
+            } else if (section.startsWith("SOLUTION")) {
                 this.answerCode = section.replaceFirst("ANSWER\\s*", "");
             } else if (section.startsWith("TESTS")) {
                 String[] testStrings = section.replaceFirst("TESTS\\s*", "").split("\n");
