@@ -59,9 +59,6 @@ public class UsersController {
             var user = usersRepository.getOne(ctx.body());
             ctx.status(201);
             HashMap<String, Integer> lessonStatus = user.getUserStatus();
-            for (String key: lessonStatus.keySet()) {
-                System.out.println("key: " + key + " value: " + lessonStatus.get(key));
-            }
             ctx.json(user.getUserStatus());
         } catch (UserNotFoundException | SQLException e) {
             ctx.status(401);
@@ -70,14 +67,10 @@ public class UsersController {
 
     public void getSolution(Context ctx) {
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            HashMap<String, String> components = objectMapper.readValue(ctx.body(), HashMap.class);
+            HashMap<String, String> components = new ObjectMapper().readValue(ctx.body(), HashMap.class);
             var user = usersRepository.getOne(components.get("Username"));
-            String courseID = components.get("CourseID");
-            String lessonID = components.get("LessonID");
-            String problemID = components.get("ElementID");
+            String problemKey = getProblemKey(components);
             String convertToTypeScript = components.get("convertToTypeScript");
-            String problemKey = "c" + courseID + "_l" + lessonID + "_p" + problemID;
             String solution = user.getSolutions().get(problemKey);
             if (convertToTypeScript.equals("true")) {
                 TypescriptCompiler tsc = new TypescriptCompiler();
@@ -96,13 +89,9 @@ public class UsersController {
 
     public void setProblemStatus(Context ctx) {
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            HashMap<String, String> components = objectMapper.readValue(ctx.body(), HashMap.class);
+            HashMap<String, String> components = new ObjectMapper().readValue(ctx.body(), HashMap.class);
             var user = usersRepository.getOne(components.get("Username"));
-            String courseID = components.get("CourseID");
-            String lessonID = components.get("LessonID");
-            String problemID = components.get("ElementID");
-            String problemKey = "c" + courseID + "_l" + lessonID + "_p" + problemID;
+            String problemKey = getProblemKey(components);
             int newProblemStatus = Integer.parseInt(components.get("ProblemStatus"));
             usersRepository.setProblemStatus(user, problemKey, newProblemStatus);
             ctx.json(user.getUserStatus());
@@ -114,13 +103,9 @@ public class UsersController {
 
     public void setSolution(Context ctx) {
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            HashMap<String, String> components = objectMapper.readValue(ctx.body(), HashMap.class);
+            HashMap<String, String> components = new ObjectMapper().readValue(ctx.body(), HashMap.class);
+            String problemKey = getProblemKey(components);
             var user = usersRepository.getOne(components.get("Username"));
-            String courseID = components.get("CourseID");
-            String lessonID = components.get("LessonID");
-            String problemID = components.get("ElementID");
-            String problemKey = "c" + courseID + "_l" + lessonID + "_p" + problemID;
             String newSolution = components.get("newSolution");
             usersRepository.setSolution(user, problemKey, newSolution);
         } catch (UserNotFoundException | SQLException | IOException e) {
@@ -150,5 +135,12 @@ public class UsersController {
         } catch (UserNotFoundException e) {
             ctx.status(401);
         }
+    }
+
+    private String getProblemKey(HashMap<String, String> components) {
+        String courseID = components.get("CourseID");
+        String lessonID = components.get("LessonID");
+        String problemID = components.get("ElementID");
+        return "c" + courseID + "_l" + lessonID + "_p" + problemID;
     }
 }
