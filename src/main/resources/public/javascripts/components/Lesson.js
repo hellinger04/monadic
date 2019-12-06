@@ -180,7 +180,8 @@ class Problem extends React.Component {
         let output;
         if(this.err === "No errors!") {
             try {
-                output = eval(studentAnswer + test.input).toString();
+                let answer = eval(studentAnswer + test.input);
+                output = JSON.stringify(answer);
             } catch (e) {
                 if (e.message === "Cannot read property 'toString' of undefined") {
                     this.err = "Your function needs to return a value!"
@@ -192,6 +193,8 @@ class Problem extends React.Component {
 
             // update student results array with test output
             this.studentResults[test.id] = output;
+
+            // console.log(Object.prototype.toString.call(output));
 
             //update count of passed tests
             if (this.studentResults[test.id] === this.expectedOutputs[test.id]) {
