@@ -18,25 +18,27 @@ class LessonTests {
 
     @Test
     void testLessonConstructor() {
-        Lesson lesson = new Lesson(0, 3);
+        Lesson lesson = new Lesson(0, 0);
 
         // retrieve actual text from Lesson and set expected text
-        LessonElement actualText = lesson.getLessonElements().get(2);
-        LessonElement expectedText = new Text(1, "\n\nWrite a function `foldFunctional` that takes in three "
-                + "arguments:\n" + "\n" + "- A two argument function\n" + "- An accumulator, which can be of any value "
-                + "(though it has to make sense for the function and the List)\n" + "- A `List`\n\n" +
-                "Your `foldFunctional` will run the input function repeatedly over the accumulator and each element of "
-                + "the List, and will return the final value of the accumulator as a result. For example, if `adder` is"
-                + " your function, `0` is your accumulator, and `[1, 2, 3]` is your list, you should end up with the "
-                + "number `6` as your output (since 1 + 2 + 3 = 6).\n\n" + "You should not mutate the value of any "
-                + "pre-existing accumulator; you can only create new accumulator instances. You also can't mutate your "
-                + "`List` since it's an Immutable.js object. Furthermore, you should not use for or while loops; use "
-                + "recursion only.\n\n" + "**Problem 0.2.1:** Create a function `filterFunctional` that takes two "
-                + "arguments:\n\n");
+        LessonElement actualText = lesson.getLessonElements().get(0);
+        LessonElement expectedText = new Text(1, "# Lesson 0.0: Intro to Functional Programming\n" +
+                        "\n" +
+                        "Monads are a *functional programming* concept, so before we even touch monads we need to have a solid understanding of what the heck functional programming is.\n" +
+                        "\n" +
+                        "First, you know what programming is, with or without the functional part, right? In particular, our tutorial will be using JavaScript and TypeScript throughout, so if you don’t have a good grasp of these languages, we suggest that you learn them. There are plenty of resources on the Internets that can teach you better than we can, so we suggest using Google.\n" +
+                        "\n" +
+                        "![What Google looked like in 1996](https://www.uxpincdn.com/studio/wp-content/uploads/2013/03/google-first-look.jpg)\n" +
+                        "(Photo source: [Studio by UXPin](https://www.uxpin.com/studio/blog/should-designers-code/))\n" +
+                        "\n" +
+                        "You learned how to do JavaScript? Good? Let's check.\n" +
+                        "\n" +
+                        "**Problem 0.0.0:** Let’s check that you have a modicum of JavaScript knowledge. Write in JavaScript a function called `adder` that adds two numbers together. We will be using this function in the next lesson.\n" +
+                        "\n");
 
         // assert that values from Lesson are as expected
-        assertEquals(3, lesson.getID());
-        assertEquals(actualText.getContents(), expectedText.getContents());
+        assertEquals(0, lesson.getID());
+        assertEquals(expectedText.getContents(), actualText.getContents());
     }
 
     @Test
@@ -56,19 +58,29 @@ class LessonTests {
 
         // construct Course and get a sample problem and text from the Course's lessons
         Course course = new Course(1, lessons);
+        LessonElement text = course.getLessonList().get(0).getLessonElements().get(0);
         LessonElement problem = course.getLessonList().get(0).getLessonElements().get(1);
-        LessonElement text = course.getLessonList().get(3).getLessonElements().get(4);
 
-        // set expected values for problem and text
-        String expectedProblem = "function adder(x, y) {\n" + "    // your code here\n" + "    // solution added for " +
-                "development purposes\n" + "    return x + y\n" + "}\n\n";
-        String expectedText = "\n\n" +
-                "- A predicate, ie. a function that takes in a single argument and returns true or false.\n" +
-                "- A `List`\n\n" + "Your `filterFunctional` will run the predicate repeatedly over each element in the "
-                + "list. The output is a new `List` where only elements that make the predicate return `true` exist. "
-                + "For instance, if `greaterThan2` is your predicate and `[1, 3, 2, 5, 7]` is your `List`, then " +
-                "`filterFunctional` should return `[3, 5, 7]`.\n\n" + "Again, you should not mutate the `List`, nor " +
-                "should you use for or while loops.\n";
+        // set expected values for problem and text (from Lesson 0.0)
+        String expectedProblem =
+                "function adder(x, y) {\n"
+                + "  // TODO: Your code here\n"
+                + "}";
+
+        String expectedText = "# Lesson 0.0: Intro to Functional Programming\n" +
+                "\n" +
+                "Monads are a *functional programming* concept, so before we even touch monads we need to have a solid understanding of what the heck functional programming is.\n" +
+                "\n" +
+                "First, you know what programming is, with or without the functional part, right? In particular, our tutorial will be using JavaScript and TypeScript throughout, so if you don’t have a good grasp of these languages, we suggest that you learn them. There are plenty of resources on the Internets that can teach you better than we can, so we suggest using Google.\n" +
+                "\n" +
+                "![What Google looked like in 1996](https://www.uxpincdn.com/studio/wp-content/uploads/2013/03/google-first-look.jpg)\n" +
+                "(Photo source: [Studio by UXPin](https://www.uxpin.com/studio/blog/should-designers-code/))\n" +
+                "\n" +
+                "You learned how to do JavaScript? Good? Let's check.\n" +
+                "\n" +
+                "**Problem 0.0.0:** Let’s check that you have a modicum of JavaScript knowledge. Write in JavaScript a function called `adder` that adds two numbers together. We will be using this function in the next lesson.\n" +
+                "\n";
+
 
         // assert that values from Course are as expected
         assertEquals(1, course.getID());
@@ -98,10 +110,19 @@ class LessonTests {
     @Test
     void testProblemConstructor() {
         // construct new Problem by providing sample text, define expected contents based on sample text
-        LessonElement problem = new Problem(5, "function adder(x, y) {\n" + "    // Your code here\n" + "}\n\n"
-                + "// TESTS\n" + "// adder(2, 3) ==> 5\n" + "// adder(100, -100) ==> 0\n" + "// adder(\"Foo\", \"Bar\")"
-                + " ==> \"FooBar\"");
-        String expectedContents = "function adder(x, y) {\n" + "    // Your code here\n" + "}\n" + "\n";
+        LessonElement problem = new Problem(5,
+                "///// CODE\n"
+                        + "function adder(x, y) {\n"
+                        + "    // Your code here\n"
+                        + "}\n\n"
+                        + "///// TESTS\n"
+                        + "adder(2, 3) ==> 5\n"
+                        + "adder(100, -100) ==> 0\n"
+                        + "adder(\"Foo\", \"Bar\") ==> \"FooBar\"");
+        String expectedContents =
+                "function adder(x, y) {\n"
+                + "    // Your code here\n"
+                + "}";
 
         // assert values are as expected
         assertEquals(5, problem.getID());
@@ -112,9 +133,15 @@ class LessonTests {
     @Test
     void testProblemTestCases() {
         // construct new Problem by providing sample text, get list of tests from Problem
-        Problem problem = new Problem(5, "function adder(x, y) {\n" + "    // Your code here\n" + "}\n\n"
-                + "// TESTS\n" + "// adder(2, 3) ==> 5\n" + "// adder(100, -100) " + "==> 0\n// adder(\"Foo\", \"Bar\")"
-                + " ==> \"FooBar\"");
+        Problem problem = new Problem(5,
+                "///// CODE\n"
+                        + "function adder(x, y) {\n"
+                        + "    // Your code here\n"
+                        + "}\n\n"
+                        + "///// TESTS\n"
+                        + "adder(2, 3) ==> 5\n"
+                        + "adder(100, -100) ==> 0\n"
+                        + "adder(\"Foo\", \"Bar\") ==> \"FooBar\"");
         List<TestCase> tests = problem.getTests();
 
         // assert test values are as expected
