@@ -160,7 +160,8 @@ class Problem extends React.Component {
             CourseID: this.props.currCourse.toString(),
             LessonID: this.props.currLesson.toString(),
             ElementID: this.props.element.id.toString(),
-            ProblemStatus: result.toString()
+            ProblemStatus: result.toString(),
+            newSolution: this.studentAnswer.toString()
         };
 
         let dataJSON = JSON.stringify(data);

@@ -103,26 +103,14 @@ public class UsersController {
             String lessonID = components.get("LessonID");
             String problemID = components.get("ElementID");
             String problemKey = "c" + courseID + "_l" + lessonID + "_p" + problemID;
+
             int newProblemStatus = Integer.parseInt(components.get("ProblemStatus"));
             usersRepository.setProblemStatus(user, problemKey, newProblemStatus);
-            ctx.json(user.getUserStatus());
 
-        } catch (UserNotFoundException | SQLException | IOException e) {
-            ctx.status(401);
-        }
-    }
-
-    public void setSolution(Context ctx) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            HashMap<String, String> components = objectMapper.readValue(ctx.body(), HashMap.class);
-            var user = usersRepository.getOne(components.get("Username"));
-            String courseID = components.get("CourseID");
-            String lessonID = components.get("LessonID");
-            String problemID = components.get("ElementID");
-            String problemKey = "c" + courseID + "_l" + lessonID + "_p" + problemID;
             String newSolution = components.get("newSolution");
             usersRepository.setSolution(user, problemKey, newSolution);
+
+            ctx.json(user.getUserStatus());
         } catch (UserNotFoundException | SQLException | IOException e) {
             ctx.status(401);
         }
