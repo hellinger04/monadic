@@ -4,9 +4,6 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jhuoose.monadic.models.User;
-import com.jhuoose.monadic.models.lesson.Lesson;
-import com.jhuoose.monadic.models.lesson.element.LessonElement;
-import com.jhuoose.monadic.models.lesson.element.Problem;
 import com.jhuoose.monadic.repositories.UserNotFoundException;
 import com.jhuoose.monadic.repositories.UsersRepository;
 import com.mangofactory.typescript.TypescriptCompiler;
@@ -99,9 +96,9 @@ public class UsersController {
             String courseID = components.get("CourseID");
             String lessonID = components.get("LessonID");
             String problemID = components.get("ElementID");
-            String lessonKey = "c" + courseID + "_l" + lessonID + "_p" + problemID;
+            String problemKey = "c" + courseID + "_l" + lessonID + "_p" + problemID;
             int newProblemStatus = Integer.parseInt(components.get("ProblemStatus"));
-            usersRepository.setProblemStatus(user, lessonKey, newProblemStatus);
+            usersRepository.setProblemStatus(user, problemKey, newProblemStatus);
             ctx.json(user.getUserStatus());
 
         } catch (UserNotFoundException | SQLException | IOException e) {
@@ -111,12 +108,16 @@ public class UsersController {
 
     public void setSolution(Context ctx) {
         try {
-            var user = usersRepository.getOne(ctx.formParam("username", ""));
-            HashMap<String, String> solutions = user.getSolutions();
-            String problemKey = ctx.formParam("problemKey", "");
-            String newSolution = ctx.formParam("newSolution", "");
-            usersRepository.modifySolution(user, problemKey, newSolution);
-        } catch (UserNotFoundException | SQLException | JsonProcessingException e) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            HashMap<String, String> components = objectMapper.readValue(ctx.body(), HashMap.class);
+            var user = usersRepository.getOne(components.get("Username"));
+            String courseID = components.get("CourseID");
+            String lessonID = components.get("LessonID");
+            String problemID = components.get("ElementID");
+            String problemKey = "c" + courseID + "_l" + lessonID + "_p" + problemID;
+            String newSolution = components.get("newSolution");
+            usersRepository.setSolution(user, problemKey, newSolution);
+        } catch (UserNotFoundException | SQLException | IOException e) {
             ctx.status(401);
         }
     }

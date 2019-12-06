@@ -92,7 +92,7 @@ public class UsersRepository {
         statement.close();
     }
 
-    public void modifySolution(User user, String problemKey, String newSolution) throws SQLException, JsonProcessingException {
+    public void setSolution(User user, String problemKey, String newSolution) throws SQLException, JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         HashMap<String, String> solutions = user.getSolutions();
         solutions.replace(problemKey, newSolution);
