@@ -59,6 +59,10 @@ public class UsersController {
         try {
             var user = usersRepository.getOne(ctx.body());
             ctx.status(201);
+            HashMap<String, Integer> lessonStatus = user.getUserStatus();
+            for (String key: lessonStatus.keySet()) {
+                System.out.println("key: " + key + " value: " + lessonStatus.get(key));
+            }
             ctx.json(user.getUserStatus());
         } catch (UserNotFoundException | SQLException e) {
             ctx.status(401);
@@ -89,9 +93,7 @@ public class UsersController {
 
     public void setProblemStatus(Context ctx) {
         try {
-            System.out.println(ctx.body());
             ObjectMapper objectMapper = new ObjectMapper();
-            System.out.println(ctx.body());
             HashMap<String, String> components = objectMapper.readValue(ctx.body(), HashMap.class);
             var user = usersRepository.getOne(components.get("Username"));
             String courseID = components.get("CourseID");

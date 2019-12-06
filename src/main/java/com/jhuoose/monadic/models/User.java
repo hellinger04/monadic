@@ -13,6 +13,12 @@ import java.util.Map;
  */
 public class User {
 
+    public static final int solvedProblemStatus = 2;
+    public static final int unsolvedProblemStatus = 0;
+    public static final int completedLessonStatus = 2;
+    public static final int inProgressLessonStatus = 1;
+    public static final int notStartedLessonStatus = 0;
+
     private String username;
     private String password;
     private HashMap<String, String> solutions;
@@ -30,17 +36,11 @@ public class User {
         this.password = password;
         this.problemsCompleted = new HashMap<>();
         this.solutions = new HashMap<>();
-        for (int i = 0; i < Course.COURSE_0_SIZE; ++i) {
-            putProblemElems(problemsCompleted, solutions, new Lesson(0, i));
-        }
-        for (int i = 0; i < Course.COURSE_1_SIZE; ++i) {
-            putProblemElems(problemsCompleted, solutions, new Lesson(1, i));
-        }
-        for (int i = 0; i < Course.COURSE_2_SIZE; ++i) {
-            putProblemElems(problemsCompleted, solutions, new Lesson(2, i));
-        }
-        for (int i = 0; i < Course.COURSE_3_SIZE; ++i) {
-            putProblemElems(problemsCompleted, solutions, new Lesson(3, i));
+
+        for (int i = 0; i < Course.COURSE_SIZES.size(); i++) {
+            for (int j = 0; j < Course.COURSE_SIZES.get(i); j++) {
+                putProblemElems(problemsCompleted, solutions, new Lesson(i, j));
+            }
         }
     }
 
@@ -49,7 +49,7 @@ public class User {
             if (le.isProblem()) {
                 Problem problemLE = (Problem) le;
                 String problemKey = "c" + lesson.getCourseID() + "_l" + lesson.getID() + "_p" + problemLE.getID();
-                problemsCompleted.put(problemKey, 0);
+                problemsCompleted.put(problemKey, unsolvedProblemStatus);
                 solutions.put(problemKey, problemLE.getStarterCode());
             }
         }
@@ -93,29 +93,19 @@ public class User {
                 Problem problemLE = (Problem) le;
                 String problemKey = "c" + lesson.getCourseID() + "_l" + lesson.getID() + "_p" + problemLE.getID();
                 int problemStatus = problemsCompleted.get(problemKey);
-                if (problemStatus != 2) return 0;
+                if (problemStatus != solvedProblemStatus) return notStartedLessonStatus;
             }
         }
-        return 2;
+        return completedLessonStatus;
     }
 
     public HashMap<String, Integer> getUserStatus() {
         HashMap<String, Integer> lessonStatus = new HashMap<>();
-        for (int i = 0; i < Course.COURSE_0_SIZE; ++i) {
-            lessonStatus.put("c0_l" + i, getLessonStatus(new Lesson(0, i)));
+        for (int i = 0; i < Course.COURSE_SIZES.size(); i++) {
+            for (int j = 0; j < Course.COURSE_SIZES.get(i); j++) {
+                lessonStatus.put("c" + i + "_l" + j, getLessonStatus(new Lesson(i, j)));
+            }
         }
-        for (int i = 0; i < Course.COURSE_1_SIZE; ++i) {
-            lessonStatus.put("c1_l" + i, getLessonStatus(new Lesson(1, i)));
-        }
-        for (int i = 0; i < Course.COURSE_2_SIZE; ++i) {
-            lessonStatus.put("c2_l" + i, getLessonStatus(new Lesson(2, i)));
-        }
-        for (int i = 0; i < Course.COURSE_3_SIZE; ++i) {
-            lessonStatus.put("c3_l" + i, getLessonStatus(new Lesson(3, i)));
-        }
-
         return lessonStatus;
     }
-
-
 }

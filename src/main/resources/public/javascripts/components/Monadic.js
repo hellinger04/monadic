@@ -89,7 +89,6 @@ class Register extends React.Component {
         if (response.status === 409) {
             alert("That username already exists. Please try another username.");
         } else if (response.status === 201) {
-            console.log(username);
             this.props.changePage("content", username);
         }
     }
