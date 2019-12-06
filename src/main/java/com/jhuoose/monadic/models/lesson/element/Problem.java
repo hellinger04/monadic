@@ -1,12 +1,10 @@
 package com.jhuoose.monadic.models.lesson.element;
 
-import com.jhuoose.monadic.models.lesson.answer.TestCase;
+import com.jhuoose.monadic.models.lesson.TestCase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Problem implements LessonElement {
 
@@ -81,6 +79,8 @@ public class Problem implements LessonElement {
     public String getStarterCode() {
         return starterCode;
     }
+
+    public String getAnswerCode() { return answerCode; }
 
     public List<String> getKeyWords() {
         return keyWords;

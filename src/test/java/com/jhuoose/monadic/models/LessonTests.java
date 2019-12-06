@@ -1,6 +1,6 @@
 package com.jhuoose.monadic.models;
 
-import com.jhuoose.monadic.models.lesson.answer.TestCase;
+import com.jhuoose.monadic.models.lesson.TestCase;
 import com.jhuoose.monadic.models.lesson.*;
 import com.jhuoose.monadic.models.lesson.element.LessonElement;
 import com.jhuoose.monadic.models.lesson.element.Problem;
