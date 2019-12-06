@@ -54,6 +54,11 @@ public class Problem implements LessonElement {
                 }
             }
         }
+
+        // If no solution code exists yet, use regular starter code instead
+        if (this.answerCode == null) {
+            this.answerCode = this.starterCode;
+        }
     }
 
     public Problem(int ID, String starterCode, String tests, List<String> keyWords) {
