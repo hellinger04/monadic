@@ -3,6 +3,7 @@ package com.jhuoose.monadic.models.lesson.element;
 import com.jhuoose.monadic.models.lesson.answer.TestCase;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,37 +11,33 @@ import java.util.regex.Pattern;
 public class Problem implements LessonElement {
 
     private int id;
-    private List<TestCase> tests;
     private String starterCode;
+    private String answerCode;
+    private List<TestCase> tests;
     private List<String> keyWords;
-    // private CanonicalAnswer canonicalAnswer;
 
     public Problem(int ID, String text) {
-        String[] words = new String[] {"run", "bind", "raise", "ret", "tryWith"};
+        // String[] words = new String[] {"run", "bind", "raise", "ret", "tryWith"};
 
         this.id = ID;
         this.tests = new ArrayList<>();
-        String[] texts = text.split("//\\s*TESTS\\s*\n");
-        this.starterCode = texts[0];
         this.keyWords = new ArrayList<String>();
 
-        // check specific words in starterCode
-        for(int i = 0; i < words.length; i++) {
-            words[i] = "\\b" + words[i] + "\\b";
-            Pattern p = Pattern.compile(words[i]);
-            Matcher m = p.matcher(this.starterCode);
-            if(m.find()){
-                this.keyWords.add(words[i]);
-            }
-        }
-
-        if (texts.length > 1) {
-            String[] testStrings = texts[1].split("\n");
-            int currTest = 0;
-            for (String testString : testStrings) {
-                String[] inputOutput = testString.split("\\s*==>\\s*");
-                tests.add(new TestCase(currTest, inputOutput[0], inputOutput[1]));
-                currTest++;
+        String[] sections = text.split("\\s*/////\\s*");
+        for (String section : sections) {
+            if (section.startsWith("CODE")) {
+                this.starterCode = section.replaceFirst("CODE\\s*", "");
+            } else if (section.startsWith("ANSWER")) {
+                this.answerCode = section.replaceFirst("ANSWER\\s*", "");
+            } else if (section.startsWith("TESTS")) {
+                String[] testStrings = section.replaceFirst("TESTS\\s*", "").split("\n");
+                for (int i = 0; i < testStrings.length; ++i) {
+                    String[] inputOutput = testStrings[i].split("\\s*==>\\s*");
+                    this.tests.add(new TestCase(i, inputOutput[0], inputOutput[1]));
+                }
+            } else if (section.startsWith("KEYWORDS")) {
+                String[] keywords = section.split(",");
+                this.keyWords = Arrays.asList(keywords);
             }
         }
     }
