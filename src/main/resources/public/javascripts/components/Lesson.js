@@ -277,19 +277,23 @@ class TextElement extends React.Component {
             );
         } else if (this.props.element.contents.indexOf("![") > -1) {
             let begin = this.props.element.contents.indexOf("![");
+            let end = this.props.element.contents.indexOf(")", begin) + 1;
 
             let before = this.props.element.contents.substring(0, begin);
-            let img = this.props.element.contents.substring(begin, (this.props.element.contents.indexOf(")", begin) + 1));
-            let after = this.props.element.contents.substring(this.props.element.contents.indexOf(")", begin) + 1, this.props.element.contents.length);
+            let img = this.props.element.contents.substring(begin, end);
+            let imgCaption = this.props.element.contents.substring(end + 2, this.props.element.contents.indexOf(")", end) + 1);
+            let after = this.props.element.contents.substring(this.props.element.contents.indexOf(")", end) + 2, this.props.element.contents.length);
 
             let beforeHTML = conv.makeHtml(before);
             let imgHTML = conv.makeHtml(img);
+            let imgCaptionHTML = conv.makeHtml(imgCaption);
             let afterHTML = conv.makeHtml(after);
 
             return (
                 <div className={"lessonContainer"}>
                     <div dangerouslySetInnerHTML={{__html: beforeHTML}} className={"lessTxt"}/>
                     <div dangerouslySetInnerHTML={{__html: imgHTML}} className={"lessImg"}/>
+                    <div dangerouslySetInnerHTML={{__html: imgCaptionHTML}} className={"lessImgTxt"}/>
                     <div dangerouslySetInnerHTML={{__html: afterHTML}} className={"lessTxt"}/>
                 </div>
             );
