@@ -41,7 +41,7 @@ public class Problem implements LessonElement {
                     this.tests.add(new TestCase(i, inputOutput[0], inputOutput[1]));
                 }
             } else if (section.startsWith("KEYWORDS")) {
-                String[] keywords = section.split(",\\s*");
+                String[] keywords = section.replaceAll("\\s*", "").split(",");
                 this.keyWords = Arrays.asList(keywords);
             } else if (section.startsWith("LANGUAGE")) {
                 String lang = section.replaceFirst("LANGUAGE", "").replaceAll("\\s*", "");
