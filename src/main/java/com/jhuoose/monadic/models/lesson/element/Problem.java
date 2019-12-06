@@ -10,18 +10,23 @@ import java.util.regex.Pattern;
 
 public class Problem implements LessonElement {
 
+    public  enum Language {
+        JAVASCRIPT, TYPESCRIPT, OTHER
+    }
+
     private int id;
     private String starterCode;
     private String answerCode;
     private List<TestCase> tests;
     private List<String> keyWords;
+    private Language language;
 
     public Problem(int ID, String text) {
         // String[] words = new String[] {"run", "bind", "raise", "ret", "tryWith"};
 
         this.id = ID;
         this.tests = new ArrayList<>();
-        this.keyWords = new ArrayList<String>();
+        this.keyWords = new ArrayList<>();
 
         String[] sections = text.split("\\s*/////\\s*");
         for (String section : sections) {
@@ -36,8 +41,17 @@ public class Problem implements LessonElement {
                     this.tests.add(new TestCase(i, inputOutput[0], inputOutput[1]));
                 }
             } else if (section.startsWith("KEYWORDS")) {
-                String[] keywords = section.split(",");
+                String[] keywords = section.split(",\\s*");
                 this.keyWords = Arrays.asList(keywords);
+            } else if (section.startsWith("LANGUAGE")) {
+                String lang = section.replaceFirst("LANGUAGE", "").replaceAll("\\s*", "");
+                if (lang.toLowerCase().equals("javascript")) {
+                    this.language = Language.JAVASCRIPT;
+                } else if (lang.toLowerCase().equals("typescript")) {
+                    this.language = Language.TYPESCRIPT;
+                } else {
+                    this.language = Language.OTHER;
+                }
             }
         }
     }
@@ -70,5 +84,9 @@ public class Problem implements LessonElement {
 
     public List<String> getKeyWords() {
         return keyWords;
+    }
+
+    public Language getLanguage() {
+        return language;
     }
 }

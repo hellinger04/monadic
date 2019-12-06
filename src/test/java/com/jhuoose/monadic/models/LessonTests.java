@@ -118,7 +118,9 @@ class LessonTests {
                         + "///// TESTS\n"
                         + "adder(2, 3) ==> 5\n"
                         + "adder(100, -100) ==> 0\n"
-                        + "adder(\"Foo\", \"Bar\") ==> \"FooBar\"");
+                        + "adder(\"Foo\", \"Bar\") ==> \"FooBar\"\n\n"
+                        + "///// LANGUAGE"
+                        + "JavaScript");
         String expectedContents =
                 "function adder(x, y) {\n"
                 + "    // Your code here\n"
@@ -128,6 +130,7 @@ class LessonTests {
         assertEquals(5, problem.getID());
         assertTrue(problem.isProblem());
         assertEquals(expectedContents, problem.getContents());
+        assertEquals(Problem.Language.JAVASCRIPT, ((Problem) problem).getLanguage());
     }
 
     @Test
