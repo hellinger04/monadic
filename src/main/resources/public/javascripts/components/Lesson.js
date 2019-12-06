@@ -194,8 +194,6 @@ class Problem extends React.Component {
             // update student results array with test output
             this.studentResults[test.id] = output;
 
-            // console.log(Object.prototype.toString.call(output));
-
             //update count of passed tests
             if (this.studentResults[test.id] === this.expectedOutputs[test.id]) {
                 this.passedTests++;
