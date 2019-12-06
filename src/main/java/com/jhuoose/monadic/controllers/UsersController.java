@@ -54,18 +54,19 @@ public class UsersController {
         }
     }
 
-    public void getUserStatus(Context ctx) {
-        try {
+    public void getUserStatus(Context ctx) throws SQLException, UserNotFoundException {
+//        try {
             var user = usersRepository.getOne(ctx.body());
             ctx.status(201);
-            HashMap<String, Integer> lessonStatus = user.getUserStatus();
-            for (String key: lessonStatus.keySet()) {
-                System.out.println("key: " + key + " value: " + lessonStatus.get(key));
-            }
+//            HashMap<String, Integer> lessonStatus = user.getUserStatus();
+//            for (String key: lessonStatus.keySet()) {
+//                System.out.println("key: " + key + " value: " + lessonStatus.get(key));
+//            }
             ctx.json(user.getUserStatus());
-        } catch (UserNotFoundException | SQLException e) {
-            ctx.status(401);
-        }
+//        } catch (UserNotFoundException | SQLException e) {
+//            System.out.println(e.getMessage());
+//            ctx.status(401);
+//        }
     }
 
     public void getSolution(Context ctx) {
@@ -78,13 +79,21 @@ public class UsersController {
             String problemID = components.get("ElementID");
             String convertToTypeScript = components.get("convertToTypeScript");
             String problemKey = "c" + courseID + "_l" + lessonID + "_p" + problemID;
-            String solution = user.getSolutions().get(problemKey);
+
+            HashMap<String, String> solutions = user.getSolutions();
+            String solution = solutions.get(problemKey);
+
+            HashMap<String, HashMap<String, String>> result = new HashMap<>();
+            result.put("userStatus", user.getUserStatus());
+
+
             if (convertToTypeScript.equals("true")) {
                 TypescriptCompiler tsc = new TypescriptCompiler();
-                ctx.json(tsc.compile(solution));
+                solutions.put(problemKey, tsc.compile(solution));
+                ctx.json(solutions);
                 ctx.status(201);
             } else if (convertToTypeScript.equals("false")) {
-                ctx.json(solution);
+                ctx.json(solutions);
                 ctx.status(201);
             } else {
                 ctx.status(401);
@@ -104,7 +113,7 @@ public class UsersController {
             String problemID = components.get("ElementID");
             String problemKey = "c" + courseID + "_l" + lessonID + "_p" + problemID;
 
-            int newProblemStatus = Integer.parseInt(components.get("ProblemStatus"));
+            String newProblemStatus = components.get("ProblemStatus");
             usersRepository.setProblemStatus(user, problemKey, newProblemStatus);
 
             String newSolution = components.get("newSolution");

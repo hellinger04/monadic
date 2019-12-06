@@ -13,18 +13,18 @@ import java.util.Map;
  */
 public class User {
 
-    public static final int solvedProblemStatus = 2;
-    public static final int unsolvedProblemStatus = 0;
-    public static final int completedLessonStatus = 2;
-    public static final int inProgressLessonStatus = 1;
-    public static final int notStartedLessonStatus = 0;
+    public static final String solvedProblemStatus = "2";
+    public static final String unsolvedProblemStatus = "0";
+    public static final String completedLessonStatus = "2";
+    public static final String inProgressLessonStatus = "1";
+    public static final String notStartedLessonStatus = "0";
 
     private String username;
     private String password;
     private HashMap<String, String> solutions;
-    private HashMap<String, Integer> problemsCompleted;
+    private HashMap<String, String> problemsCompleted;
 
-    public User(String username, String password, HashMap<String, Integer> problemsCompleted, HashMap<String, String> solutions) {
+    public User(String username, String password, HashMap<String, String> problemsCompleted, HashMap<String, String> solutions) {
         this.username = username;
         this.password = password;
         this.problemsCompleted = problemsCompleted;
@@ -44,7 +44,7 @@ public class User {
         }
     }
 
-    private void putProblemElems(HashMap<String, Integer> problemsCompleted, HashMap<String, String> solutions, Lesson lesson) {
+    private void putProblemElems(HashMap<String, String> problemsCompleted, HashMap<String, String> solutions, Lesson lesson) {
         for (LessonElement le: lesson.getLessonElements()) {
             if (le.isProblem()) {
                 Problem problemLE = (Problem) le;
@@ -67,7 +67,7 @@ public class User {
         return solutions;
     }
 
-    public HashMap<String, Integer> getProblemsCompleted() {
+    public HashMap<String, String> getProblemsCompleted() {
         return problemsCompleted;
     }
 
@@ -83,24 +83,26 @@ public class User {
         this.solutions = solutions;
     }
 
-    public void setProblemsCompleted(HashMap<String, Integer> problemsCompleted) {
+    public void setProblemsCompleted(HashMap<String, String> problemsCompleted) {
         this.problemsCompleted = problemsCompleted;
     }
 
-    private int getLessonStatus(Lesson lesson) {
+    private String getLessonStatus(Lesson lesson) {
         for (LessonElement le: lesson.getLessonElements()) {
             if (le.isProblem()) {
                 Problem problemLE = (Problem) le;
                 String problemKey = "c" + lesson.getCourseID() + "_l" + lesson.getID() + "_p" + problemLE.getID();
-                int problemStatus = problemsCompleted.get(problemKey);
-                if (problemStatus != solvedProblemStatus) return notStartedLessonStatus;
+                String problemStatus = problemsCompleted.get(problemKey);
+                if (problemStatus.equals(solvedProblemStatus)) {
+                    return notStartedLessonStatus;
+                }
             }
         }
         return completedLessonStatus;
     }
 
-    public HashMap<String, Integer> getUserStatus() {
-        HashMap<String, Integer> lessonStatus = new HashMap<>();
+    public HashMap<String, String> getUserStatus() {
+        HashMap<String, String> lessonStatus = new HashMap<>();
         for (int i = 0; i < Course.COURSE_SIZES.size(); i++) {
             for (int j = 0; j < Course.COURSE_SIZES.get(i); j++) {
                 lessonStatus.put("c" + i + "_l" + j, getLessonStatus(new Lesson(i, j)));

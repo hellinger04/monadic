@@ -48,7 +48,7 @@ public class UsersRepository {
         var result = statement.executeQuery();
         try {
             if (result.next()) {
-                HashMap<String, Integer> problemsCompleted = objectMapper.readValue(result.getString("problemsCompleted"), HashMap.class);
+                HashMap<String, String> problemsCompleted = objectMapper.readValue(result.getString("problemsCompleted"), HashMap.class);
                 HashMap<String, String> solutions = objectMapper.readValue(result.getString("solutions"), HashMap.class);
                 return new User(
                         result.getString("username"),
@@ -80,9 +80,9 @@ public class UsersRepository {
         statement.close();
     }
 
-    public void setProblemStatus(User user, String problemID, int setting) throws SQLException, JsonProcessingException {
+    public void setProblemStatus(User user, String problemID, String setting) throws SQLException, JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        HashMap<String, Integer> problemsCompleted = user.getProblemsCompleted();
+        HashMap<String, String> problemsCompleted = user.getProblemsCompleted();
         problemsCompleted.replace(problemID, setting);
         user.setProblemsCompleted(problemsCompleted);
         var statement = connection.prepareStatement("UPDATE users SET problemsCompleted = ? WHERE username = ?");

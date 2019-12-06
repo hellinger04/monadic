@@ -171,7 +171,7 @@ class Problem extends React.Component {
             body: dataJSON,
         }).then((function(response) {  }).bind(this));
 
-        this.props.getUserStatus();
+        this.props.getUserStatus(this.props.element.id);
     }
 
     grade(test) {
