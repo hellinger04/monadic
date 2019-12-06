@@ -31,7 +31,7 @@ public class Problem implements LessonElement {
             if (section.startsWith("CODE")) {
                 this.starterCode = section.replaceFirst("CODE\\s*", "");
             } else if (section.startsWith("SOLUTION")) {
-                this.answerCode = section.replaceFirst("ANSWER\\s*", "");
+                this.answerCode = section.replaceFirst("ANSWER\\s*", "").substring(9);
             } else if (section.startsWith("TESTS")) {
                 String[] testStrings = section.replaceFirst("TESTS\\s*", "").split("\n");
                 for (int i = 0; i < testStrings.length; ++i) {
