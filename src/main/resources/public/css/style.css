@@ -140,6 +140,18 @@ div.lessTxt p {
     word-wrap: break-word;
 }
 
+div.lessImgTxt p {
+    text-align: center;
+}
+
+div.lessImgTxt a {
+    color: #FFFFFF;
+}
+
+div.lessTxt a {
+    color: #FFFFFF;
+}
+
 div.lessImg img {
     margin-left: auto;
     margin-right: auto;

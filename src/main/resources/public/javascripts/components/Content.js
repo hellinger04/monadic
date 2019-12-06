@@ -84,7 +84,9 @@ class Listing extends React.Component {
                 }
 
                 //logic for availability
-                if (avail === 0 && ordered[currKey] !== 2) {
+                if (this.props.user === "admin") {
+                    avail = 1;
+                } else if (avail === 0 && ordered[currKey] !== 2) {
                     avail = 1;
                 } else if (avail === 1) {
                     avail = 2;
@@ -175,7 +177,8 @@ class Splash extends React.Component {
               </div>
 
               <div>
-                  <Listing userStatus={this.props.userStatus} courses={this.props.courses} toLesson={this.toLesson}/>
+                  <Listing userStatus={this.props.userStatus} courses={this.props.courses} toLesson={this.toLesson}
+                           user={this.props.user}/>
               </div>
 
               <div></div>

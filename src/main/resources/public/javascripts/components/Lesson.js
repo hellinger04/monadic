@@ -31,7 +31,7 @@ class CodeBlock extends React.Component {
         let editedContents = this.props.element.contents.substring((this.props.element.contents.indexOf("\n") + 1), endIndex);
         return (
             <div>
-                <textarea id={'codeblock' + this.props.element.id} value={editedContents}/>
+                <textarea id={'codeblock' + this.props.element.id} defaultValue={editedContents}/>
             </div>
         );
     }
@@ -44,14 +44,17 @@ class CodeBlock extends React.Component {
 class TestResults extends React.Component {
     constructor(props) {
         super(props);
+        this.numCorrect = 0;
         this.state = {submissions: 0};
-        this.space = " ";
+        this.genList = this.genList.bind(this);
     }
 
-    render() {
+    genList() {
+        //reset numCorrect to 0
+        this.numCorrect = 0;
+
         // create array to store test results
         let results = [];
-        let numCorrect = 0;
 
         for (let i = 0; i < this.props.student.length; i++) {
             if (this.props.expected[i] === this.props.student[i]) {
@@ -60,7 +63,7 @@ class TestResults extends React.Component {
                     Test {i + 1}: Correct! Expected output is {this.props.expected[i]} and actual output was&nbsp;
                     {this.props.student[i]}
                 </li>);
-                numCorrect++;
+                this.numCorrect++;
             } else if (this.props.expected !== this.props.student[i]) {
                 // if student result does not match expected result, save 'incorrect' statement to results array
                 results.push(<li className={"incorrect"} key={i}>
@@ -70,13 +73,17 @@ class TestResults extends React.Component {
             }
         }
 
+        return results;
+    }
+
+    render() {
         if (this.props.error === "No errors!") {
             return (
                 <div className={"problemText"}>
                     <p>Number of submissions: {this.props.numSubmissions}</p>
-                    <p>{this.props.student.length > 0 ? <div>Passed {numCorrect} out of&nbsp;
-                        {this.props.student.length} tests:</div> : null}</p>
-                    <ul>{results.map(result => <NoBullet><li>{result}</li></NoBullet>)}</ul>
+                    {this.props.student.length > 0 ? <p>Passed {this.numCorrect} out of&nbsp;
+                        {this.props.student.length} tests:</p> : null}
+                    <NoBullet>{this.genList()}</NoBullet>
                 </div>
             );
         } else {
@@ -245,7 +252,7 @@ class Problem extends React.Component {
 
         return (
             <div className={"lessonContainer"}>
-                <textarea id={'problem' + this.props.element.id} value={this.props.element.starterCode}/>
+                <textarea id={'problem' + this.props.element.id} defaultValue={this.props.element.starterCode}/>
                 <button onClick={() => this.handleClick()}>Save and Submit</button>
                 <TestResults numSubmissions={this.count} student={this.studentResults} expected={this.expectedOutputs}
                              error={this.err} showError={this.showErr}/>
@@ -270,19 +277,23 @@ class TextElement extends React.Component {
             );
         } else if (this.props.element.contents.indexOf("![") > -1) {
             let begin = this.props.element.contents.indexOf("![");
+            let end = this.props.element.contents.indexOf(")", begin) + 1;
 
             let before = this.props.element.contents.substring(0, begin);
-            let img = this.props.element.contents.substring(begin, (this.props.element.contents.indexOf(")", begin) + 1));
-            let after = this.props.element.contents.substring(this.props.element.contents.indexOf(")", begin) + 1, this.props.element.contents.length);
+            let img = this.props.element.contents.substring(begin, end);
+            let imgCaption = this.props.element.contents.substring(end + 2, this.props.element.contents.indexOf(")", end) + 1);
+            let after = this.props.element.contents.substring(this.props.element.contents.indexOf(")", end) + 2, this.props.element.contents.length);
 
             let beforeHTML = conv.makeHtml(before);
             let imgHTML = conv.makeHtml(img);
+            let imgCaptionHTML = conv.makeHtml(imgCaption);
             let afterHTML = conv.makeHtml(after);
 
             return (
                 <div className={"lessonContainer"}>
                     <div dangerouslySetInnerHTML={{__html: beforeHTML}} className={"lessTxt"}/>
                     <div dangerouslySetInnerHTML={{__html: imgHTML}} className={"lessImg"}/>
+                    <div dangerouslySetInnerHTML={{__html: imgCaptionHTML}} className={"lessImgTxt"}/>
                     <div dangerouslySetInnerHTML={{__html: afterHTML}} className={"lessTxt"}/>
                 </div>
             );
@@ -318,14 +329,14 @@ class LessonNavigation extends React.Component {
 
                 <button style={{display: 0 <= this.props.currLesson - 1 ? "inline" : "none"}}
                         onClick={() => {
-                            this.props.changePage("lesson", this.props.currCourse, Number(this.props.currLesson) - 1)
-                        }}>Previous Lesson
+                            this.props.changePage("lesson", this.props.currCourse, Number(this.props.currLesson) - 1);
+                        window.scrollTo(0, 0);}} >Previous Lesson
                 </button>
 
-                <button style={{display: ((this.props.userStatus["c" + this.props.currCourse + "_l" + this.props.currLesson] === 2) && (this.props.numLessons >= this.props.currLesson + 1) ? "inline" : "none")}}
-                        onClick={() => {
-                            this.props.changePage("lesson", this.props.currCourse, Number(this.props.currLesson) + 1)
-                        }}>Next Lesson
+                <button style={{display: this.props.numLessons > this.props.currLesson + 1 ? "inline" : "none"}}
+                        disabled={!(this.props.userStatus["c" + this.props.currCourse + "_l" + this.props.currLesson] === 2 || this.props.user === "admin")} onClick={() => {
+                            this.props.changePage("lesson", this.props.currCourse, Number(this.props.currLesson) + 1);
+                            window.scrollTo(0, 0);}}>Next Lesson
                 </button>
             </div>
         );
@@ -338,26 +349,15 @@ class LessonNavigation extends React.Component {
    type. The component also uses the LessonNavigation component to render navigation buttons for the user.
  */
 class Lesson extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.myRef = React.createRef();
-    }
-
-    componentDidMount() {
-        console.log("component is mounting");
-        this.myRef.current.scrollTo(0, 0);
-    }
-
     render() {
         // count the total lessons available in current course (used to determine which buttons to display)
         const numLessons = Object.keys(this.props.courses[this.props.currCourse].lessonList).length;
 
         return (
-            <div ref={this.myRef}>
+            <div>
                 <LessonNavigation numLessons={numLessons} currLesson={this.props.currLesson}
                                   currCourse={this.props.currCourse} changePage={this.props.changePage}
-                                  userStatus={this.props.userStatus}/>
+                                  user={this.props.user} userStatus={this.props.userStatus}/>
 
                 <div className={"lessonBody"}>
                     {this.props.courses[this.props.currCourse].lessonList[this.props.currLesson].lessonElements.map(
@@ -373,7 +373,7 @@ class Lesson extends React.Component {
 
                 <LessonNavigation numLessons={numLessons} currLesson={this.props.currLesson}
                                   currCourse={this.props.currCourse} changePage={this.props.changePage}
-                                  userStatus={this.props.userStatus}/>
+                                  user={this.props.user} userStatus={this.props.userStatus}/>
             </div>
         );
     }
