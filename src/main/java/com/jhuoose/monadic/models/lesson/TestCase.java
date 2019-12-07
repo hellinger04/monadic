@@ -1,4 +1,4 @@
-package com.jhuoose.monadic.models.lesson.answer;
+package com.jhuoose.monadic.models.lesson;
 
 public class TestCase {
 

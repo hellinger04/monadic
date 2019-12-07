@@ -184,7 +184,13 @@ class Problem extends React.Component {
         if(this.err === "No errors!") {
             try {
                 let answer = eval(this.studentAnswer + test.input);
-                output = JSON.stringify(answer);
+                if (typeof answer === "undefined") {
+                    output = JSON.stringify("undefined");
+                } else if (typeof answer === "function" || typeof answer === "symbol") {
+                    output = JSON.stringify(answer.toString());
+                } else {
+                    output = JSON.stringify(answer);
+                }
             } catch (e) {
                 if (e.message === "Cannot read property 'toString' of undefined") {
                     this.err = "Your function needs to return a value!"
@@ -208,6 +214,7 @@ class Problem extends React.Component {
         this.studentAnswer = this.eliminateComments("//","\n",1, this.studentAnswer);
         this.studentAnswer = this.eliminateComments("/*","*/",2, this.studentAnswer);
 
+        /*
         // checks for instances of for and while
         let disallowed = ["for", "while"];
         for (let i = 0; i < disallowed.length; i++) {
@@ -224,6 +231,39 @@ class Problem extends React.Component {
                 if (this.studentAnswer.toLowerCase().match(this.props.element.keyWords[i].toLowerCase()) == null) {
                     this.err = "You are not using " + this.props.element.keyWords[i].substring(2,
                         this.props.element.keyWords[i].length-2) + "!";
+                }
+            }
+        }
+        */
+
+        // Checks if key monadic words/function calls exist
+        let keyPairs = this.props.element.keyPairs;
+        // console.log(keyPairs);
+        // console.log(Object.entries(keyPairs));
+        if (Object.keys(keyPairs).length !== 0) {
+            for (const fnName in keyPairs) {
+                try {
+                    let fnStr = eval(this.studentAnswer + (fnName + ".toString()"));
+                    let fnBody = fnStr.slice(fnStr.indexOf("{") + 1, fnStr.lastIndexOf("}"));
+                    let keywords = keyPairs[fnName];
+                    for (let i = 0; i < keywords.length; ++i) {
+                        let kw = keywords[i];
+                        if (kw.startsWith("!")) {
+                            kw = kw.slice(1, kw.length);
+                            // Regex is to avoid hiding keywords in middle of variable names
+                            if (fnBody.match("(?<![\\w\\d_$]+)" + kw + "(?![\\w\\d_$]+)") !== null) {
+                                this.err = "You are using disallowed keyword " + kw + " in " + fnName + "!";
+                            }
+                        } else {
+                            // Regex is to avoid hiding keywords in middle of variable names
+                            if (fnBody.match("(?<![\\w\\d_$]+)" + kw + "(?![\\w\\d_$]+)") === null) {
+                                this.err = "You are not using " + kw + " in " + fnName + "!";
+                            }
+                        }
+
+                    }
+                } catch(e) {
+                    this.err = e.message;
                 }
             }
         }
