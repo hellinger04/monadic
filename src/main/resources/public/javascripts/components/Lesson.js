@@ -183,7 +183,7 @@ class Problem extends React.Component {
         let output;
         if(this.err === "No errors!") {
             try {
-                let answer = eval(studentAnswer + test.input);
+                let answer = eval(this.studentAnswer + test.input);
                 if (typeof answer === "undefined") {
                     output = JSON.stringify("undefined");
                 } else if (typeof answer === "function" || typeof answer === "symbol") {
@@ -242,9 +242,8 @@ class Problem extends React.Component {
         // console.log(Object.entries(keyPairs));
         if (Object.keys(keyPairs).length !== 0) {
             for (const fnName in keyPairs) {
-                // console.log(fnName);
                 try {
-                    let fnStr = eval(studentAnswer + (fnName + ".toString()"));
+                    let fnStr = eval(this.studentAnswer + (fnName + ".toString()"));
                     let fnBody = fnStr.slice(fnStr.indexOf("{") + 1, fnStr.lastIndexOf("}"));
                     let keywords = keyPairs[fnName];
                     for (let i = 0; i < keywords.length; ++i) {
@@ -268,7 +267,6 @@ class Problem extends React.Component {
                 }
             }
         }
-        return studentAnswer;
     }
 
     eliminateComments(begin, end, ind, answer) {
