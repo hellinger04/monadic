@@ -51,92 +51,92 @@ class Listing extends React.Component {
     }
 
     genList() {
-        let list = [];
-        let numLessons = 0;
+        try {
+            let list = [];
+            let numLessons = 0;
 
-        //determine number of lessons
-        for (let i = 0; i < this.props.courses.length; i++) {
-            numLessons = numLessons + Object.keys(this.props.courses[i].lessonList).length;
-        }
+            //determine number of lessons
+            for (let i = 0; i < this.props.courses.length; i++) {
+                numLessons = numLessons + Object.keys(this.props.courses[i].lessonList).length;
+            }
 
-        if (this.props.userStatus === undefined) {
-            console.log("userStatus is undefined");
-            return null;
-        }
+            console.log("printing userStatus information");
+            if ('status' in this.props.userStatus) {
+                console.log("status exists")
+            }
 
-        console.log("printing userStatus information");
-        if ('status' in this.props.userStatus) {
-            console.log("status exists")
-        }
+            if ('solutions' in this.props.userStatus) {
+                console.log("solutions exist")
+            }
 
-        if ('solutions' in this.props.userStatus) {
-            console.log("solutions exist")
-        }
+            console.log(this.props.userStatus.status);
 
-        console.log(this.props.userStatus.status);
+            //sort array of lessons by course and lesson
+            const ordered = {};
+            const orderedKeys = Object.keys(this.props.userStatus.status).sort();
+            for (let i = 0; i < numLessons; i++) {
+                ordered[orderedKeys[i]] = this.props.userStatus.status[orderedKeys[i]];
+            }
 
-        //sort array of lessons by course and lesson
-        const ordered = {};
-        const orderedKeys = Object.keys(this.props.userStatus).sort();
-        for (let i = 0; i < numLessons; i++) {
-            ordered[orderedKeys[i]] = this.props.userStatus[orderedKeys[i]];
-        }
+            //push each lesson to list of lessons
+            let prevCourse = -1;
+            let avail = 0;
+            let completeCount = 0;
+            let furtherCompletion = true;
+            for (let i = 0; i < this.props.courses.length; i++) {
+                let currKey = "";
+                for (let j = 0; j < Object.keys(this.props.courses[i].lessonList).length; j++) {
+                    currKey = "c" + i + "_l" + j;
+                    let currCourse = i;
+                    let currLesson = j;
 
-        //push each lesson to list of lessons
-        let prevCourse = -1;
-        let avail = 0;
-        let completeCount = 0;
-        let furtherCompletion = true;
-        for (let i = 0; i < this.props.courses.length; i++) {
-            let currKey = "";
-            for (let j = 0; j < Object.keys(this.props.courses[i].lessonList).length; j++) {
-                currKey = "c" + i + "_l" + j;
-                let currCourse = i;
-                let currLesson = j;
+                    //generate course headings
+                    if (prevCourse !== currCourse) {
+                        list.push(<h2 className={"spC"} key={currCourse}> Course {currCourse}</h2>);
+                        prevCourse = currCourse
+                    }
 
-                //generate course headings
-                if (prevCourse !== currCourse) {
-                    list.push(<h2 className={"spC"} key={currCourse}> Course {currCourse}</h2>);
-                    prevCourse = currCourse
-                }
+                    //logic for availability
+                    if (this.props.user === "admin") {
+                        avail = 1;
+                    } else if (avail === 0 && ordered[currKey] !== 2) {
+                        avail = 1;
+                    } else if (avail === 1) {
+                        avail = 2;
+                    }
 
-                //logic for availability
-                if (this.props.user === "admin") {
-                    avail = 1;
-                } else if (avail === 0 && ordered[currKey] !== 2) {
-                    avail = 1;
-                } else if (avail === 1) {
-                    avail = 2;
-                }
+                    //if current lesson is not started or is in progress, disqualify any future lesson from being complete
+                    if (ordered[currKey] === 0 || ordered[currKey] === 1) {
+                        furtherCompletion = false;
+                    } else if (furtherCompletion && ordered[currKey] === 2) {
+                        completeCount++;
+                    }
 
-                //if current lesson is not started or is in progress, disqualify any future lesson from being complete
-                if (ordered[currKey] === 0 || ordered[currKey] === 1) {
-                    furtherCompletion = false;
-                } else if (furtherCompletion && ordered[currKey] === 2) {
-                    completeCount++;
-                }
-
-                //push to list
-                if (avail === 0) {
-                    list.push(<button className={"spB"} key={currKey} onClick={() => {
-                        this.props.toLesson(currCourse, currLesson)
-                    }}>
-                        Lesson {currLesson}: <em>Completed</em></button>);
-                } else if (avail === 1) {
-                    list.push(<button className={"spB"} key={currKey} onClick={() => {
-                        this.props.toLesson(currCourse, currLesson)
-                    }}>
-                        Lesson {currLesson}: <em>Available</em></button>);
-                } else if (avail === 2) {
-                    list.push(<button className={"spB"} key={currKey}
-                                      disabled={true}>Lesson {currLesson}: <em>Unavailable</em></button>);
+                    //push to list
+                    if (avail === 0) {
+                        list.push(<button className={"spB"} key={currKey} onClick={() => {
+                            this.props.toLesson(currCourse, currLesson)
+                        }}>
+                            Lesson {currLesson}: <em>Completed</em></button>);
+                    } else if (avail === 1) {
+                        list.push(<button className={"spB"} key={currKey} onClick={() => {
+                            this.props.toLesson(currCourse, currLesson)
+                        }}>
+                            Lesson {currLesson}: <em>Available</em></button>);
+                    } else if (avail === 2) {
+                        list.push(<button className={"spB"} key={currKey}
+                                          disabled={true}>Lesson {currLesson}: <em>Unavailable</em></button>);
+                    }
                 }
             }
+
+            this.state.completion = (completeCount / numLessons) * 100;
+
+            return list;
+        } catch (e) {
+            console.log(e instanceof TypeError);
+            return null;
         }
-
-        this.state.completion = (completeCount / numLessons) * 100 ;
-
-        return list;
     }
 
     render() {
@@ -244,7 +244,7 @@ class Content extends React.Component {
         let dataJSON = JSON.stringify(data);
 
         //get user status
-        fetch('/users/getUserStatus', {
+        await fetch('/users/getUserStatus', {
             method: 'POST',
             body: dataJSON,
         }).then(this.status).then(this.json).then(function(data) {

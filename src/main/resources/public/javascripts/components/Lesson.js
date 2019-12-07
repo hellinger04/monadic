@@ -288,18 +288,24 @@ class Problem extends React.Component {
     }
 
     render()  {
-        // store expected output values in array to pass to TestResults
-        for (let i = 0; i < this.props.element.tests.length; i++) {
-            this.expectedOutputs[i] = this.props.element.tests[i].output;
-        }
-
-        let problemID = "c" + this.props.currCourse + "_l" + this.props.currLesson + "_p" + this.props.element.id;
         let code = "";
+        try {
+            // store expected output values in array to pass to TestResults
+            for (let i = 0; i < this.props.element.tests.length; i++) {
+                this.expectedOutputs[i] = this.props.element.tests[i].output;
+            }
 
-        if (this.props.user === "admin") {
-            code = this.props.element.answerCode;
-        } else {
-            code = this.props.userStatus["solutions"][problemID]
+            let problemID = "c" + this.props.currCourse + "_l" + this.props.currLesson + "_p" + this.props.element.id;
+
+            if (this.props.user === "admin") {
+                code = this.props.element.answerCode;
+            } else {
+
+                code = this.props.userStatus.solutions[problemID]
+            }
+        } catch (e) {
+            console.log(e.message);
+            code = this.props.element.starterCode;
         }
 
         return (
@@ -386,7 +392,7 @@ class LessonNavigation extends React.Component {
                 </button>
 
                 <button style={{display: this.props.numLessons > this.props.currLesson + 1 ? "inline" : "none"}}
-                        disabled={!(this.props.userStatus["status"]["c" + this.props.currCourse + "_l" + this.props.currLesson] === 2 || this.props.user === "admin")} onClick={() => {
+                        disabled={!(this.props.userStatus.status["c" + this.props.currCourse + "_l" + this.props.currLesson] === 2 || this.props.user === "admin")} onClick={() => {
                             this.props.changePage("lesson", this.props.currCourse, Number(this.props.currLesson) + 1);
                             window.scrollTo(0, 0);}}>Next Lesson
                 </button>
