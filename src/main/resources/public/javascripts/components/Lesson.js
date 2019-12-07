@@ -171,7 +171,7 @@ class Problem extends React.Component {
             body: dataJSON,
         }).then((function(response) {  }).bind(this));
 
-        this.props.getUserStatus(this.props.element.id);
+        this.props.getUserStatus(this.props.element.id, this.props.element.language === "TYPESCRIPT");
     }
 
     grade(test) {
