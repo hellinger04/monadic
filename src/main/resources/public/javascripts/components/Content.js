@@ -88,16 +88,16 @@ class Listing extends React.Component {
                     //logic for availability
                     if (this.props.user === "admin") {
                         avail = 1;
-                    } else if (avail === 0 && ordered[currKey] !== 2) {
+                    } else if (avail === 0 && ordered[currKey] !== "2") {
                         avail = 1;
                     } else if (avail === 1) {
                         avail = 2;
                     }
 
                     //if current lesson is not started or is in progress, disqualify any future lesson from being complete
-                    if (ordered[currKey] === 0 || ordered[currKey] === 1) {
+                    if (ordered[currKey] === "0" || ordered[currKey] === "1") {
                         furtherCompletion = false;
-                    } else if (furtherCompletion && ordered[currKey] === 2) {
+                    } else if (furtherCompletion && ordered[currKey] === "2") {
                         completeCount++;
                     }
 

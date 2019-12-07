@@ -394,7 +394,7 @@ class LessonNavigation extends React.Component {
                 </button>
 
                 <button style={{display: this.props.numLessons > this.props.currLesson + 1 ? "inline" : "none"}}
-                        disabled={!(this.props.userStatus.status["c" + this.props.currCourse + "_l" + this.props.currLesson] === 2 || this.props.user === "admin")} onClick={() => {
+                        disabled={(this.props.userStatus.status["c" + this.props.currCourse + "_l" + this.props.currLesson] !== "2" && this.props.user !== "admin")} onClick={() => {
                             this.props.changePage("lesson", this.props.currCourse, Number(this.props.currLesson) + 1);
                             window.scrollTo(0, 0);}}>Next Lesson
                 </button>
