@@ -71,22 +71,13 @@ public class UsersController {
             if (convertToTypeScript.equals("true")) {
                 TypescriptCompiler tsc = new TypescriptCompiler();
                 solutions.put(problemKey, tsc.compile(solution));
-                //after lesson status HashMap is changed to String, String, this can be uncommented
                 results.put("solutions", solutions);
-                ctx.status(201);
                 ctx.json(results);
-
-                //filler code - replace with commented code above
-                // ctx.json(user.getUserStatus());
+                ctx.status(201);
             } else if (convertToTypeScript.equals("false")) {
-                solutions.put(problemKey, solution);
-                //after lesson status HashMap is changed to String, String, this can be uncommented
                 results.put("solutions", solutions);
-                ctx.status(201);
                 ctx.json(results);
-
-                //filler code - replace with commented code above
-                // ctx.json(user.getUserStatus());
+                ctx.status(201);
             } else {
                 ctx.status(401);
             }

@@ -46,7 +46,8 @@ const Title = window.styled.h1`
 class Listing extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {completion: 0.0}
+        this.state = {completion: 0.0};
+        this.outerKey = "status";
     }
 
     genList() {
@@ -58,11 +59,27 @@ class Listing extends React.Component {
             numLessons = numLessons + Object.keys(this.props.courses[i].lessonList).length;
         }
 
+        if (this.props.userStatus === undefined) {
+            console.log("userStatus is undefined");
+            return null;
+        }
+
+        console.log("printing userStatus information");
+        if ('status' in this.props.userStatus) {
+            console.log("status exists")
+        }
+
+        if ('solutions' in this.props.userStatus) {
+            console.log("solutions exist")
+        }
+
+        console.log(this.props.userStatus.status);
+
         //sort array of lessons by course and lesson
         const ordered = {};
         const orderedKeys = Object.keys(this.props.userStatus).sort();
         for (let i = 0; i < numLessons; i++) {
-                ordered[orderedKeys[i]] = this.props.userStatus[orderedKeys[i]];
+            ordered[orderedKeys[i]] = this.props.userStatus[orderedKeys[i]];
         }
 
         //push each lesson to list of lessons
@@ -208,7 +225,7 @@ class Content extends React.Component {
     }
 
     json(response) {
-        return response.json()
+        return response.json();
     }
 
     //get status of user's courses progression

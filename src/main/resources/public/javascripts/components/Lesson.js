@@ -299,11 +299,7 @@ class Problem extends React.Component {
         if (this.props.user === "admin") {
             code = this.props.element.answerCode;
         } else {
-            ////after lesson status HashMap is changed to String, String, this can be uncommented
-            //code = this.props.userStatus["solutions"][problemID]
-
-            //filler code - replace with commented code above
-            code = this.props.element.starterCode;
+            code = this.props.userStatus["solutions"][problemID]
         }
 
         return (
@@ -390,7 +386,7 @@ class LessonNavigation extends React.Component {
                 </button>
 
                 <button style={{display: this.props.numLessons > this.props.currLesson + 1 ? "inline" : "none"}}
-                        disabled={!(this.props.userStatus["c" + this.props.currCourse + "_l" + this.props.currLesson] === 2 || this.props.user === "admin")} onClick={() => {
+                        disabled={!(this.props.userStatus["status"]["c" + this.props.currCourse + "_l" + this.props.currLesson] === 2 || this.props.user === "admin")} onClick={() => {
                             this.props.changePage("lesson", this.props.currCourse, Number(this.props.currLesson) + 1);
                             window.scrollTo(0, 0);}}>Next Lesson
                 </button>
