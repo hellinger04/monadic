@@ -15,9 +15,9 @@ public class User {
 
     public static final int solvedProblemStatus = 2;
     public static final int unsolvedProblemStatus = 0;
-    public static final int completedLessonStatus = 2;
-    public static final int inProgressLessonStatus = 1;
-    public static final int notStartedLessonStatus = 0;
+    public static final String completedLessonStatus = "2";
+    public static final String inProgressLessonStatus = "1";
+    public static final String notStartedLessonStatus = "0";
 
     private String username;
     private String password;
@@ -87,7 +87,7 @@ public class User {
         this.problemsCompleted = problemsCompleted;
     }
 
-    private int getLessonStatus(Lesson lesson) {
+    private String getLessonStatus(Lesson lesson) {
         for (LessonElement le: lesson.getLessonElements()) {
             if (le.isProblem()) {
                 Problem problemLE = (Problem) le;
@@ -99,8 +99,8 @@ public class User {
         return completedLessonStatus;
     }
 
-    public HashMap<String, Integer> getUserStatus() {
-        HashMap<String, Integer> lessonStatus = new HashMap<>();
+    public HashMap<String, String> getUserStatus() {
+        HashMap<String, String> lessonStatus = new HashMap<>();
         for (int i = 0; i < Course.COURSE_SIZES.size(); i++) {
             for (int j = 0; j < Course.COURSE_SIZES.get(i); j++) {
                 lessonStatus.put("c" + i + "_l" + j, getLessonStatus(new Lesson(i, j)));
