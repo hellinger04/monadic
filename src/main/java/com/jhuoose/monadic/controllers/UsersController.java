@@ -56,29 +56,38 @@ public class UsersController {
 
     public void getUserStatus(Context ctx) {
         try {
-            var user = usersRepository.getOne(ctx.body());
-            ctx.status(201);
-            HashMap<String, Integer> lessonStatus = user.getUserStatus();
-            ctx.json(user.getUserStatus());
-        } catch (UserNotFoundException | SQLException e) {
-            ctx.status(401);
-        }
-    }
-
-    public void getSolution(Context ctx) {
-        try {
             HashMap<String, String> components = new ObjectMapper().readValue(ctx.body(), HashMap.class);
             var user = usersRepository.getOne(components.get("Username"));
             String problemKey = getProblemKey(components);
             String convertToTypeScript = components.get("convertToTypeScript");
-            String solution = user.getSolutions().get(problemKey);
+
+            HashMap<String, String> solutions = user.getSolutions();
+            String solution = solutions.get(problemKey);
+
+            //after lesson status HashMap is changed to String, String, this can be uncommented
+            //HashMap<String, HashMap<String, String>> results = new HashMap<>();
+            //results.put("status", user.getUserStatus());
+
             if (convertToTypeScript.equals("true")) {
                 TypescriptCompiler tsc = new TypescriptCompiler();
-                ctx.json(tsc.compile(solution));
+                solutions.put(problemKey, tsc.compile(solution));
                 ctx.status(201);
+
+                //after lesson status HashMap is changed to String, String, this can be uncommented
+                //results.put("solutions", solutions);
+                //ctx.json(results);
+
+                //filler code - replace with commented code above
+                ctx.json(user.getUserStatus());
             } else if (convertToTypeScript.equals("false")) {
-                ctx.json(solution);
                 ctx.status(201);
+
+                //after lesson status HashMap is changed to String, String, this can be uncommented
+                //results.put("solutions", solutions);
+                //ctx.json(results);
+
+                //filler code - replace with commented code above
+                ctx.json(user.getUserStatus());
             } else {
                 ctx.status(401);
             }

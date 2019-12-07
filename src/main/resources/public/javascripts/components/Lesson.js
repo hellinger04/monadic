@@ -171,7 +171,7 @@ class Problem extends React.Component {
             body: dataJSON,
         }).then((function(response) {  }).bind(this));
 
-        this.props.getUserStatus();
+        this.props.getUserStatus(this.props.element.id);
     }
 
     grade(test) {
@@ -183,7 +183,7 @@ class Problem extends React.Component {
         let output;
         if(this.err === "No errors!") {
             try {
-                let answer = eval(studentAnswer + test.input);
+                let answer = eval(this.studentAnswer + test.input);
                 output = JSON.stringify(answer);
             } catch (e) {
                 if (e.message === "Cannot read property 'toString' of undefined") {

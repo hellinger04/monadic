@@ -212,20 +212,30 @@ class Content extends React.Component {
     }
 
     //get status of user's courses progression
-    async getUserStatus() {
+    async getUserStatus(currElement) {
         //get list of courses
         await this.setState({ courses: await (await fetch("/courses")).json() });
+
+        let data = {
+            Username: this.props.user,
+            CourseID: this.state.currCourse.toString(),
+            LessonID: this.state.currLesson.toString(),
+            ElementID: currElement.toString(),
+            convertToTypeScript: "false"
+        };
+
+        let dataJSON = JSON.stringify(data);
 
         //get user status
         fetch('/users/getUserStatus', {
             method: 'POST',
-            body: this.props.user,
+            body: dataJSON,
         }).then(this.status).then(this.json).then(function(data) {
             this.setState({userStatus: data});}.bind(this));
     }
 
     async componentDidMount() {
-        this.getUserStatus();
+        this.getUserStatus(0);
     }
 
     changePage(newpage, course, lesson) {
@@ -233,7 +243,7 @@ class Content extends React.Component {
         this.setState({page: newpage});
         this.setState({currCourse: course});
         this.setState({currLesson: lesson});
-        this.getUserStatus();
+        this.getUserStatus(0);
     }
 
     render() {
