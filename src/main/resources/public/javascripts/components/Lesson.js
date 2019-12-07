@@ -244,12 +244,12 @@ class Problem extends React.Component {
                             kw = kw.slice(1, kw.length);
                             // Regex is to avoid hiding keywords in middle of variable names
                             if (fnBody.match("(?<![\\w\\d_$]+)" + kw + "(?![\\w\\d_$]+)") !== null) {
-                                this.err = "You are using disallowed keyword " + kw + "!";
+                                this.err = "You are using disallowed keyword " + kw + " in " + fnName + "!";
                             }
                         } else {
                             // Regex is to avoid hiding keywords in middle of variable names
                             if (fnBody.match("(?<![\\w\\d_$]+)" + kw + "(?![\\w\\d_$]+)") === null) {
-                                this.err = "You are not using " + kw + "!";
+                                this.err = "You are not using " + kw + " in " + fnName + "!";
                             }
                         }
 
