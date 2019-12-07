@@ -205,6 +205,7 @@ class Problem extends React.Component {
         studentAnswer = this.eliminateComments("//","\n",1, studentAnswer);
         studentAnswer = this.eliminateComments("/*","*/",2, studentAnswer);
 
+        /*
         // checks for instances of for and while
         let disallowed = ["for", "while"];
         for (let i = 0; i < disallowed.length; i++) {
@@ -221,6 +222,30 @@ class Problem extends React.Component {
                 if (studentAnswer.toLowerCase().match(this.props.element.keyWords[i].toLowerCase()) == null) {
                     this.err = "You are not using " + this.props.element.keyWords[i].substring(2,
                         this.props.element.keyWords[i].length-2) + "!";
+                }
+            }
+        }
+         */
+
+        // Checks if key monadic words/function calls exist
+        let keyPairs = this.props.element.keyPairs;
+        // console.log(keyPairs);
+        // console.log(Object.entries(keyPairs));
+        if (Object.keys(keyPairs).length !== 0) {
+            for (const fnName in keyPairs) {
+                // console.log(fnName);
+                try {
+                    let fnStr = eval(studentAnswer + (fnName + ".toString()"));
+                    let fnBody = fnStr.slice(fnStr.indexOf("{") + 1, fnStr.lastIndexOf("}"));
+                    let keywords = keyPairs[fnName];
+                    for (let i = 0; i < keywords.length; ++i) {
+                        let kw = keywords[i];
+                        if (fnBody.match(kw) === null) {
+                            this.err = "You are not using " + kw + "!";
+                        }
+                    }
+                } catch(e) {
+                    this.err = e.message;
                 }
             }
         }

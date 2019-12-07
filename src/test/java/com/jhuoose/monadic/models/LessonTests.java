@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -110,7 +111,7 @@ class LessonTests {
     @Test
     void testProblemConstructor() {
         // construct new Problem by providing sample text, define expected contents based on sample text
-        LessonElement problem = new Problem(5,
+        Problem problem = new Problem(5,
                 "///// CODE\n"
                         + "function adder(x, y) {\n"
                         + "    // Your code here\n"
@@ -130,7 +131,7 @@ class LessonTests {
         assertEquals(5, problem.getID());
         assertTrue(problem.isProblem());
         assertEquals(expectedContents, problem.getContents());
-        assertEquals(Problem.Language.JAVASCRIPT, ((Problem) problem).getLanguage());
+        assertEquals(Problem.Language.JAVASCRIPT, problem.getLanguage());
     }
 
     @Test
@@ -151,6 +152,28 @@ class LessonTests {
         assertEquals("adder(2, 3)", tests.get(0).getInput());
         assertEquals("adder(100, -100)", tests.get(1).getInput());
         assertEquals("adder(\"Foo\", \"Bar\")", tests.get(2).getInput());
+    }
+
+    @Test
+    void testProblemKeyWords() {
+        Problem problem = new Problem(11,
+                "///// CODE\n" +
+                        "function mult(x, y) {\n" +
+                        "  return x * y;\n" +
+                        "}\n\n" +
+                        "function mapped(arr1) {\n" +
+                        "  // TODO: Your code here\n" +
+                        "}\n\n" +
+                        "///// TESTS\n" +
+                        "mapped([-1, -2, -3]); ==> [-3,-6,-9]\n\n" +
+                        "///// KEYWORDS\n" +
+                        "mapped: mult, bind\n" +
+                        "foo: bar");
+        Map<String, List<String>> kp = problem.getKeyPairs();
+
+        assertEquals("mult", kp.get("mapped").get(0));
+        assertEquals("bind", kp.get("mapped").get(1));
+        assertEquals("bar", kp.get("foo").get(0));
     }
 }
 

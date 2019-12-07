@@ -2,9 +2,7 @@ package com.jhuoose.monadic.models.lesson.element;
 
 import com.jhuoose.monadic.models.lesson.TestCase;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Problem implements LessonElement {
 
@@ -16,15 +14,13 @@ public class Problem implements LessonElement {
     private String starterCode;
     private String answerCode;
     private List<TestCase> tests;
-    private List<String> keyWords;
+    private Map<String, List<String>> keyPairs;
     private Language language;
 
     public Problem(int ID, String text) {
-        // String[] words = new String[] {"run", "bind", "raise", "ret", "tryWith"};
-
         this.id = ID;
         this.tests = new ArrayList<>();
-        this.keyWords = new ArrayList<>();
+        this.keyPairs = new HashMap<>();
 
         String[] sections = text.split("\\s*/////\\s*");
         for (String section : sections) {
@@ -33,14 +29,21 @@ public class Problem implements LessonElement {
             } else if (section.startsWith("SOLUTION")) {
                 this.answerCode = section.replaceFirst("SOLUTION\\s*", "");
             } else if (section.startsWith("TESTS")) {
-                String[] testStrings = section.replaceFirst("TESTS\\s*", "").split("\n");
+                String[] testStrings = section.replaceFirst("TESTS\\s*", "")
+                        .split("\n");
                 for (int i = 0; i < testStrings.length; ++i) {
                     String[] inputOutput = testStrings[i].split("\\s*==>\\s*");
                     this.tests.add(new TestCase(i, inputOutput[0], inputOutput[1]));
                 }
             } else if (section.startsWith("KEYWORDS")) {
-                String[] keywords = section.replaceAll("\\s*", "").split(",");
-                this.keyWords = Arrays.asList(keywords);
+                String[] keypairs = section.replaceFirst("KEYWORDS\\s*", "")
+                        .replaceAll(" ", "")
+                        .split("\n");
+                for (String keypair : keypairs) {
+                    String[] pair = keypair.split(":");
+                    List<String> keyWords = Arrays.asList(pair[1].split(","));
+                    this.keyPairs.put(pair[0], keyWords);
+                }
             } else if (section.startsWith("LANGUAGE")) {
                 String lang = section.replaceFirst("LANGUAGE", "").replaceAll("\\s*", "");
                 if (lang.toLowerCase().equals("javascript")) {
@@ -57,12 +60,6 @@ public class Problem implements LessonElement {
         if (this.answerCode == null) {
             this.answerCode = this.starterCode;
         }
-    }
-
-    public Problem(int ID, String starterCode, String tests, List<String> keyWords) {
-        this.id = ID;
-        this.starterCode = starterCode;
-        this.keyWords = keyWords;
     }
 
     public boolean isProblem() {
@@ -87,8 +84,8 @@ public class Problem implements LessonElement {
 
     public String getAnswerCode() { return answerCode; }
 
-    public List<String> getKeyWords() {
-        return keyWords;
+    public Map<String, List<String>> getKeyPairs() {
+        return keyPairs;
     }
 
     public Language getLanguage() {
