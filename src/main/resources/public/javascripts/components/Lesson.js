@@ -181,7 +181,13 @@ class Problem extends React.Component {
         if(this.err === "No errors!") {
             try {
                 let answer = eval(studentAnswer + test.input);
-                output = JSON.stringify(answer);
+                if (typeof answer === "undefined") {
+                    output = JSON.stringify("undefined");
+                } else if (typeof answer === "function" || typeof answer === "symbol") {
+                    output = JSON.stringify(answer.toString());
+                } else {
+                    output = JSON.stringify(answer);
+                }
             } catch (e) {
                 if (e.message === "Cannot read property 'toString' of undefined") {
                     this.err = "Your function needs to return a value!"
