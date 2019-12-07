@@ -293,9 +293,22 @@ class Problem extends React.Component {
             this.expectedOutputs[i] = this.props.element.tests[i].output;
         }
 
+        let problemID = "c" + this.props.currCourse + "_l" + this.props.currLesson + "_p" + this.props.element.id;
+        let code = "";
+
+        if (this.props.user === "admin") {
+            code = this.props.element.answerCode;
+        } else {
+            ////after lesson status HashMap is changed to String, String, this can be uncommented
+            //code = this.props.userStatus["solutions"][problemID]
+
+            //filler code - replace with commented code above
+            code = this.props.element.starterCode;
+        }
+
         return (
             <div className={"lessonContainer"}>
-                <textarea id={'problem' + this.props.element.id} defaultValue={this.props.element.starterCode}/>
+                <textarea id={'problem' + this.props.element.id} defaultValue={code}/>
                 <button onClick={() => this.handleClick()}>Save and Submit</button>
                 <TestResults numSubmissions={this.count} student={this.studentResults} expected={this.expectedOutputs}
                              error={this.err} showError={this.showErr}/>
