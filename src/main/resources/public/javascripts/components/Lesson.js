@@ -240,10 +240,19 @@ class Problem extends React.Component {
                     let keywords = keyPairs[fnName];
                     for (let i = 0; i < keywords.length; ++i) {
                         let kw = keywords[i];
-                        // Regex is to avoid hiding keywords in middle of variable names
-                        if (fnBody.match("(?<![\\w\\d_$]+)" + kw + "(?![\\w\\d_$]+)") === null) {
-                            this.err = "You are not using " + kw + "!";
+                        if (kw.startsWith("!")) {
+                            kw = kw.slice(1, kw.length);
+                            // Regex is to avoid hiding keywords in middle of variable names
+                            if (fnBody.match("(?<![\\w\\d_$]+)" + kw + "(?![\\w\\d_$]+)") !== null) {
+                                this.err = "You are using disallowed keyword " + kw + "!";
+                            }
+                        } else {
+                            // Regex is to avoid hiding keywords in middle of variable names
+                            if (fnBody.match("(?<![\\w\\d_$]+)" + kw + "(?![\\w\\d_$]+)") === null) {
+                                this.err = "You are not using " + kw + "!";
+                            }
                         }
+
                     }
                 } catch(e) {
                     this.err = e.message;
