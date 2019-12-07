@@ -171,7 +171,11 @@ class Problem extends React.Component {
             body: dataJSON,
         }).then((function(response) {  }).bind(this));
 
-        this.props.getUserStatus(this.props.element.id, this.props.element.language === "TYPESCRIPT");
+        //remove when TypeScript works
+        this.props.getUserStatus(this.props.element.id, false);
+
+        //uncomment when TypeScript works
+        //this.props.getUserStatus(this.props.element.id, this.props.element.language === "TYPESCRIPT");
     }
 
     grade(test) {
@@ -238,8 +242,6 @@ class Problem extends React.Component {
 
         // Checks if key monadic words/function calls exist
         let keyPairs = this.props.element.keyPairs;
-        // console.log(keyPairs);
-        // console.log(Object.entries(keyPairs));
         if (Object.keys(keyPairs).length !== 0) {
             for (const fnName in keyPairs) {
                 try {
@@ -304,8 +306,8 @@ class Problem extends React.Component {
                 code = this.props.userStatus.solutions[problemID]
             }
         } catch (e) {
-            console.log(e.message);
-            code = this.props.element.starterCode;
+            code = "loading..."
+            //code = this.props.element.starterCode;
         }
 
         return (
@@ -423,7 +425,8 @@ class Lesson extends React.Component {
                             return element.problem ?
                                 <Problem key={this.props.currLesson + " " + element.id} element={element}
                                          currCourse={this.props.currCourse } currLesson={this.props.currLesson}
-                                         user={this.props.user} getUserStatus={this.props.getUserStatus}/> :
+                                         user={this.props.user} getUserStatus={this.props.getUserStatus}
+                                         userStatus={this.props.userStatus}/> :
                                 <TextElement key={this.props.currLesson + " " + element.id} element={element}/>
                         }
                     )}

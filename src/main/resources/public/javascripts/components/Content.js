@@ -60,17 +60,6 @@ class Listing extends React.Component {
                 numLessons = numLessons + Object.keys(this.props.courses[i].lessonList).length;
             }
 
-            console.log("printing userStatus information");
-            if ('status' in this.props.userStatus) {
-                console.log("status exists")
-            }
-
-            if ('solutions' in this.props.userStatus) {
-                console.log("solutions exist")
-            }
-
-            console.log(this.props.userStatus.status);
-
             //sort array of lessons by course and lesson
             const ordered = {};
             const orderedKeys = Object.keys(this.props.userStatus.status).sort();
@@ -134,7 +123,6 @@ class Listing extends React.Component {
 
             return list;
         } catch (e) {
-            console.log(e instanceof TypeError);
             return null;
         }
     }
