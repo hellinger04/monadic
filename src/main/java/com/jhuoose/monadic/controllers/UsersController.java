@@ -94,20 +94,9 @@ public class UsersController {
             String problemKey = getProblemKey(components);
             int newProblemStatus = Integer.parseInt(components.get("ProblemStatus"));
             usersRepository.setProblemStatus(user, problemKey, newProblemStatus);
-            ctx.json(user.getUserStatus());
-
-        } catch (UserNotFoundException | SQLException | IOException e) {
-            ctx.status(401);
-        }
-    }
-
-    public void setSolution(Context ctx) {
-        try {
-            HashMap<String, String> components = new ObjectMapper().readValue(ctx.body(), HashMap.class);
-            String problemKey = getProblemKey(components);
-            var user = usersRepository.getOne(components.get("Username"));
             String newSolution = components.get("newSolution");
             usersRepository.setSolution(user, problemKey, newSolution);
+            ctx.json(user.getUserStatus());
         } catch (UserNotFoundException | SQLException | IOException e) {
             ctx.status(401);
         }

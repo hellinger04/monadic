@@ -124,9 +124,6 @@ public class Server {
                 path("getSolution", () -> {
                     post(usersController::getSolution);
                 });
-                path("setSolution", () -> {
-                    post(usersController::setSolution);
-                 });
             });
         });
 
