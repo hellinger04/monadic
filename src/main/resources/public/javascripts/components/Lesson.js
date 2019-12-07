@@ -110,6 +110,7 @@ class Problem extends React.Component {
         this.parse = this.parse.bind(this);
         this.count = 0;
         this.passedTests = 0;
+        this.studentAnswer = "";
         this.studentResults = [];
         this.expectedOutputs = [];
         this.err = "No errors!";
@@ -138,9 +139,10 @@ class Problem extends React.Component {
     handleClick() {
         //initialize passed tests to 0 each time problem is submitted
         this.passedTests = 0;
+        this.studentAnswer = this.mirror.getValue();
 
         // map over available tests for current problem and grade student submission for each test
-        this.props.element.tests.map(test => this.grade(this.mirror.getValue(), test));
+        this.props.element.tests.map(test => this.grade(test));
 
         // increment submission count and call method to update TestResults component
         this.count++;
@@ -158,7 +160,8 @@ class Problem extends React.Component {
             CourseID: this.props.currCourse.toString(),
             LessonID: this.props.currLesson.toString(),
             ElementID: this.props.element.id.toString(),
-            ProblemStatus: result.toString()
+            ProblemStatus: result.toString(),
+            newSolution: this.studentAnswer.toString()
         };
 
         let dataJSON = JSON.stringify(data);
@@ -168,14 +171,14 @@ class Problem extends React.Component {
             body: dataJSON,
         }).then((function(response) {  }).bind(this));
 
-        this.props.getUserStatus();
+        this.props.getUserStatus(this.props.element.id);
     }
 
-    grade(studentAnswer, test) {
+    grade(test) {
         // run student's code using the specified test value
         this.err = "No errors!";
 
-        studentAnswer = this.parse(studentAnswer);
+        this.parse();
 
         let output;
         if(this.err === "No errors!") {
@@ -207,16 +210,16 @@ class Problem extends React.Component {
         }
     }
 
-    parse(studentAnswer) {
-        studentAnswer = this.eliminateComments("//","\n",1, studentAnswer);
-        studentAnswer = this.eliminateComments("/*","*/",2, studentAnswer);
+    parse() {
+        this.studentAnswer = this.eliminateComments("//","\n",1, this.studentAnswer);
+        this.studentAnswer = this.eliminateComments("/*","*/",2, this.studentAnswer);
 
         /*
         // checks for instances of for and while
         let disallowed = ["for", "while"];
         for (let i = 0; i < disallowed.length; i++) {
             disallowed[i] = "\\b" + disallowed[i].replace(" ", "\\b \\b") + "\\b";
-            if(studentAnswer.toLowerCase().match(disallowed[i].toLowerCase())!=null){
+            if(this.studentAnswer.toLowerCase().match(disallowed[i].toLowerCase()) != null){
                 this.err = "You are not allowed to use " + disallowed[i].substring(2,
                     disallowed[i].length-2) +  " loops!";
             }
@@ -225,13 +228,13 @@ class Problem extends React.Component {
         // checks if key monadic words exist
         if(this.props.element.keyWords[0] !== undefined) {
             for (let i = 0; i < this.props.element.keyWords.length; i++) {
-                if (studentAnswer.toLowerCase().match(this.props.element.keyWords[i].toLowerCase()) == null) {
+                if (this.studentAnswer.toLowerCase().match(this.props.element.keyWords[i].toLowerCase()) == null) {
                     this.err = "You are not using " + this.props.element.keyWords[i].substring(2,
                         this.props.element.keyWords[i].length-2) + "!";
                 }
             }
         }
-         */
+        */
 
         // Checks if key monadic words/function calls exist
         let keyPairs = this.props.element.keyPairs;
