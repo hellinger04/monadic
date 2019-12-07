@@ -240,7 +240,8 @@ class Problem extends React.Component {
                     let keywords = keyPairs[fnName];
                     for (let i = 0; i < keywords.length; ++i) {
                         let kw = keywords[i];
-                        if (fnBody.match(kw) === null) {
+                        // Regex is to avoid hiding keywords in middle of variable names
+                        if (fnBody.match("(?<![\\w\\d_$]+)" + kw + "(?![\\w\\d_$]+)") === null) {
                             this.err = "You are not using " + kw + "!";
                         }
                     }
