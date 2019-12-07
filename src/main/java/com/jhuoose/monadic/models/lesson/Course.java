@@ -11,8 +11,9 @@ public class Course {
     public static final int COURSE_1_SIZE = 7;
     public static final int COURSE_2_SIZE = 8;
     public static final int COURSE_3_SIZE = 4;
+    public static final int COURSE_4_SIZE = 4;
 
-    public static final List<Integer> COURSE_SIZES = Arrays.asList(5, 7, 8, 4);
+    public static final List<Integer> COURSE_SIZES = Arrays.asList(5, 7, 8, 4, 4);
 
     private int ID;
     private ArrayList<Lesson> lessonList;
