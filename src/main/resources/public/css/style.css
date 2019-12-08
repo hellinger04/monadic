@@ -170,7 +170,7 @@ div.rightCode p {
     color: #00d95a;
 }
 
-.space {
+div.space {
     background-image: url("../img/outrspc2.gif");
     width: 100%;
     min-height: 100%;
@@ -179,6 +179,22 @@ div.rightCode p {
     left: 0;
     background-size: auto auto;
     overflow: auto;
+}
+
+div.earthBound {
+    background-image: url("../img/back2.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+    overflow: auto;
+}
+
+div.lessonBack {
+    font-family: "Times New Roman", Times, serif;
+    color: white;
+    text-align: left;
+    font-size: 1em;
 }
 
 div.problemText {

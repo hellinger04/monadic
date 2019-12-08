@@ -1,19 +1,3 @@
-const EarthBound = window.styled.div`
-  background-image: url("/img/back2.jpg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  height: 100%;
-  overflow: auto;
-`;
-
-const LessonBack = window.styled.div`
-    font-family: "Times New Roman", Times, serif;
-    color: white;
-    text-align: left;
-    font-size: 1em;
-`;
-
 const NoBullet = window.styled.div`
     list-style: none;
 `;
@@ -262,11 +246,11 @@ class Content extends React.Component {
         } else if (this.state.page === "lesson") {
             return (
                 <div className={"space"}>
-                    <LessonBack>
+                    <div className={"lessonBack"}>
                         <Lesson changePage={this.changePage} courses={this.state.courses} user={this.props.user}
                                 currCourse={this.state.currCourse} currLesson={this.state.currLesson}
                                 userStatus={this.state.userStatus} getUserStatus={this.getUserStatus}/>
-                    </LessonBack>
+                    </div>
                 </div>
             );
         }

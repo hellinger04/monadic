@@ -51,7 +51,7 @@ class User extends React.Component {
         if (this.state.page === "dashboard") {
             if (typeof this.state.userStatus !== 'undefined') {
                 return (
-                    <EarthBound>
+                    <div className={"earthBound"}>
                         <Format>
                             <Title>{this.props.user}'s profile</Title>
                             <img src={"/img/default-profile.png"} alt={"Profile Picture"}/>
@@ -61,17 +61,17 @@ class User extends React.Component {
                             </NoBullet>
                             <button onClick={() => {this.props.changePage("courselist", 0, 0)}}> Go Back </button>
                         </Format>
-                    </EarthBound>
+                    </div>
                 );
             } else {
                 return (
-                    <EarthBound>
+                    <div className={"earthBound"}>
                         <Format>
                             <Title>{this.props.user}'s profile</Title>
                             <h2>{this.props.user}'s picture here</h2>
                             <button onClick={() => {this.props.changePage("courselist", 0, 0)}}> Go Back </button>
                         </Format>
-                    </EarthBound>
+                    </div>
                 );
             }
 
