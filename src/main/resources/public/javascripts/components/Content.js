@@ -1,9 +1,3 @@
-const Title = window.styled.h1`
-  font-size: 5em;
-  text-align: center;
-  color: white;
-`;
-
 // This class displays a directory of available courses, and provides buttons which link to them
 class Listing extends React.Component {
     constructor(props) {

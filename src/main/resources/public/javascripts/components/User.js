@@ -53,7 +53,7 @@ class User extends React.Component {
                 return (
                     <div className={"earthBound"}>
                         <div className={"format"}>
-                            <Title>{this.props.user}'s profile</Title>
+                            <h1 className={"title"}>{this.props.user}'s profile</h1>
                             <img src={"/img/default-profile.png"} alt={"Profile Picture"}/>
                             <h1>Lesson Progress</h1>
                             <div className={"noBullet"}>
@@ -67,7 +67,7 @@ class User extends React.Component {
                 return (
                     <div className={"earthBound"}>
                         <div className={"format"}>
-                            <Title>{this.props.user}'s profile</Title>
+                            <h1 className={"title"}>{this.props.user}'s profile</h1>
                             <h2>{this.props.user}'s picture here</h2>
                             <button onClick={() => {this.props.changePage("courselist", 0, 0)}}> Go Back </button>
                         </div>

@@ -134,7 +134,7 @@ html, body {
     margin-right: 5%;
 }
 
-div.title h1 {
+h1.title {
     font-size: 5em;
     text-align: center;
     color: white;
