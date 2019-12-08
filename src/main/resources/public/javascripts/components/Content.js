@@ -1,14 +1,3 @@
-const Space = window.styled.div`
-  background-image: url("/img/outrspc2.gif");
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  position: absolute;
-  left: 0;
-  background-size: auto auto;
-  overflow: auto;
-`;
-
 const EarthBound = window.styled.div`
   background-image: url("/img/back2.jpg");
   background-repeat: no-repeat;
@@ -272,13 +261,13 @@ class Content extends React.Component {
             );
         } else if (this.state.page === "lesson") {
             return (
-                <Space>
+                <div className={"space"}>
                     <LessonBack>
                         <Lesson changePage={this.changePage} courses={this.state.courses} user={this.props.user}
                                 currCourse={this.state.currCourse} currLesson={this.state.currLesson}
                                 userStatus={this.state.userStatus} getUserStatus={this.getUserStatus}/>
                     </LessonBack>
-                </Space>
+                </div>
             );
         }
     }

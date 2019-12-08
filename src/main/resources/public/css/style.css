@@ -170,6 +170,17 @@ div.rightCode p {
     color: #00d95a;
 }
 
+.space {
+    background-image: url("../img/outrspc2.gif");
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    position: absolute;
+    left: 0;
+    background-size: auto auto;
+    overflow: auto;
+}
+
 div.problemText {
     font-family: "Courier", monospace;
     text-align: left;
