@@ -59,7 +59,7 @@ class Login extends React.Component {
                     <p/>
                     <input type="submit" value="Login" />
                     <p/>
-                    <button onClick={() => {this.props.changePage("register", "")} }>No account? Register now!</button>
+                    <button className={"mc-button"} onClick={() => {this.props.changePage("register", "")} }>No account? Register now!</button>
                 </form>
             </div>
         );
@@ -183,7 +183,7 @@ class Register extends React.Component {
                     <p/>
                     <input id="registerButton" type="submit" value="Register" disabled/>
                     <p/>
-                    <button onClick={() => {this.props.changePage("login", "")} }>Already registered? Login!</button>
+                    <button className={"mc-button"} onClick={() => {this.props.changePage("login", "")} }>Already registered? Login!</button>
                 </form>
             </div>
         );
