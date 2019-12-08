@@ -83,7 +83,7 @@ class TestResults extends React.Component {
                     <p>Number of submissions: {this.props.numSubmissions}</p>
                     {this.props.student.length > 0 ? <p>Passed {this.numCorrect} out of&nbsp;
                         {this.props.student.length} tests:</p> : null}
-                    <NoBullet>{this.genList()}</NoBullet>
+                    <div className={"noBullet"}>{this.genList()}</div>
                 </div>
             );
         } else {

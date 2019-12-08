@@ -52,25 +52,25 @@ class User extends React.Component {
             if (typeof this.state.userStatus !== 'undefined') {
                 return (
                     <div className={"earthBound"}>
-                        <Format>
+                        <div className={"format"}>
                             <Title>{this.props.user}'s profile</Title>
                             <img src={"/img/default-profile.png"} alt={"Profile Picture"}/>
                             <h1>Lesson Progress</h1>
-                            <NoBullet>
+                            <div className={"noBullet"}>
                                 {this.createList()}
-                            </NoBullet>
+                            </div>
                             <button onClick={() => {this.props.changePage("courselist", 0, 0)}}> Go Back </button>
-                        </Format>
+                        </div>
                     </div>
                 );
             } else {
                 return (
                     <div className={"earthBound"}>
-                        <Format>
+                        <div className={"format"}>
                             <Title>{this.props.user}'s profile</Title>
                             <h2>{this.props.user}'s picture here</h2>
                             <button onClick={() => {this.props.changePage("courselist", 0, 0)}}> Go Back </button>
-                        </Format>
+                        </div>
                     </div>
                 );
             }

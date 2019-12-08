@@ -134,6 +134,25 @@ html, body {
     margin-right: 5%;
 }
 
+div.title h1 {
+    font-size: 5em;
+    text-align: center;
+    color: white;
+}
+
+div.noBullet {
+    list-style: none;
+}
+
+div.format {
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    color: white;
+    text-align: center;
+    font-size: 1em;
+    list-style: none;
+}
+
+
 div.lessTxt p {
     text-align: left;
     font-size: 1.2em;

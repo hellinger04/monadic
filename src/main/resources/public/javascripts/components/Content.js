@@ -1,15 +1,3 @@
-const NoBullet = window.styled.div`
-    list-style: none;
-`;
-
-const Format = window.styled.div`
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
-    color: white;
-    text-align: center;
-    font-size: 1em;
-    list-style: none;
-`;
-
 const Title = window.styled.h1`
   font-size: 5em;
   text-align: center;
@@ -105,9 +93,9 @@ class Listing extends React.Component {
         return (
             <div>
                 <h1 className={"spRightHeader"} >Lessons</h1>
-                <NoBullet>
+                <div className={"noBullet"}>
                     {this.genList()}
-                </NoBullet>
+                </div>
 
                 <br></br> <br></br>
 
