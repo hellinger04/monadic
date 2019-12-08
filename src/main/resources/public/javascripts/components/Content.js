@@ -1,9 +1,10 @@
 const Space = window.styled.div`
   background-image: url("/img/outrspc2.gif");
-  height: auto;
+  height: 100%;
+  width: 100%;
+  margin: 0;
   position: absolute;
   left: 0;
-  width: auto;
   background-size: auto auto;
   overflow: auto;
 `;
