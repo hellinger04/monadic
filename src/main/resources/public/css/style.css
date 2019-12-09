@@ -31,6 +31,7 @@ html, body {
     image-rendering: pixelated;
     border: 2px solid #000;
     padding-bottom: .3em;
+    transition: 0.3s;
 @include flex-center-hv;
     color: #DDD;
     text-shadow: 2px 2px #000A;
@@ -44,7 +45,7 @@ html, body {
 }
 
 .mc-button:disabled {
-    background: url("../img/bgbtndis2.png") center / cover;
+    background: url("../img/bgbtndis.png") center / cover;
     cursor: pointer;
     color: #a3a7aa;
     text-shadow: 0 0 #000A;
