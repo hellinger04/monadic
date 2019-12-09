@@ -31,7 +31,6 @@ html, body {
     image-rendering: pixelated;
     border: 2px solid #000;
     padding-bottom: .3em;
-    transition: 0.3s;
 @include flex-center-hv;
     color: #DDD;
     text-shadow: 2px 2px #000A;
