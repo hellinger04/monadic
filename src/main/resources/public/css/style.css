@@ -23,6 +23,7 @@ html, body {
     font: 10pt 'Minecraftia', sans-serif;
     height: 30pt;
     max-width: 100%;
+    min-width: 100px;
     cursor: pointer;
     overflow: hidden;
     white-space: nowrap;
@@ -45,10 +46,14 @@ html, body {
 
 .mc-button:disabled {
     background: url("../img/bgbtndis.png") center / cover;
-    cursor: pointer;
+    cursor: not-allowed;
     color: #a3a7aa;
     text-shadow: 0 0 #000A;
     box-shadow: inset 0 0 #0006, inset 0 0 #FFF7;
+}
+
+.mc-button:focus {
+    outline: none;
 }
 
 /*custom fonts*/

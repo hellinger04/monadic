@@ -57,7 +57,7 @@ class Login extends React.Component {
                     <p/>
                     <span id="errorSpan" style={{color:"red"}}/>
                     <p/>
-                    <input type="submit" value="Login" />
+                    <input className={"mc-button"} type="submit" value="Login" />
                     <p/>
                     <button className={"mc-button"} onClick={() => {this.props.changePage("register", "")} }>No account? Register now!</button>
                 </form>
