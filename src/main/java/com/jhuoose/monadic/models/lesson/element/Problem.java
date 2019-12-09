@@ -41,7 +41,7 @@ public class Problem implements LessonElement {
                         .split("\n");
                 for (String keypair : keypairs) {
                     String[] pair = keypair.split(":");
-                    List<String> keyWords = Arrays.asList(pair[1].split(","));
+                    List<String> keyWords = (pair.length == 1) ? new ArrayList<>() : Arrays.asList(pair[1].split(","));
                     this.keyPairs.put(pair[0], keyWords);
                 }
             } else if (section.startsWith("LANGUAGE")) {

@@ -26,7 +26,8 @@ public class Server {
         var courseOneLessons = new ArrayList<Lesson>();
         var courseTwoLessons = new ArrayList<Lesson>();
         var courseThreeLessons = new ArrayList<Lesson>();
-      
+        var courseFourLessons = new ArrayList<Lesson>();
+
         var courseList = new ArrayList<Course>();
 
         // construct course 0 lessons
@@ -49,16 +50,22 @@ public class Server {
             courseThreeLessons.add(new Lesson(3, i));
         }
 
+        for (int i = 0; i < Course.COURSE_4_SIZE; ++i) {
+            courseFourLessons.add(new Lesson(4, i));
+        }
+
         // construct Courses and add them to list of courses
         Course courseZero = new Course(0, courseZeroLessons);
         Course courseOne = new Course(1, courseOneLessons);
         Course courseTwo = new Course(2, courseTwoLessons);
         Course courseThree = new Course(3, courseThreeLessons);
+        Course courseFour = new Course(4, courseFourLessons);
 
         courseList.add(courseZero);
         courseList.add(courseOne);
         courseList.add(courseTwo);
         courseList.add(courseThree);
+        courseList.add(courseFour);
 
         Javalin app = Javalin.create(config -> {
             config.addStaticFiles("/public");
