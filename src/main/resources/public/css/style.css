@@ -38,7 +38,7 @@ html, body {
 }
 
 .mc-button:hover {
-    filter: sepia(90%) hue-rotate(200deg) saturate(300%);
+    background: url("../img/bgbtnblu.png") center / cover;
     text-shadow: 2px 2px #202013CC;
     color: #FFFFA0;
 }
