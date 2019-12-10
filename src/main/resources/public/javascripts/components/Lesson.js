@@ -291,7 +291,8 @@ class Problem extends React.Component {
         return (
             <div className={"lessonContainer"}>
                 <textarea id={'problem' + this.props.element.id} defaultValue={code}/>
-                <button onClick={() => this.handleClick()}>Save and Submit</button>
+                <br></br>
+                <button id={'save'} className={"mc-button"} onClick={() => this.handleClick()}>Save and Submit</button>
                 <TestResults numSubmissions={this.count} student={this.studentResults} expected={this.expectedOutputs}
                              error={this.err} showError={this.showErr}/>
             </div>
@@ -359,19 +360,20 @@ class LessonNavigation extends React.Component {
     render() {
         return (
             <div className={"lessonNavigation"}>
-                <button onClick={() => {
+                <br></br>
+                <button className={"mc-button"} onClick={() => {
                     this.props.changePage("courselist", this.props.currCourse, 0)}}>Back to the Main Page
                 </button>
 
                 <br></br>
 
-                <button style={{display: 0 <= this.props.currLesson - 1 ? "inline" : "none"}}
+                <button className={"mc-button"} style={{display: 0 <= this.props.currLesson - 1 ? "inline" : "none"}}
                         onClick={() => {
                             this.props.changePage("lesson", this.props.currCourse, Number(this.props.currLesson) - 1);
-                        window.focus(); window.scrollTo(0, this.props.currLesson.clientHeight);}} >Previous Lesson
+                        window.focus(); window.scrollTo(0, this.props.currLesson.clientHeight);}} >Prev Lesson
                 </button>
 
-                <button style={{display: this.props.numLessons > this.props.currLesson + 1 ? "inline" : "none"}}
+                <button className={"mc-button"} style={{display: this.props.numLessons > this.props.currLesson + 1 ? "inline" : "none"}}
                         disabled={(this.props.userStatus.status["c" + this.props.currCourse + "_l" + this.props.currLesson] !== "2" && this.props.user !== "admin")} onClick={() => {
                             this.props.changePage("lesson", this.props.currCourse, Number(this.props.currLesson) + 1);
                             window.scrollTo(0, this.props.currLesson.clientHeight);}}>Next Lesson
