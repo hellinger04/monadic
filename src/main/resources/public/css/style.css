@@ -213,7 +213,7 @@ html, body {
     background-color: #ffa3e2;
 }
 
-.splashWrap {
+.dashboardWrap {
     display: grid;
     grid-template-columns: 10% 1fr 1fr 10%;
     grid-gap: 10px;

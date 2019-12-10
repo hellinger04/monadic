@@ -1,5 +1,5 @@
 // This class displays a directory of available courses, and provides buttons which link to them
-class Listing extends React.Component {
+class CourseDirectory extends React.Component {
     constructor(props) {
         super(props);
         this.state = {completion: 0.0};
@@ -103,7 +103,7 @@ class Listing extends React.Component {
 }
 
 //this class serves as a wrapper for navigating the directory and user pages after logging in
-class Splash extends React.Component {
+class Dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.toUser = this.toUser.bind(this);
@@ -120,7 +120,7 @@ class Splash extends React.Component {
 
     render() {
         return(
-          <div className={"splashWrap"}>
+          <div className={"dashboardWrap"}>
 
               <div></div>
 
@@ -139,7 +139,7 @@ class Splash extends React.Component {
               </div>
 
               <div>
-                  <Listing userStatus={this.props.userStatus} courses={this.props.courses} toLesson={this.toLesson}
+                  <CourseDirectory userStatus={this.props.userStatus} courses={this.props.courses} toLesson={this.toLesson}
                            user={this.props.user}/>
               </div>
 
@@ -209,7 +209,7 @@ class Home extends React.Component {
 
         if (this.state.page === "home") {
             return (
-                <Splash changePage={this.changePage} courses={this.state.courses}
+                <Dashboard changePage={this.changePage} courses={this.state.courses}
                     userStatus={this.state.userStatus} user={this.props.user} logOut={this.props.logOut}/>
             );
         } else if (this.state.page === "user") {
