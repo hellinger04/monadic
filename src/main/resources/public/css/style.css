@@ -157,8 +157,8 @@ html, body {
 }
 
 .home-button:hover {
-    background: #1c6d97;
-    color: #daedf2;
+    background: #8d75d3;
+    color: #ffc5d4;
     text-shadow: 2px 2px #202013CC;
 }
 
@@ -168,7 +168,7 @@ html, body {
 
 .home-button:disabled {
     cursor: not-allowed;
-    background: #002143;
+    background: #46377e;
     color: #a3a7aa;
     text-shadow: 0 0 #000A;
     box-shadow: inset 0 0 #0006, inset 0 0 #FFF7;
