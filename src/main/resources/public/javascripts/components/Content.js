@@ -133,8 +133,9 @@ class Splash extends React.Component {
                   <h2 className={"sp2"}> Welcome, <em>{this.props.user}</em>! <br></br>
                       Please choose a course.
                   </h2>
-                  <button onClick={() => {this.toUser()}}> Profile </button>
-                  <button onClick={() => {this.props.logOut()}}> Log Out </button>
+                  <button className={"home-button"} onClick={() => {this.toUser()}}> Profile </button>
+                  &nbsp; &nbsp;
+                  <button className={"home-button"} onClick={() => {this.props.logOut()}}> Log Out </button>
               </div>
 
               <div>

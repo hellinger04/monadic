@@ -57,9 +57,9 @@ class Login extends React.Component {
                     <p/>
                     <span id="errorSpan" style={{color:"red"}}/>
                     <p/>
-                    <input type="submit" value="Login" />
+                    <input className={"reg-button"} type="submit" value="Login" />
                     <p/>
-                    <button onClick={() => {this.props.changePage("register", "")} }>No account? Register now!</button>
+                    <button className={"reg-button"} onClick={() => {this.props.changePage("register", "")} }>No account? Register now!</button>
                 </form>
             </div>
         );
@@ -181,9 +181,9 @@ class Register extends React.Component {
                     <p/>
                     <span id="errorSpan" className={this.isMessage ? 'asciiLite' : 'asciiLiteNoBackground'} style={{color:"red"}}/>
                     <p/>
-                    <input id="registerButton" type="submit" value="Register" disabled/>
+                    <input className={"reg-button"} id="registerButton" type="submit" value="Register" disabled/>
                     <p/>
-                    <button onClick={() => {this.props.changePage("login", "")} }>Already registered? Login!</button>
+                    <button className={"reg-button"} onClick={() => {this.props.changePage("login", "")} }>Signed up? Login!</button>
                 </form>
             </div>
         );

@@ -96,6 +96,89 @@ html, body {
     padding:  .3em;
 }
 
+.reg-button {
+    font: 8pt 'IBM Bios', sans-serif;
+    height: 30pt;
+    max-width: 100%;
+    min-width: 100px;
+    cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    user-select: none;
+    background: #004a7b;
+    image-rendering: pixelated;
+    border: 2px solid #000;
+    padding-bottom: .3em;
+@include flex-center-hv;
+    color: #90cbe6;
+    text-shadow: 2px 2px #000A;
+    box-shadow: inset -2px -4px #0006, inset 2px 2px #FFF7;
+}
+
+.reg-button:hover {
+    background: #1c6d97;
+    color: #daedf2;
+    text-shadow: 2px 2px #202013CC;
+}
+
+.reg-button:active {
+    box-shadow: inset -2px -4px #0004, inset 2px 2px #FFF7;
+}
+
+.reg-button:disabled {
+    cursor: not-allowed;
+    background: #002143;
+    color: #a3a7aa;
+    text-shadow: 0 0 #000A;
+    box-shadow: inset 0 0 #0006, inset 0 0 #FFF7;
+}
+
+.reg-button:focus {
+    outline: none;
+}
+
+.home-button {
+    font: 8pt 'IBM Bios', sans-serif;
+    height: 30pt;
+    max-width: 100%;
+    min-width: 100px;
+    cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    user-select: none;
+    background: #6b49b5;
+    image-rendering: pixelated;
+    border: 2px solid #000;
+    padding-bottom: .3em;
+@include flex-center-hv;
+    color: #ff92b5;
+    text-shadow: 2px 2px #000A;
+    box-shadow: inset -2px -4px #0006, inset 2px 2px #FFF7;
+}
+
+.home-button:hover {
+    background: #1c6d97;
+    color: #daedf2;
+    text-shadow: 2px 2px #202013CC;
+}
+
+.home-button:active {
+    box-shadow: inset -2px -4px #0004, inset 2px 2px #FFF7;
+}
+
+.home-button:disabled {
+    cursor: not-allowed;
+    background: #002143;
+    color: #a3a7aa;
+    text-shadow: 0 0 #000A;
+    box-shadow: inset 0 0 #0006, inset 0 0 #FFF7;
+}
+
+.home-button:focus {
+    outline: none;
+}
+
+
 /*automatically adjusts the height of CodeMirror boxes*/
 .CodeMirror {
     height: auto;
