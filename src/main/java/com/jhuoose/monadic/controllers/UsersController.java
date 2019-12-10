@@ -56,32 +56,18 @@ public class UsersController {
 
     public void getUserStatus(Context ctx) {
         try {
-            HashMap<String, String> components = new ObjectMapper().readValue(ctx.body(), HashMap.class);
-            var user = usersRepository.getOne(components.get("Username"));
-            String problemKey = getProblemKey(components);
-            String convertToTypeScript = components.get("convertToTypeScript");
+            //get username of current User
+            var user = usersRepository.getOne(ctx.body());
 
-            HashMap<String, String> solutions = user.getSolutions();
-            String solution = solutions.get(problemKey);
-
-            //after lesson status HashMap is changed to String, String, this can be uncommented
+            //store both lesson status and user's solutions in a HashMap
             HashMap<String, HashMap<String, String>> results = new HashMap<>();
             results.put("status", user.getUserStatus());
+            results.put("solutions", user.getSolutions());
 
-            if (convertToTypeScript.equals("true")) {
-                TypescriptCompiler tsc = new TypescriptCompiler();
-                solutions.put(problemKey, tsc.compile(solution));
-                results.put("solutions", solutions);
-                ctx.json(results);
-                ctx.status(201);
-            } else if (convertToTypeScript.equals("false")) {
-                results.put("solutions", solutions);
-                ctx.json(results);
-                ctx.status(201);
-            } else {
-                ctx.status(401);
-            }
-        } catch (UserNotFoundException | SQLException | IOException e) {
+            //encode results HashMap as JSON and assign to Context
+            ctx.json(results);
+            ctx.status(201);
+        } catch (UserNotFoundException | SQLException e) {
             ctx.status(401);
         }
     }
