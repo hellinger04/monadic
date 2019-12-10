@@ -218,28 +218,6 @@ class Problem extends React.Component {
         this.studentAnswer = this.eliminateComments("//","\n",1, this.studentAnswer);
         this.studentAnswer = this.eliminateComments("/*","*/",2, this.studentAnswer);
 
-        /*
-        // checks for instances of for and while
-        let disallowed = ["for", "while"];
-        for (let i = 0; i < disallowed.length; i++) {
-            disallowed[i] = "\\b" + disallowed[i].replace(" ", "\\b \\b") + "\\b";
-            if(this.studentAnswer.toLowerCase().match(disallowed[i].toLowerCase()) != null){
-                this.err = "You are not allowed to use " + disallowed[i].substring(2,
-                    disallowed[i].length-2) +  " loops!";
-            }
-        }
-
-        // checks if key monadic words exist
-        if(this.props.element.keyWords[0] !== undefined) {
-            for (let i = 0; i < this.props.element.keyWords.length; i++) {
-                if (this.studentAnswer.toLowerCase().match(this.props.element.keyWords[i].toLowerCase()) == null) {
-                    this.err = "You are not using " + this.props.element.keyWords[i].substring(2,
-                        this.props.element.keyWords[i].length-2) + "!";
-                }
-            }
-        }
-        */
-
         // Checks if key monadic words/function calls exist
         let keyPairs = this.props.element.keyPairs;
         if (Object.keys(keyPairs).length !== 0) {
