@@ -55,7 +55,4 @@ Course 1 is based off of the blog post ["No really, what's a monad?"](https://rm
 
 Courses 2, 3, and 4 are based off of material from the course ["Functional programming and type systems"](https://xavierleroy.org/mpri/2-4/), taught by OCaml developer [Xavier Leroy](https://xavierleroy.org/teaching.html). In particular, the Exception, State, and Continuation monads are mainly TypeScript re-implementations of monads that Leroy originally implemented in OCaml.
 
-  
-
-
-
+The buttons were inspired by these Minecraft buttons: ["Minecraft Style Menu & Buttons"](https://codepen.io/joexmdq/pen/EOMLzg) by [Joel](https://codepen.io/joexmdq)
