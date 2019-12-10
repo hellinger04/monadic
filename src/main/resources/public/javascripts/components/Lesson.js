@@ -313,7 +313,8 @@ class Problem extends React.Component {
         return (
             <div className={"lessonContainer"}>
                 <textarea id={'problem' + this.props.element.id} defaultValue={code}/>
-                <button className={"mc-button"} onClick={() => this.handleClick()}>Save and Submit</button>
+                <br></br>
+                <button id={'save'} className={"mc-button"} onClick={() => this.handleClick()}>Save and Submit</button>
                 <TestResults numSubmissions={this.count} student={this.studentResults} expected={this.expectedOutputs}
                              error={this.err} showError={this.showErr}/>
             </div>
