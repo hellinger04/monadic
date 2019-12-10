@@ -358,7 +358,7 @@ class LessonNavigation extends React.Component {
             <div className={"lessonNavigation"}>
                 <br></br>
                 <button className={"mc-button"} onClick={() => {
-                    this.props.changePage("courselist", this.props.currCourse, 0)}}>Back to the Main Page
+                    this.props.changePage("home", this.props.currCourse, 0)}}>Back to the Main Page
                 </button>
 
                 <br></br>

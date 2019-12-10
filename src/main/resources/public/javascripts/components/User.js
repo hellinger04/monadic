@@ -59,7 +59,7 @@ class User extends React.Component {
                             <div className={"noBullet"}>
                                 {this.createList()}
                             </div>
-                            <button onClick={() => {this.props.changePage("courselist", 0, 0)}}> Go Back </button>
+                            <button onClick={() => {this.props.changePage("home", 0, 0)}}> Go Back </button>
                         </div>
                     </div>
                 );
@@ -69,7 +69,7 @@ class User extends React.Component {
                         <div className={"format"}>
                             <h1 className={"title"}>{this.props.user}'s profile</h1>
                             <h2>{this.props.user}'s picture here</h2>
-                            <button onClick={() => {this.props.changePage("courselist", 0, 0)}}> Go Back </button>
+                            <button onClick={() => {this.props.changePage("home", 0, 0)}}> Go Back </button>
                         </div>
                     </div>
                 );

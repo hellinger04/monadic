@@ -143,20 +143,20 @@ class Splash extends React.Component {
                            user={this.props.user}/>
               </div>
 
-              <div></div>
+              <div/>
           </div>
         );
     }
 }
 
-/* The main Content component. This component keeps track of state throughout courses and lessons, and defines the
+/* The main Home component. This component keeps track of state throughout courses and lessons, and defines the
    changePage() function used in subcomponents to change states and navigate through the pages. When this component
    mounts, it initiates a GET request from the Server to obtain information about all available courses.
  */
-class Content extends React.Component {
+class Home extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {page: "courselist", currCourse: 0, currLesson: 0, courses: [], userStatus: []};
+        this.state = {page: "home", currCourse: 0, currLesson: 0, courses: [], userStatus: []};
         this.changePage = this.changePage.bind(this);
         this.getUserStatus = this.getUserStatus.bind(this);
     }
@@ -207,7 +207,7 @@ class Content extends React.Component {
             return null;
         }
 
-        if (this.state.page === "courselist") {
+        if (this.state.page === "home") {
             return (
                 <Splash changePage={this.changePage} courses={this.state.courses}
                     userStatus={this.state.userStatus} user={this.props.user} logOut={this.props.logOut}/>

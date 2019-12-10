@@ -1,7 +1,7 @@
 /* This component renders a login page for the user. The user can enter their username and password and attempt to login
    using the "Login" button. Once this button is clicked, the username and password input by the user are sent to the
-   Server, where their authenticity is checked. If the credentials are valid, the user can proceed to view content,
-   otherwise the user must try to enter valid credentials again.
+   Server, where their authenticity is checked. If the credentials are valid, the user can proceed to view the Home
+   page, otherwise the user must try to enter valid credentials again.
  */
 class Login extends React.Component {
     constructor(props) {
@@ -13,7 +13,7 @@ class Login extends React.Component {
         if (response.status === 401) {
             alert("Invalid username or password. Please try again")
         } else if (response.status === 200) {
-            this.props.changePage("content", username)
+            this.props.changePage("home", username)
         }
     }
 
@@ -89,7 +89,7 @@ class Register extends React.Component {
         if (response.status === 409) {
             alert("That username already exists. Please try another username.");
         } else if (response.status === 201) {
-            this.props.changePage("content", username);
+            this.props.changePage("home", username);
         }
     }
 
@@ -191,7 +191,7 @@ class Register extends React.Component {
 }
 
 /* The main component for the Monadic website. By default, this component renders the Register component, but can also
-   load the login page, and can load the other two main components, Content and User.
+   load the login page, and can load the other two main components, Home and User.
  */
 class Monadic extends React.Component {
     constructor(props) {
@@ -217,8 +217,8 @@ class Monadic extends React.Component {
             return (<Register changePage={this.changePage}/>);
         } else if (this.state.page === "login") {
             return (<Login changePage={this.changePage}/>);
-        } else if (this.state.page === "content") {
-            return (<Content logOut={this.logOut} user={this.state.user}/>);
+        } else if (this.state.page === "home") {
+            return (<Home logOut={this.logOut} user={this.state.user}/>);
         }
     }
 }
