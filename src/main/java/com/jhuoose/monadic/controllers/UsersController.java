@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jhuoose.monadic.models.User;
 import com.jhuoose.monadic.repositories.UserNotFoundException;
 import com.jhuoose.monadic.repositories.UsersRepository;
-import com.mangofactory.typescript.TypescriptCompiler;
 import io.javalin.http.Context;
 import io.javalin.http.ForbiddenResponse;
 
@@ -63,7 +62,6 @@ public class UsersController {
             HashMap<String, HashMap<String, String>> results = new HashMap<>();
             results.put("status", user.getUserStatus());
             results.put("solutions", user.getSolutions());
-
             //encode results HashMap as JSON and assign to Context
             ctx.json(results);
             ctx.status(201);
@@ -95,18 +93,17 @@ public class UsersController {
 
     public void changePassword(Context ctx) throws SQLException {
         try {
-            var user = usersRepository.getOne(ctx.formParam("username", ""));
+            HashMap<String, String> components = new ObjectMapper().readValue(ctx.body(), HashMap.class);
+            var user = usersRepository.getOne(components.get("Username"));;
             // first make sure the user has valid authentication
-            BCrypt.Result result = BCrypt.verifyer().verify(ctx.formParam("password", "").toCharArray(),
-                    user.getPassword().toCharArray());
+            BCrypt.Result result = BCrypt.verifyer().verify(components.get("OldPassword").toCharArray(), user.getPassword().toCharArray());
             if (!result.verified) {
                 ctx.status(401);
             } else {
-                ctx.sessionAttribute("user", user);
-                user.setPassword(BCrypt.withDefaults().hashToString(12, ctx.formParam("password", "").toCharArray()));
+                user.setPassword(BCrypt.withDefaults().hashToString(12, components.get("NewPassword").toCharArray()));
                 ctx.status(200);
             }
-        } catch (UserNotFoundException e) {
+        } catch (UserNotFoundException | IOException e) {
             ctx.status(401);
         }
     }

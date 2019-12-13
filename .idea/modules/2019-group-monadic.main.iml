@@ -15,7 +15,6 @@
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.9.8" level="project" />
     <orderEntry type="library" name="Gradle: org.xerial:sqlite-jdbc:3.27.2.1" level="project" />
     <orderEntry type="library" name="Gradle: at.favre.lib:bcrypt:0.8.0" level="project" />
-    <orderEntry type="library" name="Gradle: com.mangofactory:typescript4j:0.4.0" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.31" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.26" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.jetty:jetty-webapp:9.4.19.v20190610" level="project" />
@@ -26,11 +25,6 @@
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.9.0" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.9.8" level="project" />
     <orderEntry type="library" name="Gradle: at.favre.lib:bytes:1.1.0" level="project" />
-    <orderEntry type="library" name="Gradle: commons-io:commons-io:2.4" level="project" />
-    <orderEntry type="library" name="Gradle: org.apache.commons:commons-lang3:3.1" level="project" />
-    <orderEntry type="library" name="Gradle: org.mozilla:rhino:1.7R4" level="project" />
-    <orderEntry type="library" name="Gradle: commons-lang:commons-lang:2.5" level="project" />
-    <orderEntry type="library" name="Gradle: com.google.guava:guava:13.0.1" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.31" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.3.31" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.jetty.websocket:websocket-servlet:9.4.19.v20190610" level="project" />
