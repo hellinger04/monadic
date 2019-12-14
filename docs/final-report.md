@@ -59,6 +59,8 @@ have the ability to comment on different lessons and problems to discuss their t
 Another idea would be to implement a sort of light and dark mode that would change the appearance of the website based
 on the time of day. The user could also have the ability to manually change the mode to their preferred setting. 
 
+Finally, we would add more problems and material to the curriculum. There were some exercises that I wanted to implemented but decided against, due to lack of time. In particular, Iteration 7 would re-add TypeScript exercises, which were initially implemented but then removed because we couldn't get the TS compiler to work. Beyond that, we could even add more lessons and courses - there's a lot more to monads, such as monadic laws, transformers, and comonads, and we've only scratched the surface of the surface.
+
 # A Final Message to Your Advisor
 
 <!--
