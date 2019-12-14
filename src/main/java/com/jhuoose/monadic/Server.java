@@ -122,6 +122,9 @@ public class Server {
                 path("login", () -> {
                     post(usersController::login);
                 });
+                path("password", () -> {
+                    post(usersController::changePassword);
+                });
                 path("getUserStatus", () -> {
                     post(usersController::getUserStatus);
                 });
