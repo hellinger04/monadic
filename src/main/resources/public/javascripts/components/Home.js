@@ -110,14 +110,16 @@ class PassChange extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    //check for correct server response
     validatePassword(response) {
         if (response.status === 401) {
             alert("Invalid current password!")
         } else if (response.status === 200) {
-            this.setState({page: "success"});
+            this.setState({page: "success"});//if successful, change page
         }
     }
 
+    //parse form data submission
     handleSubmit(event) {
         event.preventDefault();
         let data = new FormData(event.target);
@@ -127,12 +129,14 @@ class PassChange extends React.Component {
         const newPass1 = data.get("NewPassword");
         const newPass2 = data.get("NewPassword2");
 
+        //init posted data
         const data2 = {
             OldPassword: oldPass,
             NewPassword: newPass1,
             Username: user
         };
 
+        //convert to JSON
         let dataJSON = JSON.stringify(data2);
 
         if (newPass1 !== newPass2) {
@@ -183,7 +187,7 @@ class PassChange extends React.Component {
                         <p/>
                         <span id="errorSpan" style={{color:"red"}}/>
                         <p/>
-                        <input className={"home-button"} type="submit" value="Login" />
+                        <input className={"home-button"} type="submit" value="Submit Change" />
                     </form>
                     <p/>
                     <button className={"home-button"} onClick={() => {this.setState({ page: "button"})}}> Go Back </button>
