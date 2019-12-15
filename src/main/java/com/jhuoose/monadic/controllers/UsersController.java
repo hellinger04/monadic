@@ -101,6 +101,7 @@ public class UsersController {
                 ctx.status(401);
             } else {
                 user.setPassword(BCrypt.withDefaults().hashToString(12, components.get("NewPassword").toCharArray()));
+                usersRepository.setNewPassword(user);
                 ctx.status(200);
             }
         } catch (UserNotFoundException | IOException e) {

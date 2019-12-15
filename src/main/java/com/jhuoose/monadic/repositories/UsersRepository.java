@@ -92,6 +92,14 @@ public class UsersRepository {
         statement.close();
     }
 
+    public void setNewPassword(User user) throws SQLException {
+        var statement = connection.prepareStatement("UPDATE users SET password = ? WHERE username = ?");
+        statement.setString(1, user.getPassword());
+        statement.setString(2, user.getUsername());
+        statement.execute();
+        statement.close();
+    }
+
     public void setSolution(User user, String problemKey, String newSolution) throws SQLException, JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         HashMap<String, String> solutions = user.getSolutions();
