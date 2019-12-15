@@ -122,16 +122,18 @@ class PassChange extends React.Component {
         event.preventDefault();
         let data = new FormData(event.target);
 
+        const user = this.props.user;
         const oldPass = data.get("OldPassword");
         const newPass1 = data.get("NewPassword");
         const newPass2 = data.get("NewPassword2");
-        data.delete("NewPassword2");
-        data.append("Username", this.props.user);
 
-        console.log(data.get("Username"));
-        console.log(data.get("OldPassword"));
-        console.log(data.get("NewPassword"));
-        console.log(data);
+        const data2 = {
+            OldPassword: oldPass,
+            NewPassword: newPass1,
+            Username: user
+        };
+
+        let dataJSON = JSON.stringify(data2);
 
         if (newPass1 !== newPass2) {
             alert("New passwords don't match!");
@@ -142,7 +144,7 @@ class PassChange extends React.Component {
         } else {
             fetch('/users/password', {
                 method: 'POST',
-                body: data,
+                body: dataJSON,
             }).then((function(response) { this.validatePassword(response) }).bind(this));
         }
     }

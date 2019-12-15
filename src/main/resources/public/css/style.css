@@ -70,6 +70,11 @@ html, body {
     src: url("fonts/Px437_IBM_BIOS.ttf");
 }
 
+@font-face {
+    font-family: "Weeb";
+    src: url("fonts/jackeyfont.ttf");
+}
+
 /*define register and login page text style*/
 .asciiLite {
     font-family: IBM Bios, Arial, sans-serif;
@@ -255,12 +260,16 @@ html, body {
 
 /*weeb text*/
 .sp1 {
+    font-family: Weeb, Arial;
+    text-shadow: 0.1em 0.1em black;
     color: white;
-    font-size: 3em;
+    font-size: 4em;
 }
 
 /*english text*/
 .sp2 {
+    font-family: "IBM Bios", Arial;
+    text-shadow: 0.1em 0.1em black;
     color: white;
     font-size: 2em;
 }
