@@ -102,6 +102,109 @@ class CourseDirectory extends React.Component {
     }
 }
 
+//this class is responsible for changing the password
+class PassChange extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {page: "button"};
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    validatePassword(response) {
+        if (response.status === 401) {
+            alert("Invalid current password!")
+        } else if (response.status === 200) {
+            this.setState({page: "success"});
+        }
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        let data = new FormData(event.target);
+
+        const oldPass = data.get("OldPassword");
+        const newPass1 = data.get("NewPassword");
+        const newPass2 = data.get("NewPassword2");
+        data.delete("NewPassword2");
+        data.append("Username", this.props.user);
+
+        console.log(data.get("Username"));
+        console.log(data.get("OldPassword"));
+        console.log(data.get("NewPassword"));
+        console.log(data);
+
+        if (newPass1 !== newPass2) {
+            alert("New passwords don't match!");
+        } else if (oldPass === newPass1) {
+            alert("New password can't be the same as the old password!");
+        } else if (newPass1.length < 8) {
+            alert("New password must be at least 8 characters!");
+        } else {
+            fetch('/users/password', {
+                method: 'POST',
+                body: data,
+            }).then((function(response) { this.validatePassword(response) }).bind(this));
+        }
+    }
+
+    render() {
+        if (this.state.page === "button") {
+            return(
+                <div>
+                    <button className={"home-button"} onClick={() => {this.setState({ page: "change"})}}> Change Password </button>
+                </div>
+            );
+        } else if (this.state.page === "change") {
+            return(
+                <div>
+                    <form onSubmit={this.handleSubmit} className={"rForm"}>
+                        <span className={"passChangeLine"}>Old Password</span>
+                        <br/>
+                        <label>
+                            <input type="password" name="OldPassword" placeholder={"Old Password"}/>
+                        </label>
+
+                        <p/>
+                        <span className={"passChangeLine"}>New Password</span>
+                        <br/>
+                        <label>
+                            <input type="password" name="NewPassword" placeholder={"New Password"}/>
+                        </label>
+
+                        <p/>
+                        <span className={"passChangeLine"}>Repeat New Password</span>
+                        <br/>
+                        <label>
+                            <input type="password" name="NewPassword2" placeholder={"New Password"}/>
+                        </label>
+
+                        <p/>
+                        <span id="errorSpan" style={{color:"red"}}/>
+                        <p/>
+                        <input className={"home-button"} type="submit" value="Login" />
+                    </form>
+                    <p/>
+                    <button className={"home-button"} onClick={() => {this.setState({ page: "button"})}}> Go Back </button>
+                </div>
+            );
+        } else if (this.state.page === "success") {
+            setTimeout(
+                function() {
+                    this.setState({page: "button"});
+                }
+                    .bind(this),
+                3000
+            );
+            return(
+                <div>
+                    <h2 className={"leftSuccess"}> Successfully Changed! </h2>
+                </div>
+            )
+        }
+
+    }
+}
+
 //this class serves as a wrapper for navigating the directory and user pages after logging in
 class Dashboard extends React.Component {
     constructor(props) {
@@ -122,20 +225,30 @@ class Dashboard extends React.Component {
         return(
           <div className={"dashboardWrap"}>
 
-              <div></div>
+              <div> </div>
 
-              <div>
-                  <h1 className={"sp1"}>
-                      ようこそ、<em>{this.props.user}</em>！ <br></br>
-                      コースを選択してください。
-                  </h1>
+              <div className={"leftWrap"}>
 
-                  <h2 className={"sp2"}> Welcome, <em>{this.props.user}</em>! <br></br>
-                      Please choose a course.
-                  </h2>
-                  <button className={"home-button"} onClick={() => {this.toUser()}}> Profile </button>
-                  &nbsp; &nbsp;
-                  <button className={"home-button"} onClick={() => {this.props.logOut()}}> Log Out </button>
+                  <div>
+                      <h1 className={"sp1"}>
+                          ようこそ、<em>{this.props.user}</em>！ <br></br>
+                          コースを選択してください。
+                      </h1>
+
+                      <h2 className={"sp2"}> Welcome, <em>{this.props.user}</em>! <br></br>
+                          Please choose a course.
+                      </h2>
+                  </div>
+
+                  <div className={"leftInWrap"}>
+
+                      <PassChange user={this.props.user}/>
+
+                      <div>
+                          <button className={"home-button"} onClick={() => {this.props.logOut()}}> Log Out </button>
+                      </div>
+                  </div>
+
               </div>
 
               <div>
@@ -143,7 +256,7 @@ class Dashboard extends React.Component {
                            user={this.props.user}/>
               </div>
 
-              <div/>
+              <div> </div>
           </div>
         );
     }

@@ -230,6 +230,29 @@ html, body {
     image-rendering: pixelated;
 }
 
+.leftWrap {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    justify-content: center;
+}
+
+.leftInWrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.leftSuccess {
+    top: 0;
+    padding-top: 0;
+    font-family: IBM Bios, Arial, sans-serif;
+    color: white;
+}
+
+.passChangeLine {
+    font-family: IBM Bios, Arial, sans-serif;
+    color: white;
+}
+
 /*weeb text*/
 .sp1 {
     color: white;
