@@ -14,8 +14,6 @@ long. You will be alerted if your desired username is already taken and will hav
 ## Signing Into an Existing Account
 If you already have an account, click the "Already Registered? Login!" button on the home page. 
 
-![](docs/signin1.png)
-
 You should then be given the option to enter your username and password. Complete this form and then click the "Login" 
 button.
 
