@@ -37,6 +37,17 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "get user status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}
