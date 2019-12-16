@@ -59,17 +59,17 @@ class CourseDirectory extends React.Component {
 
                     //push to list
                     if (avail === 0) {
-                        list.push(<button className={"spB"} key={currKey} onClick={() => {
+                        list.push(<button className={"home-button"} key={currKey} onClick={() => {
                             this.props.toLesson(currCourse, currLesson)
                         }}>
                             Lesson {currLesson}: <em>Completed</em></button>);
                     } else if (avail === 1) {
-                        list.push(<button className={"spB"} key={currKey} onClick={() => {
+                        list.push(<button className={"home-button"} key={currKey} onClick={() => {
                             this.props.toLesson(currCourse, currLesson)
                         }}>
                             Lesson {currLesson}: <em>Available</em></button>);
                     } else if (avail === 2) {
-                        list.push(<button className={"spB"} key={currKey}
+                        list.push(<button className={"home-button"} key={currKey}
                                           disabled={true}>Lesson {currLesson}: <em>Unavailable</em></button>);
                     }
                 }

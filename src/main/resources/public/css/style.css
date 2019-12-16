@@ -289,10 +289,22 @@ html, body {
 
 }
 
+.rightWrap{
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.rightChild {
+    overflow-y: auto;
+}
+
 /*course heading format*/
 .spC {
     color: white;
     font-size: 2em;
+    font-family: "IBM Bios", Arial;
+    text-shadow: 0.1em 0.1em black;
 }
 
 /*lesson page*/

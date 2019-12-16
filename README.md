@@ -26,15 +26,17 @@ lessons will become visible as you progress through different lessons.
 
 ![](docs/lessonselection1.png)
 
-Select the course you would like to take. You should then see a list of available lessons from the course, similar to 
-the list below. **NOTE:** as described above, the available lessons that you see might be different depending on your 
-lesson progression. More courses and lessons will become visible as you progress through different lessons. 
+You can see all the available lessons (and you can see which lessons are unavailable) on your landing page once you login. You can see how much you have completed by looking at the progress bar on the bottom. **NOTE:** as described above, the available lessons that you see might be different depending on your 
+lesson progression. More courses and lessons will become visible as you progress through different lessons. Select the lesson that you would like to take. You should then find yourself on the lesson page, like below.
 
 ![](docs/lessonselection2.png)
 
-Select the lesson that you would like to take. You should then find yourself on the lesson page, like below.
+In admin mode, all lessons are available.
 
-![](docs/lessonselection3.png)
+![](docs/admin.png)
+
+
+
 
 ## Saving and Submitting Coding Activities
 Some lessons include short coding activities to reinforce concepts taught during the lesson. These coding activities are
@@ -46,6 +48,8 @@ submitted for each activity.
 ![](docs/activities1.png)
 
 ![](docs/activities2.png)
+
+When you submit, you will se the expected outcome and actual outcome of all tests.
 
 ## Works Cited
 
