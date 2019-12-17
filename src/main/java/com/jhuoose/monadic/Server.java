@@ -71,50 +71,12 @@ public class Server {
             config.addStaticFiles("/public");
         });
         app.events(event -> {
-            event.serverStarting(() -> {
-                var statement = connection.createStatement();
-                statement.execute("CREATE TABLE IF NOT EXISTS courses (identifier INTEGER PRIMARY KEY AUTOINCREMENT, lessons VARCHAR)");
-                statement.close();
-            });
             event.serverStopped(() -> {
                 connection.close();
             });
         });
         app.get("/courses", ctx -> {
             ctx.json(courseList);
-        });
-
-        app.post("/courses", ctx -> {
-            // put empty lesson list into the course. we will use update() to add lessons later.
-            ArrayList<Lesson> lessons = new ArrayList<>();
-            String JSONLessons = mapper.writeValueAsString(lessons);
-            var createStatement = connection.createStatement();
-            createStatement.execute("INSERT INTO courses (lessons) VALUES " + JSONLessons);
-            createStatement.close();
-            ctx.status(201);
-        });
-
-        app.delete("/courses/:identifier", ctx -> {
-            var statement = connection.prepareStatement("DELETE FROM courses WHERE identifier = ?");
-            statement.setInt(1, Integer.parseInt(ctx.pathParam("identifier")));
-            if (statement.executeUpdate() == 0) {
-                ctx.status(404);
-            } else {
-                ctx.status(204);
-            }
-            statement.close();
-        });
-
-        app.put("/courses/:identifier", ctx -> {
-            var statement = connection.prepareStatement("UPDATE courses SET lessons = ? WHERE identifier = ?");
-            statement.setString(1, ctx.formParam("lessons", ""));
-            statement.setInt(2, Integer.parseInt(ctx.pathParam("identifier")));
-            if (statement.executeUpdate() == 0) {
-                ctx.status(404);
-            } else {
-                ctx.status(204);
-            }
-            statement.close();
         });
         app.routes(() -> {
             path("users", () -> {
